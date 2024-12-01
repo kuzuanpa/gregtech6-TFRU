@@ -176,7 +176,6 @@ public class GT_API_Proxy_Client extends GT_API_Proxy {
 		for (OreDictMaterial tMaterial : OreDictMaterial.MATERIAL_MAP.values()) {
 			LH.add("gt.material." + tMaterial.mNameInternal, tMaterial.mNameLocal);
 			tMaterial.mNameLocal = LH.get("gt.material." + tMaterial.mNameInternal, tMaterial.mNameLocal);
-			System.out.println(tMaterial.mNameLocal);
 		}
 	}
 	@Override
