@@ -110,28 +110,34 @@ public class LanguageHandler {
 	public static String translate(String aKey) {
 		return translate(aKey, aKey);
 	}
-	
+
 	public static String translate(String aKey, String aDefault) {
+		String translated = translate0(aKey, aDefault);
+		if(translated.equals("@"))return "";
+		return translated;
+	}
+
+	public static String translate0(String aKey, String aDefault) {
 		if (aKey == null || aKey.length() < 2) return "";
 		aKey = aKey.trim();
 		if (aKey.length() < 2) return "";
 		String
-		rTranslation = LanguageRegistry.instance().getStringLocalization(aKey);
+				rTranslation = LanguageRegistry.instance().getStringLocalization(aKey);
 		if (UT.Code.stringValid(rTranslation) && !aKey.equals(rTranslation)) return rTranslation;
 		rTranslation = StatCollector.translateToLocal(aKey);
 		if (UT.Code.stringValid(rTranslation) && aKey != rTranslation) return rTranslation;
 		rTranslation = BACKUPMAP.get(aKey);
 		if (UT.Code.stringValid(rTranslation)) return rTranslation;
-		
+
 		aKey = (aKey.endsWith(".name") ? aKey.substring(0, aKey.length() - 5) : aKey + ".name");
-		
+
 		rTranslation = LanguageRegistry.instance().getStringLocalization(aKey);
 		if (UT.Code.stringValid(rTranslation) && !aKey.equals(rTranslation)) return rTranslation;
 		rTranslation = StatCollector.translateToLocal(aKey);
 		if (UT.Code.stringValid(rTranslation) && aKey != rTranslation) return rTranslation;
 		rTranslation = BACKUPMAP.get(aKey);
 		if (UT.Code.stringValid(rTranslation)) return rTranslation;
-		
+
 		return aDefault;
 	}
 	
