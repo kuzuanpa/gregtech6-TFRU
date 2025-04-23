@@ -456,7 +456,7 @@ public final class OreDictManager {
 		// Global Listeners. Those are usually direct Name->Recipe Systems, meaning they should have priority over Prefix based Stuff.
 		for (IOreDictListenerEvent tListener : mGlobalOreDictListeners) if(!tRegistration.mMaterial.mHidden) tListener.onOreRegistration(tRegistration);
 
-		if(tRegistration.mMaterial.mHidden)ERR.println("Blocked hidden material registration: " + tRegistration.mMaterial.mNameInternal + " (" + tRegistration.mMaterial.mNameLocal + ")");
+		//if(tRegistration.mMaterial.mHidden)ERR.println("Blocked hidden material registration: " + tRegistration.mMaterial.mNameInternal + " (" + tRegistration.mMaterial.mNameLocal + ")");
 		
 		// Prefix Stuff comes after Global Stuff
 		if (aPrefix != null) aPrefix.onOreRegistration(tRegistration);

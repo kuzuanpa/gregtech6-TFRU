@@ -121,6 +121,10 @@ public class MultiTileEntityRegistry {
 	}
 
 	/** Whatever you do, DO NOT GET THE UTTERLY RETARDED IDEA OF ADDING YOUR MULTITILEENTITIES TO MY OWN REGISTRY!!! Create your own instance! */
+	public static MultiTileEntityRegistry getRegistryUnRemappedID(MultiTileEntityRegistry registry) {
+		return UnRemapped_Registries.get(registry.currentID());
+	}
+	/** Whatever you do, DO NOT GET THE UTTERLY RETARDED IDEA OF ADDING YOUR MULTITILEENTITIES TO MY OWN REGISTRY!!! Create your own instance! */
 	public static MultiTileEntityRegistry getRegistryByUnRemappedID(int id) {
 		return UnRemapped_Registries.get(id);
 	}

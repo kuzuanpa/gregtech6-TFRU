@@ -232,7 +232,6 @@ public final class OreDictMaterial implements ITagDataContainer<OreDictMaterial>
 	public boolean mHidden = F;
 	/** If this Material contains the Metallum Aspect. */
 	public boolean mHasMetallum = F;
-	public boolean mGettableInGame = F;
 	/** g/cm^3 of this Material at Room Temperature. 0 Means that it is not determined. */
 	public double mGramPerCubicCentimeter = 1.0;
 	/** The Colors of this Material in its 4 different states. Any change to these 4 final Arrays will be reflected in the Color of the Material at that state. */
@@ -1489,8 +1488,4 @@ public final class OreDictMaterial implements ITagDataContainer<OreDictMaterial>
 	}
 	@SuppressWarnings({"rawtypes", "unchecked"})
 	public final ICondition<ITagDataContainer> NOT = new ICondition.Not(this);
-
-	public boolean isGettableInGame(){
-		return mGettableInGame;
-	}
 }
