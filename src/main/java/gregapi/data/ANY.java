@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2024 GregTech-6 Team
+ * Copyright (c) 2025 GregTech-6 Team
  *
  * This file is part of GregTech.
  *
@@ -43,6 +43,7 @@ public class ANY {
 	Jasper          = any("Any Jasper"          ),
 	TigerEye        = any("Any Tiger Eye"       ),
 	Aventurine      = any("Any Aventurine"      ),
+	Amber           = any("Any Amber"           ),
 	Fluorite        = any("Any Fluorite"        ), CaF2 = Fluorite,
 	Phosphorus      = any("Any Phosphorus"      ),
 	Blaze           = any("Any Blaze"           ),
@@ -100,6 +101,7 @@ public class ANY {
 		Jasper          .stealLooks(MT.Jasper         ).steal(MT.Jasper         ).setLocal("Jasper"                                                     ).put(CRYSTAL, VALUABLE                                      );
 		TigerEye        .stealLooks(MT.TigerEyeYellow ).steal(MT.TigerEyeYellow ).setLocal("Tiger Eye"                                                  ).put(CRYSTAL, VALUABLE                                      );
 		Aventurine      .stealLooks(MT.AventurineGreen).steal(MT.AventurineGreen).setLocal("Aventurine"                                                 ).put(CRYSTAL, VALUABLE                                      );
+		Amber           .stealLooks(MT.Amber          ).steal(MT.Amber          ).setLocal("Amber"                                                      ).put(CRYSTAL, VALUABLE                                      ).addReRegistrationToThis(MT.AmberGolden, MT.AmberDominican);
 		Fluorite        .stealLooks(MT.CaF2           ).steal(MT.CaF2           ).setLocal("Fluorite"           ).setAllToTheOutputOf(MT.CaF2           ).put(CRYSTAL, MORTAR, MELTING, BRITTLE, ACID                );
 		Phosphorus      .stealLooks(MT.Phosphorus     ).steal(MT.Phosphorus     ).setLocal("Phosphorus"         ).setAllToTheOutputOf(MT.Phosphorus     ).put(CRYSTAL, MORTAR, MELTING, BRITTLE, FLAMMABLE, EXPLOSIVE).addReRegistrationToThis(MT.Phosphorus, MT.PhosphorusBlue, MT.PhosphorusRed, MT.PhosphorusWhite);
 		Blaze           .stealLooks(MT.Blaze          ).steal(MT.Blaze          ).setLocal("Blaze"                                                      ).put(GLOWING, MAGICAL, BRITTLE, MORTAR                      );
@@ -132,7 +134,7 @@ public class ANY {
 		Hexorium        .stealLooks(MT.HexoriumWhite  ).steal(MT.HexoriumWhite                                                                          ).put(DONT_SHOW_THIS_COMPONENT                               );
 		WoodDefault     .stealLooks(MT.WOODS.Spruce   ).steal(MT.Wood           ).setLocal("Normal Wood"        ).setAllToTheOutputOf(MT.Wood           ).put(WOOD, FLAMMABLE                                        ).addReRegistrationToThis(MT.Wood, MT.Peanutwood).setFurnaceBurnTime(TICKS_PER_SMELT/2);
 		WoodNormal      .stealLooks(MT.WOODS.Spruce   ).steal(MT.Wood           ).setLocal("Normal Wood"        ).setAllToTheOutputOf(MT.Wood           ).put(WOOD, FLAMMABLE                                        ).addReRegistrationToThis(ANY.WoodDefault.mToThis.toArray(ZL_MT)).addReRegistrationToThis(MT.WoodRubber, MT.Weedwood, MT.Skyroot, MT.Bamboo).setFurnaceBurnTime(TICKS_PER_SMELT/2);
-		WoodMagical     .stealLooks(MT.Greatwood      ).steal(MT.Wood           ).setLocal("Magical Wood"       ).setAllToTheOutputOf(MT.Wood           ).put(WOOD, FLAMMABLE, MAGICAL                               ).addReRegistrationToThis(MT.Greatwood, MT.Silverwood, MT.Livingwood, MT.Dreamwood, MT.Shimmerwood, MT.WOODS.Magic, MT.WOODS.Tainted, MT.WOODS.Rainbowood).setFurnaceBurnTime(TICKS_PER_SMELT*2L);
+		WoodMagical     .stealLooks(MT.Greatwood      ).steal(MT.Wood           ).setLocal("Magical Wood"       ).setAllToTheOutputOf(MT.Wood           ).put(WOOD, FLAMMABLE, MAGICAL                               ).addReRegistrationToThis(MT.Greatwood, MT.Silverwood, MT.Livingwood, MT.Dreamwood, MT.Shimmerwood, MT.WOODS.Magic, MT.WOODS.Tainted, MT.WOODS.Witchwood, MT.WOODS.Rainbowood).setFurnaceBurnTime(TICKS_PER_SMELT*2L);
 		WoodTreated     .stealLooks(MT.WoodTreated    ).steal(MT.Wood           ).setLocal("Treated Wood"       ).setAllToTheOutputOf(MT.Wood           ).put(WOOD, FLAMMABLE                                        ).addReRegistrationToThis(MT.WoodTreated, MT.WoodPolished).setFurnaceBurnTime(TICKS_PER_SMELT/2);
 		WoodUntreated   .stealLooks(MT.WOODS.Spruce   ).steal(MT.Wood           ).setLocal("Untreated Wood"     ).setAllToTheOutputOf(MT.Wood           ).put(WOOD, FLAMMABLE                                        ).addReRegistrationToThis(ANY.WoodMagical.mToThis.toArray(ZL_MT)).addReRegistrationToThis(ANY.WoodNormal.mToThis.toArray(ZL_MT)).setFurnaceBurnTime(TICKS_PER_SMELT/2);
 		Wood            .stealLooks(MT.WOODS.Spruce   ).steal(MT.Wood           ).setLocal("Wood"               ).setAllToTheOutputOf(MT.Wood           ).put(WOOD, FLAMMABLE                                        ).setFurnaceBurnTime(TICKS_PER_SMELT/2);

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2023 GregTech-6 Team
+ * Copyright (c) 2025 GregTech-6 Team
  *
  * This file is part of GregTech.
  *
@@ -29,15 +29,17 @@ import gregapi.api.Abstract_Mod;
 import gregapi.api.Abstract_Proxy;
 import gregapi.data.*;
 import gregapi.load.*;
+import gregapi.old.Textures;
 import gregapi.oredict.OreDictItemData;
 import gregapi.oredict.OreDictManager;
 import gregapi.oredict.OreDictMaterial;
 import gregapi.oredict.OreDictPrefix;
+import gregapi.render.IconContainerCopied;
+import gregapi.util.CR;
 import gregapi.util.OM;
 import gregapi.util.ST;
 import gregapi.util.UT;
-import gregapi.wooddict.SaplingEntry;
-import gregapi.wooddict.WoodDictionary;
+import gregapi.wooddict.*;
 import gregapi.worldgen.StoneLayer;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.Item;
@@ -54,7 +56,7 @@ import static gregapi.data.CS.*;
  *
  * This loads after compatible Mods. The regular API loads before all compatible Mods.
  */
-@Mod(modid=ModIDs.GAPI_POST, name="Greg-API-Post", version="GT6-MC1710", dependencies="required-after:"+ModIDs.GAPI+"; after:"+ModIDs.MD8+"; after:"+ModIDs.IC2+"; after:"+ModIDs.IC2C+"; after:"+ModIDs.NC+"; after:"+ModIDs.IHL+"; after:"+ModIDs.FUNK+"; after:"+ModIDs.BAUBLES+"; after:"+ModIDs.HEE+"; after:"+ModIDs.GaSu+"; after:"+ModIDs.GaNe+"; after:"+ModIDs.GaEn+"; after:"+ModIDs.WdSt+"; after:"+ModIDs.CrGu+"; after:"+ModIDs.COFH_API+"; after:"+ModIDs.COFH_API_ENERGY+"; after:"+ModIDs.COFH_CORE+"; after:"+ModIDs.CC+"; after:"+ModIDs.OC+"; after:"+ModIDs.HEX+"; after:"+ModIDs.DE+"; after:"+ModIDs.AV+"; after:"+ModIDs.FR+"; after:"+ModIDs.FRMB+"; after:"+ModIDs.BINNIE+"; after:"+ModIDs.BINNIE_BEE+"; after:"+ModIDs.BINNIE_TREE+"; after:"+ModIDs.BINNIE_GENETICS+"; after:"+ModIDs.BINNIE_BOTANY+"; after:"+ModIDs.IE+"; after:"+ModIDs.UB+"; after:"+ModIDs.COG+"; after:"+ModIDs.PFAA+"; after:"+ModIDs.MIN+"; after:"+ModIDs.RH+"; after:"+ModIDs.CANDY+"; after:"+ModIDs.ABYSSAL+"; after:"+ModIDs.SOULFOREST+"; after:"+ModIDs.ARS+"; after:"+ModIDs.TC+"; after:"+ModIDs.TCTE+"; after:"+ModIDs.TCFM+"; after:"+ModIDs.BOTA+"; after:"+ModIDs.ALF+"; after:"+ModIDs.WTCH+"; after:"+ModIDs.HOWL+"; after:"+ModIDs.MoCr+"; after:"+ModIDs.WiMo+"; after:"+ModIDs.Birb+"; after:"+ModIDs.ChocoCraft+"; after:"+ModIDs.GoG+"; after:"+ModIDs.DRPG+"; after:"+ModIDs.LycM+"; after:"+ModIDs.LycM_Arctic+"; after:"+ModIDs.LycM_Demon+"; after:"+ModIDs.LycM_Desert+"; after:"+ModIDs.LycM_Forest+"; after:"+ModIDs.LycM_Fresh+"; after:"+ModIDs.LycM_Inferno+"; after:"+ModIDs.LycM_Jungle+"; after:"+ModIDs.LycM_Mountain+"; after:"+ModIDs.LycM_Plains+"; after:"+ModIDs.LycM_Salt+"; after:"+ModIDs.LycM_Shadow+"; after:"+ModIDs.LycM_Swamp+"; after:"+ModIDs.RC+"; after:"+ModIDs.BP+"; after:"+ModIDs.PR+"; after:"+ModIDs.PR_EXPANSION+"; after:"+ModIDs.PR_INTEGRATION+"; after:"+ModIDs.PR_TRANSMISSION+"; after:"+ModIDs.PR_TRANSPORT+"; after:"+ModIDs.PR_EXPLORATION+"; after:"+ModIDs.PR_COMPATIBILITY+"; after:"+ModIDs.PR_FABRICATION+"; after:"+ModIDs.PR_ILLUMINATION+"; after:"+ModIDs.PE+"; after:"+ModIDs.AE+"; after:"+ModIDs.MO+"; after:"+ModIDs.TE_FOUNDATION+"; after:"+ModIDs.TE_DYNAMICS+"; after:"+ModIDs.TE_DRILLS+"; after:"+ModIDs.TE+"; after:"+ModIDs.ZTONES+"; after:"+ModIDs.CHSL+"; after:"+ModIDs.NePl+"; after:"+ModIDs.NeLi+"; after:"+ModIDs.EnLi+"; after:"+ModIDs.EtFu+"; after:"+ModIDs.BB+"; after:"+ModIDs.DYNAMIC_TREES+"; after:"+ModIDs.BbLC+"; after:"+ModIDs.CARP+"; after:"+ModIDs.BETTER_RECORDS+"; after:"+ModIDs.TF+"; after:"+ModIDs.ERE+"; after:"+ModIDs.MFR+"; after:"+ModIDs.FSP+"; after:"+ModIDs.SC2+"; after:"+ModIDs.PnC+"; after:"+ModIDs.ExU+"; after:"+ModIDs.ExS+"; after:"+ModIDs.EIO+"; after:"+ModIDs.RT+"; after:"+ModIDs.AA+"; after:"+ModIDs.TreeCap+"; after:"+ModIDs.HaC+"; after:"+ModIDs.CookBook+"; after:"+ModIDs.APC+"; after:"+ModIDs.ENVM+"; after:"+ModIDs.MaCr+"; after:"+ModIDs.BC_TRANSPORT+"; after:"+ModIDs.BC_SILICON+"; after:"+ModIDs.BC_FACTORY+"; after:"+ModIDs.BC_ENERGY+"; after:"+ModIDs.BC_ROBOTICS+"; after:"+ModIDs.BC+"; after:"+ModIDs.BC_BUILDERS+"; after:"+ModIDs.MgC+"; after:"+ModIDs.BR+"; after:"+ModIDs.HBM+"; after:"+ModIDs.ELN+"; after:"+ModIDs.DRGN+"; after:"+ModIDs.ElC+"; after:"+ModIDs.CrC+"; after:"+ModIDs.ReC+"; after:"+ModIDs.RoC+"; after:"+ModIDs.Mek+"; after:"+ModIDs.Mek_Tools+"; after:"+ModIDs.Mek_Generators+"; after:"+ModIDs.GC+"; after:"+ModIDs.GC_PLANETS+"; after:"+ModIDs.GC_GALAXYSPACE+"; after:"+ModIDs.VULPES+"; after:"+ModIDs.GC_ADV_ROCKETRY+"; after:"+ModIDs.GC_EXTRAPLANETS+"; after:"+ModIDs.BTL+"; after:"+ModIDs.AETHER+"; after:"+ModIDs.TROPIC+"; after:"+ModIDs.ATUM+"; after:"+ModIDs.EB+"; after:"+ModIDs.EBXL+"; after:"+ModIDs.BoP+"; after:"+ModIDs.HiL+"; after:"+ModIDs.ATG+"; after:"+ModIDs.RTG+"; after:"+ModIDs.RWG+"; after:"+ModIDs.CW2+"; after:"+ModIDs.A97+"; after:"+ModIDs.A97_MINING+"; after:"+ModIDs.MYST+"; after:"+ModIDs.WARPBOOK+"; after:"+ModIDs.LOSTBOOKS+"; after:"+ModIDs.LOOTBAGS+"; after:"+ModIDs.EUREKA+"; after:"+ModIDs.ENCHIRIDION+"; after:"+ModIDs.ENCHIRIDION2+"; after:"+ModIDs.SmAc+"; after:"+ModIDs.HQM+"; after:"+ModIDs.SD+"; after:"+ModIDs.BTRS+"; after:"+ModIDs.JABBA+"; after:"+ModIDs.MaCu+"; after:"+ModIDs.PdC+"; after:"+ModIDs.Bamboo+"; after:"+ModIDs.PMP+"; after:"+ModIDs.Fossil+"; after:"+ModIDs.GrC+"; after:"+ModIDs.GrC_Apples+"; after:"+ModIDs.GrC_Bamboo+"; after:"+ModIDs.GrC_Bees+"; after:"+ModIDs.GrC_Cellar+"; after:"+ModIDs.GrC_Fish+"; after:"+ModIDs.GrC_Grapes+"; after:"+ModIDs.GrC_Hops+"; after:"+ModIDs.GrC_Milk+"; after:"+ModIDs.GrC_Rice+"; after:"+ModIDs.BG2+"; after:"+ModIDs.BWM+"; after:"+ModIDs.OMT+"; after:"+ModIDs.TG+"; after:"+ModIDs.FM+"; after:"+ModIDs.FZ+"; after:"+ModIDs.MNTL+"; after:"+ModIDs.OB+"; after:"+ModIDs.PA+"; after:"+ModIDs.TiC+"; after:"+ModIDs.MF2+"; after:"+ModIDs.TRANSLOCATOR+"; after:"+ModIDs.WR_CBE_C+"; after:"+ModIDs.WR_CBE_A+"; after:"+ModIDs.WR_CBE_L+"; after:"+ModIDs.VOLTZ+"; after:"+ModIDs.MFFS+"; after:"+ModIDs.ICBM+"; after:"+ModIDs.ATSCI+"; after:inventorytweaks; after:ironbackpacks; after:journeymap; after:LogisticsPipes; after:LunatriusCore; after:NEIAddons; after:NEIAddons|Developer; after:NEIAddons|AppEng; after:NEIAddons|Botany; after:NEIAddons|Forestry; after:NEIAddons|CraftingTables; after:NEIAddons|ExNihilo; after:neiintegration; after:openglasses; after:simplyjetpacks; after:Stackie; after:StevesCarts; after:TiCTooltips; after:worldedit; after:McMultipart")
+@Mod(modid=ModIDs.GAPI_POST, name="Greg-API-Post", version="GT6-MC1710", dependencies="required-after:"+ModIDs.GAPI+"; after:"+ModIDs.MD8+"; after:"+ModIDs.IC2+"; after:"+ModIDs.IC2C+"; after:"+ModIDs.NC+"; after:"+ModIDs.IHL+"; after:"+ModIDs.FUNK+"; after:"+ModIDs.BAUBLES+"; after:"+ModIDs.HEE+"; after:"+ModIDs.GaSu+"; after:"+ModIDs.GaNe+"; after:"+ModIDs.GaEn+"; after:"+ModIDs.WdSt+"; after:"+ModIDs.CrGu+"; after:"+ModIDs.COFH_API+"; after:"+ModIDs.COFH_API_ENERGY+"; after:"+ModIDs.COFH_CORE+"; after:"+ModIDs.CC+"; after:"+ModIDs.OC+"; after:"+ModIDs.HEX+"; after:"+ModIDs.DE+"; after:"+ModIDs.AV+"; after:"+ModIDs.FR+"; after:"+ModIDs.FRMB+"; after:"+ModIDs.BINNIE+"; after:"+ModIDs.BINNIE_BEE+"; after:"+ModIDs.BINNIE_TREE+"; after:"+ModIDs.BINNIE_GENETICS+"; after:"+ModIDs.BINNIE_BOTANY+"; after:"+ModIDs.IE+"; after:"+ModIDs.UB+"; after:"+ModIDs.COG+"; after:"+ModIDs.PFAA+"; after:"+ModIDs.MIN+"; after:"+ModIDs.RH+"; after:"+ModIDs.CANDY+"; after:"+ModIDs.ABYSSAL+"; after:"+ModIDs.SOULFOREST+"; after:"+ModIDs.ARS+"; after:"+ModIDs.TC+"; after:"+ModIDs.TCTE+"; after:"+ModIDs.TCFM+"; after:"+ModIDs.BOTA+"; after:"+ModIDs.ALF+"; after:"+ModIDs.WTCH+"; after:"+ModIDs.HOWL+"; after:"+ModIDs.MoCr+"; after:"+ModIDs.WiMo+"; after:"+ModIDs.Birb+"; after:"+ModIDs.ChocoCraft+"; after:"+ModIDs.GoG+"; after:"+ModIDs.DRPG+"; after:"+ModIDs.LycM+"; after:"+ModIDs.LycM_Arctic+"; after:"+ModIDs.LycM_Demon+"; after:"+ModIDs.LycM_Desert+"; after:"+ModIDs.LycM_Forest+"; after:"+ModIDs.LycM_Fresh+"; after:"+ModIDs.LycM_Inferno+"; after:"+ModIDs.LycM_Jungle+"; after:"+ModIDs.LycM_Mountain+"; after:"+ModIDs.LycM_Plains+"; after:"+ModIDs.LycM_Salt+"; after:"+ModIDs.LycM_Shadow+"; after:"+ModIDs.LycM_Swamp+"; after:"+ModIDs.RC+"; after:"+ModIDs.BP+"; after:"+ModIDs.PR+"; after:"+ModIDs.PR_EXPANSION+"; after:"+ModIDs.PR_INTEGRATION+"; after:"+ModIDs.PR_TRANSMISSION+"; after:"+ModIDs.PR_TRANSPORT+"; after:"+ModIDs.PR_EXPLORATION+"; after:"+ModIDs.PR_COMPATIBILITY+"; after:"+ModIDs.PR_FABRICATION+"; after:"+ModIDs.PR_ILLUMINATION+"; after:"+ModIDs.PE+"; after:"+ModIDs.AE+"; after:"+ModIDs.MO+"; after:"+ModIDs.TE_FOUNDATION+"; after:"+ModIDs.TE_DYNAMICS+"; after:"+ModIDs.TE_DRILLS+"; after:"+ModIDs.TE+"; after:"+ModIDs.ZTONES+"; after:"+ModIDs.CHSL+"; after:"+ModIDs.NePl+"; after:"+ModIDs.NeLi+"; after:"+ModIDs.EnLi+"; after:"+ModIDs.EtFu+"; after:"+ModIDs.BB+"; after:"+ModIDs.DYNAMIC_TREES+"; after:"+ModIDs.BbLC+"; after:"+ModIDs.CARP+"; after:"+ModIDs.BETTER_RECORDS+"; after:"+ModIDs.TF+"; after:"+ModIDs.ERE+"; after:"+ModIDs.MFR+"; after:"+ModIDs.FSP+"; after:"+ModIDs.SC2+"; after:"+ModIDs.PnC+"; after:"+ModIDs.ExU+"; after:"+ModIDs.ExS+"; after:"+ModIDs.EIO+"; after:"+ModIDs.RT+"; after:"+ModIDs.AA+"; after:"+ModIDs.TreeCap+"; after:"+ModIDs.HaC+"; after:"+ModIDs.CookBook+"; after:"+ModIDs.APC+"; after:"+ModIDs.ENVM+"; after:"+ModIDs.MaCr+"; after:"+ModIDs.BC_TRANSPORT+"; after:"+ModIDs.BC_SILICON+"; after:"+ModIDs.BC_FACTORY+"; after:"+ModIDs.BC_ENERGY+"; after:"+ModIDs.BC_ROBOTICS+"; after:"+ModIDs.BC+"; after:"+ModIDs.BC_BUILDERS+"; after:"+ModIDs.MgC+"; after:"+ModIDs.BR+"; after:"+ModIDs.HBM+"; after:"+ModIDs.ELN+"; after:"+ModIDs.DRGN+"; after:"+ModIDs.ElC+"; after:"+ModIDs.CrC+"; after:"+ModIDs.ReC+"; after:"+ModIDs.RoC+"; after:"+ModIDs.Mek+"; after:"+ModIDs.Mek_Tools+"; after:"+ModIDs.Mek_Generators+"; after:"+ModIDs.GC+"; after:"+ModIDs.GC_PLANETS+"; after:"+ModIDs.GC_GALAXYSPACE+"; after:"+ModIDs.VULPES+"; after:"+ModIDs.GC_ADV_ROCKETRY+"; after:"+ModIDs.GC_EXTRAPLANETS+"; after:"+ModIDs.BTL+"; after:"+ModIDs.AETHER+"; after:"+ModIDs.AETHEL+"; after:"+ModIDs.TROPIC+"; after:"+ModIDs.ATUM+"; after:"+ModIDs.EB+"; after:"+ModIDs.EBXL+"; after:"+ModIDs.BoP+"; after:"+ModIDs.HiL+"; after:"+ModIDs.ATG+"; after:"+ModIDs.RTG+"; after:"+ModIDs.RWG+"; after:"+ModIDs.CW2+"; after:"+ModIDs.A97+"; after:"+ModIDs.A97_MINING+"; after:"+ModIDs.MYST+"; after:"+ModIDs.WARPBOOK+"; after:"+ModIDs.LOSTBOOKS+"; after:"+ModIDs.LOOTBAGS+"; after:"+ModIDs.EUREKA+"; after:"+ModIDs.ENCHIRIDION+"; after:"+ModIDs.ENCHIRIDION2+"; after:"+ModIDs.SmAc+"; after:"+ModIDs.HQM+"; after:"+ModIDs.SD+"; after:"+ModIDs.BTRS+"; after:"+ModIDs.JABBA+"; after:"+ModIDs.MaCu+"; after:"+ModIDs.PdC+"; after:"+ModIDs.Bamboo+"; after:"+ModIDs.PMP+"; after:"+ModIDs.Fossil+"; after:"+ModIDs.GrC+"; after:"+ModIDs.GrC_Apples+"; after:"+ModIDs.GrC_Bamboo+"; after:"+ModIDs.GrC_Bees+"; after:"+ModIDs.GrC_Cellar+"; after:"+ModIDs.GrC_Fish+"; after:"+ModIDs.GrC_Grapes+"; after:"+ModIDs.GrC_Hops+"; after:"+ModIDs.GrC_Milk+"; after:"+ModIDs.GrC_Rice+"; after:"+ModIDs.BG2+"; after:"+ModIDs.BWM+"; after:"+ModIDs.OMT+"; after:"+ModIDs.TG+"; after:"+ModIDs.FM+"; after:"+ModIDs.FZ+"; after:"+ModIDs.MNTL+"; after:"+ModIDs.OB+"; after:"+ModIDs.PA+"; after:"+ModIDs.TiC+"; after:"+ModIDs.MF2+"; after:"+ModIDs.TRANSLOCATOR+"; after:"+ModIDs.WR_CBE_C+"; after:"+ModIDs.WR_CBE_A+"; after:"+ModIDs.WR_CBE_L+"; after:"+ModIDs.VOLTZ+"; after:"+ModIDs.MFFS+"; after:"+ModIDs.ICBM+"; after:"+ModIDs.ATSCI+"; after:inventorytweaks; after:ironbackpacks; after:journeymap; after:LogisticsPipes; after:LunatriusCore; after:NEIAddons; after:NEIAddons|Developer; after:NEIAddons|AppEng; after:NEIAddons|Botany; after:NEIAddons|Forestry; after:NEIAddons|CraftingTables; after:NEIAddons|ExNihilo; after:neiintegration; after:openglasses; after:simplyjetpacks; after:Stackie; after:StevesCarts; after:TiCTooltips; after:worldedit; after:McMultipart")
 public class GT_API_Post extends Abstract_Mod {
 	public GT_API_Post() {GAPI_POST = this;}
 	
@@ -357,7 +359,7 @@ public class GT_API_Post extends Abstract_Mod {
 			
 			OreDictManager.INSTANCE.setTarget(OP.oreVanillastone, MT.Ruby        , MD.PR_EXPLORATION, "projectred.exploration.ore", 0);
 			OreDictManager.INSTANCE.setTarget(OP.oreVanillastone, MT.BlueSapphire, MD.PR_EXPLORATION, "projectred.exploration.ore", 1);
-			OreDictManager.INSTANCE.setTarget(OP.oreVanillastone, MT.Olivine     , MD.PR_EXPLORATION, "projectred.exploration.ore", 2);
+			OreDictManager.INSTANCE.setTarget(OP.oreVanillastone, MT.Peridot     , MD.PR_EXPLORATION, "projectred.exploration.ore", 2);
 			OreDictManager.INSTANCE.setTarget(OP.oreVanillastone, MT.Cu          , MD.PR_EXPLORATION, "projectred.exploration.ore", 3);
 			OreDictManager.INSTANCE.setTarget(OP.oreVanillastone, MT.Sn          , MD.PR_EXPLORATION, "projectred.exploration.ore", 4);
 			OreDictManager.INSTANCE.setTarget(OP.oreVanillastone, MT.Ag          , MD.PR_EXPLORATION, "projectred.exploration.ore", 5);
@@ -404,8 +406,32 @@ public class GT_API_Post extends Abstract_Mod {
 		}
 		
 		// Wow, Ars Magica too is on this List, at least for its Blocks...
-		IL.ARS_Cerublossom.set(ST.make(MD.ARS, "blueOrchid", 1, 0), null, "flowerCerublossom");
-		IL.ARS_DesertNova .set(ST.make(MD.ARS, "desertNova", 1, 0), null, "flowerDesertNova");
+		if (MD.ARS.mLoaded) {
+			OreDictManager.INSTANCE.setTarget(OP.oreVanillastone, MT.Vinteum          , MD.ARS, "vinteumOre", 0);
+			OreDictManager.INSTANCE.setTarget(OP.oreVanillastone, MT.Chimerite        , MD.ARS, "vinteumOre", 1);
+			OreDictManager.INSTANCE.setTarget(OP.oreVanillastone, MT.BlueTopaz        , MD.ARS, "vinteumOre", 2);
+			OreDictManager.INSTANCE.setTarget(OP.ore            , MT.Sunstone         , MD.ARS, "vinteumOre", 3);
+			OreDictManager.INSTANCE.setTarget(OP.oreMoon        , MT.Moonstone        , MD.ARS, "vinteumOre", 4);
+			OreDictManager.INSTANCE.setTarget(OP.blockGem       , MT.Moonstone        , MD.ARS, "vinteumOre", 5);
+			OreDictManager.INSTANCE.setTarget(OP.blockDust      , MT.Vinteum          , MD.ARS, "vinteumOre", 6);
+			OreDictManager.INSTANCE.setTarget(OP.blockGem       , MT.BlueTopaz        , MD.ARS, "vinteumOre", 7);
+			OreDictManager.INSTANCE.setTarget(OP.blockGem       , MT.Sunstone         , MD.ARS, "vinteumOre", 8);
+			OreDictManager.INSTANCE.setTarget(OP.blockGem       , MT.Chimerite        , MD.ARS, "vinteumOre", 9);
+			OreDictManager.INSTANCE.setTarget(OP.dust           , MT.Vinteum          , MD.ARS, "itemOre", 0);
+			OreDictManager.INSTANCE.setTarget(OP.dust           , MT.ArcaneCompound   , MD.ARS, "itemOre", 1);
+			OreDictManager.INSTANCE.setTarget(OP.dust           , MT.ArcaneAsh        , MD.ARS, "itemOre", 2);
+			OreDictManager.INSTANCE.setTarget(OP.dust           , MT.VinteumPurified  , MD.ARS, "itemOre", 3);
+			OreDictManager.INSTANCE.setTarget(OP.gem            , MT.Chimerite        , MD.ARS, "itemOre", 4);
+			OreDictManager.INSTANCE.setTarget(OP.gem            , MT.BlueTopaz        , MD.ARS, "itemOre", 5);
+			OreDictManager.INSTANCE.setTarget(OP.gem            , MT.Sunstone         , MD.ARS, "itemOre", 6);
+			OreDictManager.INSTANCE.setTarget(OP.gem            , MT.Moonstone        , MD.ARS, "itemOre", 7);
+			
+			IL.ARS_Cerublossom.set(ST.make(MD.ARS, "blueOrchid", 1, 0), null, "flowerCerublossom");
+			IL.ARS_DesertNova .set(ST.make(MD.ARS, "desertNova", 1, 0), null, "flowerDesertNova");
+			
+			new SaplingEntry(ST.make(MD.ARS, "saplingWitchwood", 1, 0), new WoodEntry(ST.make(MD.ARS, "WitchwoodLog", 1, 0), new PlankEntry(ST.make(MD.ARS, "planksWitchwood", 1, 0), ST.make(MD.ARS, "witchwoodSingleSlab", 1, 0), ST.make(MD.ARS, "stairsWitchwood", 1, 0), MT.WOODS.Witchwood, 260), 1, 500), ST.make(MD.ARS, "WitchwoodLeaves", 1, 0));
+			CR.shaped(ST.make(MD.ARS, "planksWitchwood", 1, 0), CR.DEF_NCC, "S", "S", 'S', ST.make(MD.ARS, "witchwoodSingleSlab", 1, 0));
+		}
 		
 		// Cooking for Blockheads is here too!...
 		if (MD.CookBook.mLoaded) {
@@ -430,27 +456,120 @@ public class GT_API_Post extends Abstract_Mod {
 			OM.reg(OD.record, ST.make(MD.BETTER_RECORDS, "urlmultirecord", 1, 0));
 		}
 		
-		// Oh look what Ars Magica 2 does late too...
-		if (MD.ARS.mLoaded) {
-			OreDictManager.INSTANCE.setTarget(OP.oreVanillastone, MT.Vinteum          , MD.ARS, "vinteumOre", 0);
-			OreDictManager.INSTANCE.setTarget(OP.oreVanillastone, MT.Chimerite        , MD.ARS, "vinteumOre", 1);
-			OreDictManager.INSTANCE.setTarget(OP.oreVanillastone, MT.BlueTopaz        , MD.ARS, "vinteumOre", 2);
-			OreDictManager.INSTANCE.setTarget(OP.ore            , MT.Sunstone         , MD.ARS, "vinteumOre", 3);
-			OreDictManager.INSTANCE.setTarget(OP.oreMoon        , MT.Moonstone        , MD.ARS, "vinteumOre", 4);
-			OreDictManager.INSTANCE.setTarget(OP.blockGem       , MT.Moonstone        , MD.ARS, "vinteumOre", 5);
-			OreDictManager.INSTANCE.setTarget(OP.blockDust      , MT.Vinteum          , MD.ARS, "vinteumOre", 6);
-			OreDictManager.INSTANCE.setTarget(OP.blockGem       , MT.BlueTopaz        , MD.ARS, "vinteumOre", 7);
-			OreDictManager.INSTANCE.setTarget(OP.blockGem       , MT.Sunstone         , MD.ARS, "vinteumOre", 8);
-			OreDictManager.INSTANCE.setTarget(OP.blockGem       , MT.Chimerite        , MD.ARS, "vinteumOre", 9);
-			OreDictManager.INSTANCE.setTarget(OP.dust           , MT.Vinteum          , MD.ARS, "itemOre", 0);
-			OreDictManager.INSTANCE.setTarget(OP.dust           , MT.ArcaneCompound   , MD.ARS, "itemOre", 1);
-			OreDictManager.INSTANCE.setTarget(OP.dust           , MT.ArcaneAsh        , MD.ARS, "itemOre", 2);
-			OreDictManager.INSTANCE.setTarget(OP.dust           , MT.VinteumPurified  , MD.ARS, "itemOre", 3);
-			OreDictManager.INSTANCE.setTarget(OP.gem            , MT.Chimerite        , MD.ARS, "itemOre", 4);
-			OreDictManager.INSTANCE.setTarget(OP.gem            , MT.BlueTopaz        , MD.ARS, "itemOre", 5);
-			OreDictManager.INSTANCE.setTarget(OP.gem            , MT.Sunstone         , MD.ARS, "itemOre", 6);
-			OreDictManager.INSTANCE.setTarget(OP.gem            , MT.Moonstone        , MD.ARS, "itemOre", 7);
+		// Aether Legacy is fucking this up as well, and the best part is, it once WAS working fine, but they fucking decided to break it!
+		if (MD.AETHEL.mLoaded) {
+			OreDictManager.INSTANCE.setTarget(OP.oreHolystone   , MT.Zanite                 , MD.AETHEL, "zanite_ore"     , 0);
+			OreDictManager.INSTANCE.setTarget(OP.oreHolystone   , MT.Ambrosium              , MD.AETHEL, "ambrosium_ore"  , 0);
+			OreDictManager.INSTANCE.setTarget(OP.oreHolystone   , MT.Gravitite              , MD.AETHEL, "gravitite_ore"  , 0);
+			OreDictManager.INSTANCE.setTarget(OP.gem            , MT.Zanite                 , MD.AETHEL, "zanite_gemstone", 0);
+			OreDictManager.INSTANCE.setTarget(OP.gem            , MT.Ambrosium              , MD.AETHEL, "ambrosium_shard", 0);
+			OreDictManager.INSTANCE.setTarget(OP.gem            , MT.AmberGolden            , MD.AETHEL, "golden_amber"   , 0);
+			OreDictManager.INSTANCE.setTarget(OP.blockGem       , MT.Zanite                 , MD.AETHEL, "zanite_block"   , 0);
+			OreDictManager.INSTANCE.setTarget(OP.stick          , MT.Skyroot                , MD.AETHEL, "skyroot_stick"  , 0);
+			OreDictManager.INSTANCE.setTarget(OP.ring           , MT.Fe                     , MD.AETHEL, "iron_ring"      , 0);
+			OreDictManager.INSTANCE.setTarget(OP.ring           , MT.Au                     , MD.AETHEL, "golden_ring"    , 0);
+			OreDictManager.INSTANCE.setTarget(OP.ring           , MT.Zanite                 , MD.AETHEL, "zanite_ring"    , 0);
+			// Just to force the unification Target to be this Ring instead.
+			OreDictManager.INSTANCE.setTarget(OP.ring           , MT.Au                     , MD.TC, "ItemBaubleBlanks"  ,  1);
+			
+			OM.reg("cropBerry"                          , ST.make(MD.AETHEL, "enchanted_blueberry", 1, 0));
+			OM.reg("cropBlueberry"                      , ST.make(MD.AETHEL, "blue_berry", 1, 0));
+			OM.reg(OD.itemEgg                           , ST.make(MD.AETHEL, "moa_egg", 1, W));
+			OM.reg(OD.itemFeather                       , ST.make(MD.AETHEL, "golden_feather", 1, W));
+			OM.reg(OD.slimeball                         , ST.make(MD.AETHEL, "swet_ball", 1, 0));
+			OM.reg(OD.slimeballSwet                     , ST.make(MD.AETHEL, "swet_ball", 1, 0));
+			
+			OM.reg(OP.stone, MT.STONES.Holystone        , ST.make(MD.AETHEL, "holystone"      , 1, 0));
+			OM.reg(OP.stone, MT.STONES.Holystone        , ST.make(MD.AETHEL, "holystone"      , 1, 1));
+			OM.reg(OP.stone, MT.STONES.Holystone        , ST.make(MD.AETHEL, "holystone"      , 1, 2));
+			OM.reg(OP.stone, MT.STONES.Holystone        , ST.make(MD.AETHEL, "holystone"      , 1, 3));
+			OM.reg(OP.stone, MT.STONES.Holystone        , ST.make(MD.AETHEL, "holystone_brick", 1, 0));
+			OM.reg(OP.stone, MT.STONES.Holystone        , ST.make(MD.AETHEL, "mossy_holystone", 1, 0));
+			
+			BlocksGT.drillableDynamite.add(ST.block(MD.AETHEL, "aether_dirt"           , null));
+			BlocksGT.drillableDynamite.add(ST.block(MD.AETHEL, "aether_grass"          , null));
+			BlocksGT.drillableDynamite.add(ST.block(MD.AETHEL, "enchanted_aether_grass", null));
+			BlocksGT.harvestableSpade.add(ST.block(MD.AETHEL, "aether_dirt"            , null));
+			BlocksGT.harvestableSpade.add(ST.block(MD.AETHEL, "aether_grass"           , null));
+			BlocksGT.harvestableSpade.add(ST.block(MD.AETHEL, "enchanted_aether_grass" , null));
+			BlocksGT.plantableGreens.add(ST.block(MD.AETHEL, "aether_grass"            , null));
+			BlocksGT.plantableGreens.add(ST.block(MD.AETHEL, "aether_dirt"             , null));
+			BlocksGT.plantableGreens.add(ST.block(MD.AETHEL, "enchanted_aether_grass"  , null));
+			BlocksGT.plantableGrass.add(ST.block(MD.AETHEL, "aether_grass"             , null));
+			BlocksGT.plantableGrass.add(ST.block(MD.AETHEL, "enchanted_aether_grass"   , null));
+			BlocksGT.plantableTrees.add(ST.block(MD.AETHEL, "aether_grass"             , null));
+			BlocksGT.plantableTrees.add(ST.block(MD.AETHEL, "enchanted_aether_grass"   , null));
+			BlocksGT.breakableGlass.add(ST.block(MD.AETHEL, "quicksoil_glass"          , null));
+			
+			OM.data(MD.AETHEL, "skyroot_fence"                  , 1,   W, MT.Skyroot            ,  U * 1);
+			OM.data(MD.AETHEL, "skyroot_fence_gate"             , 1,   W, MT.Skyroot            ,  U * 4);
+			OM.data(MD.AETHEL, "skyroot_bed_item"               , 1,   W, MT.Skyroot            ,  U * 3);
+			OM.data(MD.AETHEL, "skyroot_bookshelf"              , 1,   W, MT.Skyroot            ,  U * 6, MT.Paper, U * 9);
+			OM.dat2(MD.AETHEL, "skyroot_sword"                  , 1     , MT.Skyroot            ,  OP.toolHeadSword  .mAmount + U2);
+			OM.dat2(MD.AETHEL, "skyroot_pickaxe"                , 1     , MT.Skyroot            ,  OP.toolHeadPickaxe.mAmount + U );
+			OM.dat2(MD.AETHEL, "skyroot_shovel"                 , 1     , MT.Skyroot            ,  OP.toolHeadShovel .mAmount + U );
+			OM.dat2(MD.AETHEL, "skyroot_axe"                    , 1     , MT.Skyroot            ,  OP.toolHeadAxe    .mAmount + U );
+			OM.dat2(MD.AETHEL, "holystone_sword"                , 1     , MT.STONES.Holystone   ,  OP.toolHeadSword  .mAmount, MT.Skyroot, U2);
+			OM.dat2(MD.AETHEL, "holystone_pickaxe"              , 1     , MT.STONES.Holystone   ,  OP.toolHeadPickaxe.mAmount, MT.Skyroot, U );
+			OM.dat2(MD.AETHEL, "holystone_shovel"               , 1     , MT.STONES.Holystone   ,  OP.toolHeadShovel .mAmount, MT.Skyroot, U );
+			OM.dat2(MD.AETHEL, "holystone_axe"                  , 1     , MT.STONES.Holystone   ,  OP.toolHeadAxe    .mAmount, MT.Skyroot, U );
+			OM.dat2(MD.AETHEL, "zanite_sword"                   , 1     , MT.Zanite             ,  OP.toolHeadSword  .mAmount, MT.Skyroot, U2);
+			OM.dat2(MD.AETHEL, "zanite_pickaxe"                 , 1     , MT.Zanite             ,  OP.toolHeadPickaxe.mAmount, MT.Skyroot, U );
+			OM.dat2(MD.AETHEL, "zanite_shovel"                  , 1     , MT.Zanite             ,  OP.toolHeadShovel .mAmount, MT.Skyroot, U );
+			OM.dat2(MD.AETHEL, "zanite_axe"                     , 1     , MT.Zanite             ,  OP.toolHeadAxe    .mAmount, MT.Skyroot, U );
+			OM.dat2(MD.AETHEL, "zanite_helmet"                  , 1     , MT.Zanite             ,  U * 5);
+			OM.dat2(MD.AETHEL, "zanite_chestplate"              , 1     , MT.Zanite             ,  U * 8);
+			OM.dat2(MD.AETHEL, "zanite_leggings"                , 1     , MT.Zanite             ,  U * 7);
+			OM.dat2(MD.AETHEL, "zanite_boots"                   , 1     , MT.Zanite             ,  U * 4);
+			
+			IL.AETHER_Skyroot_Planks                .set(ST.make(MD.AETHEL, "skyroot_planks"                    , 1, 0), new OreDictItemData(MT.Skyroot, U), OD.plankSkyroot);
+			IL.AETHER_Skyroot_Log                   .set(ST.make(MD.AETHEL, "skyroot_log"                       , 1, 0), new OreDictItemData(MT.Skyroot, U*8, MT.Bark, U));
+			IL.AETHER_Skyroot_Log_Gold              .set(ST.make(MD.AETHEL, "golden_oak_log"                    , 1, 2), new OreDictItemData(MT.Skyroot, U*8, MT.AmberGolden, U)); OM.reg(IL.AETHER_Skyroot_Log.wild(1), OD.logWood);
+			IL.AETHER_Bucket_Empty                  .set(ST.make(MD.AETHEL, "skyroot_bucket"                    , 1, 0), new OreDictItemData(MT.Skyroot, U*3));
+			IL.AETHER_Bucket_Water                  .set(ST.make(MD.AETHEL, "skyroot_bucket"                    , 1, 1), new OreDictItemData(MT.Skyroot, U*3), OD.container1000water);
+			IL.AETHER_Bucket_Poison                 .set(ST.make(MD.AETHEL, "skyroot_bucket"                    , 1, 2), new OreDictItemData(MT.Skyroot, U*3), OD.container1000poison);
+			IL.AETHER_Bucket_Remedy                 .set(ST.make(MD.AETHEL, "skyroot_bucket"                    , 1, 3), new OreDictItemData(MT.Skyroot, U*3));
+			IL.AETHER_Bucket_Milk                   .set(ST.make(MD.AETHEL, "skyroot_bucket"                    , 1, 4), new OreDictItemData(MT.Skyroot, U*3), OD.container1000milk);
+			IL.AETHER_Torch_Ambrosium               .set(ST.make(MD.AETHEL, "ambrosium_torch"                   , 1, 0), new OreDictItemData(MT.Ambrosium, U8, MT.Skyroot, U16), OD.blockTorch);
+			IL.AETHER_Apple                         .set(ST.make(MD.AETHEL, "white_apple"                       , 1, 0), null, "cropAppleWhite");
+			IL.AETHER_Sand                          .set(ST.make(MD.AETHEL, "quicksoil"                         , 1, 0), new OreDictItemData(MT.Sand, U*9), OD.sand);
+			IL.AETHER_Glass                         .set(ST.make(MD.AETHEL, "quicksoil_glass"                   , 1, 0), null, OD.blockGlassColorless);
+			IL.AETHER_Flower_Purple                 .set(ST.make(MD.AETHEL, "purple_flower"                     , 1, 0), null, OD.flower);
+			IL.AETHER_Flower_White                  .set(ST.make(MD.AETHEL, "white_flower"                      , 1, 0), null, OD.flower);
+			IL.AETHER_Dirt                          .set(ST.make(MD.AETHEL, "aether_dirt"                       , 1, 0));
+			IL.AETHER_Grass                         .set(ST.make(MD.AETHEL, "aether_grass"                      , 1, 0));
+			IL.AETHER_Grass_Enchanted               .set(ST.make(MD.AETHEL, "enchanted_aether_grass"            , 1, 0));
+			IL.AETHER_Skyroot_Sapling_Gold          .set(ST.make(MD.AETHEL, "golden_oak_sapling"                , 1, 0), null, OP.treeSapling);
+			IL.AETHER_Skyroot_Sapling_Green         .set(ST.make(MD.AETHEL, "skyroot_sapling"                   , 1, 0), null, OP.treeSapling);
+			IL.AETHER_Skyroot_Leaves_Gold           .set(ST.make(MD.AETHEL, "golden_oak_leaves"                 , 1, 0), null, OP.treeLeaves);
+			IL.AETHER_Skyroot_Leaves_Green          .set(ST.make(MD.AETHEL, "skyroot_leaves"                    , 1, 0), null, OP.treeLeaves);
+			IL.AETHER_Skyroot_Leaves_Blue           .set(ST.make(MD.AETHER, "holiday_leaves"                    , 1, 1), null, OP.treeLeaves);
+			IL.AETHER_Skyroot_Leaves_Dark           .set(ST.make(MD.AETHER, "decorated_holiday_leaves"          , 1, 1), null, OP.treeLeaves);
+			IL.AETHER_Skyroot_Leaves_Purple         .set(ST.make(MD.AETHEL, "crystal_leaves"                    , 1, 0), null, OP.treeLeaves);
+			IL.AETHER_Skyroot_Leaves_Apple          .set(ST.make(MD.AETHEL, "crystal_fruit_leaves"              , 1, 0), null, OP.treeLeaves);
+			
+			if (IL.AETHER_Dirt.exists()) Textures.BlockIcons.DIRTS[1] = new IconContainerCopied(IL.AETHER_Dirt.block(), 0, SIDE_BOTTOM);
+			
+			OM.reg(OD.record, ST.make(MD.AETHEL, "ascending_dawn" , 1, 0));
+			OM.reg(OD.record, ST.make(MD.AETHEL, "welcoming_skies", 1, 0));
+			OM.reg(OD.record, ST.make(MD.AETHEL, "aether_tune"    , 1, 0));
+			OM.reg(OD.record, ST.make(MD.AETHEL, "legacy"         , 1, 0));
+			
+			BeamEntry tSkyrootBeam = new BeamEntry(ST.make(BlocksGT.Beam3, 1, 2), new PlankEntry(IL.AETHER_Skyroot_Planks.get(1), ST.make(MD.AETHEL, "skyroot_slab", 1, 0), ST.make(MD.AETHEL, "skyroot_stairs", 1, 0), MT.Skyroot, 124), 1, 200);
+			new BeamEntry(ST.make(BlocksGT.Beam3FireProof, 1, 2), WoodDictionary.PLANKS.get(IL.AETHER_Skyroot_Planks));
+			CR.shaped(IL.AETHER_Skyroot_Planks.get(1), CR.DEF_NCC, "S", "S", 'S', ST.make(MD.AETHEL, "skyroot_slab", 1, 0));
+			
+			//new SaplingEntry(IL.AETHER_Skyroot_Sapling_Blue     .wild(1), tSkyrootWood, IL.AETHER_Skyroot_Leaves_Blue   .wild(1));
+			//new SaplingEntry(IL.AETHER_Skyroot_Sapling_Dark     .wild(1), tSkyrootWood, IL.AETHER_Skyroot_Leaves_Dark   .wild(1));
+			new SaplingEntry(IL.AETHER_Skyroot_Sapling_Green    .wild(1), new WoodEntry(IL.AETHER_Skyroot_Log     .wild(1), tSkyrootBeam, 1, 300), IL.AETHER_Skyroot_Leaves_Green  .wild(1));
+			new SaplingEntry(IL.AETHER_Skyroot_Sapling_Gold     .wild(1), new WoodEntry(IL.AETHER_Skyroot_Log_Gold.wild(1), tSkyrootBeam, 2, 500, OP.gem.mat(MT.AmberGolden, 1), MT.AmberGolden), IL.AETHER_Skyroot_Leaves_Gold   .wild(1));
+			//new SaplingEntry(IL.AETHER_Skyroot_Sapling_Purple   .wild(1), tSkyrootWood, IL.AETHER_Skyroot_Leaves_Purple .wild(1));
 		}
+		
+		// Needs to be done here for all Aether Mods, because I don't want duplicate Code.
+		FL.reg(FL.Water          .make(1000), IL.AETHER_Bucket_Water .get(1), IL.AETHER_Bucket_Empty.get(1));
+		FL.reg(FL.Milk           .make(1000), IL.AETHER_Bucket_Milk  .get(1), IL.AETHER_Bucket_Empty.get(1));
+		FL.reg(FL.Potion_Poison_2.make(1000), IL.AETHER_Bucket_Poison.get(1), IL.AETHER_Bucket_Empty.get(1));
 		
 		// Those "On-Demand" Materials of VoltzEngine are registered late...
 		if (MD.VOLTZ.mLoaded) {
@@ -594,6 +713,14 @@ public class GT_API_Post extends Abstract_Mod {
 		if (MD.ARS.mLoaded) {
 			BlocksGT.FLOWERS.add(ST.block(MD.ARS , "blueOrchid"        ));
 		}
+		if (MD.AETHER.mLoaded) {
+			BlocksGT.FLOWERS.add(ST.block(MD.AETHER , "purpleFlower"   ));
+			BlocksGT.FLOWERS.add(ST.block(MD.AETHER , "whiteRose"      ));
+		}
+		if (MD.AETHEL.mLoaded) {
+			BlocksGT.FLOWERS.add(ST.block(MD.AETHEL , "purple_flower"  ));
+			BlocksGT.FLOWERS.add(ST.block(MD.AETHEL , "white_flower"   ));
+		}
 		if (MD.BOTA.mLoaded) {
 			BlocksGT.FLOWERS.add(ST.block(MD.BOTA, "flower"            ));
 			BlocksGT.FLOWERS.add(ST.block(MD.BOTA, "shinyFlower"       ));
@@ -664,11 +791,12 @@ public class GT_API_Post extends Abstract_Mod {
 				MT.OnyxRed              .addEnchantmentForWeapons(tEnchant, 3).addEnchantmentForAmmo(tEnchant, 5);
 				MT.Topaz                .addEnchantmentForWeapons(tEnchant, 5).addEnchantmentForAmmo(tEnchant, 7);
 				MT.BlueTopaz            .addEnchantmentForWeapons(tEnchant, 5).addEnchantmentForAmmo(tEnchant, 7);
+				MT.Zanite               .addEnchantmentForWeapons(tEnchant, 4).addEnchantmentForAmmo(tEnchant, 6);
 				MT.Tanzanite            .addEnchantmentForWeapons(tEnchant, 4).addEnchantmentForAmmo(tEnchant, 6);
 				MT.Amazonite            .addEnchantmentForWeapons(tEnchant, 5).addEnchantmentForAmmo(tEnchant, 7);
 				MT.Alexandrite          .addEnchantmentForWeapons(tEnchant, 5).addEnchantmentForAmmo(tEnchant, 7);
 				MT.Opal                 .addEnchantmentForWeapons(tEnchant, 4).addEnchantmentForAmmo(tEnchant, 6);
-				MT.Olivine              .addEnchantmentForWeapons(tEnchant, 2).addEnchantmentForAmmo(tEnchant, 4);
+				MT.Peridot              .addEnchantmentForWeapons(tEnchant, 2).addEnchantmentForAmmo(tEnchant, 4);
 				MT.Dioptase             .addEnchantmentForWeapons(tEnchant, 3).addEnchantmentForAmmo(tEnchant, 5);
 				MT.Jade                 .addEnchantmentForWeapons(tEnchant, 3).addEnchantmentForAmmo(tEnchant, 5);
 				MT.Craponite            .addEnchantmentForWeapons(tEnchant, 1).addEnchantmentForAmmo(tEnchant, 3);

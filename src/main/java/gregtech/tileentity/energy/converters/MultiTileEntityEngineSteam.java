@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2021 GregTech-6 Team
+ * Copyright (c) 2025 GregTech-6 Team
  *
  * This file is part of GregTech.
  *
@@ -21,6 +21,7 @@ package gregtech.tileentity.energy.converters;
 
 import gregapi.block.multitileentity.IWailaTile;
 import gregapi.code.TagData;
+import gregapi.data.CS.*;
 import gregapi.data.FL;
 import gregapi.data.LH;
 import gregapi.data.LH.Chat;
@@ -156,7 +157,7 @@ public class MultiTileEntityEngineSteam extends TileEntityBase09FacingSingle imp
 				if (mState > 30) {
 					mStopped = T;
 					mTank.setEmpty();
-					UT.Sounds.send(SFX.MC_FIZZ, this);
+					UT.Sounds.send(SFX.MC_FIZZ, this, F);
 				} else {
 					mState = 31;
 				}

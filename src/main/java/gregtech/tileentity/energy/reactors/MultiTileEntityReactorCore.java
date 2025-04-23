@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2023 GregTech-6 Team
+ * Copyright (c) 2025 GregTech-6 Team
  *
  * This file is part of GregTech.
  *
@@ -219,7 +219,7 @@ public abstract class MultiTileEntityReactorCore extends TileEntityBase10FacingD
 				if (!slotHas(tSlot) && ST.use(aPlayer, aStack)) {
 					slot(tSlot, ST.amount(1, aStack));
 					mStopped = T;
-					UT.Sounds.send(SFX.MC_CLICK, this);
+					UT.Sounds.send(SFX.MC_CLICK, this, F);
 					updateClientData();
 				}
 			}

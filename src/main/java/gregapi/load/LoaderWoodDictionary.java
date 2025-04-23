@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2023 GregTech-6 Team
+ * Copyright (c) 2025 GregTech-6 Team
  *
  * This file is part of GregTech.
  *
@@ -39,7 +39,7 @@ import static gregapi.data.CS.W;
 public class LoaderWoodDictionary implements Runnable {
 	@Override
 	public void run() {
-		// 257 is next! There is no Gaps in this List!
+		// 261 is next! There is no Gaps in this List!
 		
 		// Vanilla Trees
 		OreDictionary.registerOre(OD.plankWood.toString(), ST.make(Blocks.planks, 1, 0));
@@ -268,19 +268,23 @@ public class LoaderWoodDictionary implements Runnable {
 			CR.shaped(IL.BTL_Weedwood_Planks.get(1), CR.DEF_NCC, "S", "S", 'S', ST.make(MD.BTL, "Weedwood Planks Slab", 1, 0));
 		}
 		// Aether Trees
-		if (MD.AETHER.mLoaded) {
+		if (!MD.AETHEL.mLoaded && MD.AETHER.mLoaded) {
 			BeamEntry tSkyrootBeam = new BeamEntry(ST.make(BlocksGT.Beam3, 1, 2), new PlankEntry(IL.AETHER_Skyroot_Planks.get(1), ST.make(MD.AETHER, "tile.skyrootSingleSlab", 1, 0), ST.make(MD.AETHER, "skyrootStairs", 1, 0), MT.Skyroot, 124), 1, 200);
 			new BeamEntry(ST.make(BlocksGT.Beam3FireProof, 1, 2), WoodDictionary.PLANKS.get(IL.AETHER_Skyroot_Planks));
 			CR.shaped(IL.AETHER_Skyroot_Planks.get(1), CR.DEF_NCC, "S", "S", 'S', ST.make(MD.AETHER, "tile.skyrootSingleSlab", 1, 0));
 			
 			new WoodEntry(IL.AETHER_Skyroot_Log_Small.wild(1), tSkyrootBeam, 1, 200);
+			new SaplingEntry(IL.AETHER_Skyroot_Sapling_Gold.wild(1), new WoodEntry(IL.AETHER_Skyroot_Log_Gold.get(1), tSkyrootBeam, 1, 300, OP.gem.mat(MT.AmberGolden, 1), MT.AmberGolden), IL.AETHER_Skyroot_Leaves_Gold  .wild(1));
 			
-			WoodEntry tSkyrootWood = new WoodEntry(IL.AETHER_Skyroot_Log.wild(1), tSkyrootBeam, 1, 300);
-			new SaplingEntry(IL.AETHER_Skyroot_Sapling_Blue     .wild(1), tSkyrootWood, IL.AETHER_Skyroot_Leaves_Blue   .wild(1));
-			new SaplingEntry(IL.AETHER_Skyroot_Sapling_Dark     .wild(1), tSkyrootWood, IL.AETHER_Skyroot_Leaves_Dark   .wild(1));
-			new SaplingEntry(IL.AETHER_Skyroot_Sapling_Green    .wild(1), tSkyrootWood, IL.AETHER_Skyroot_Leaves_Green  .wild(1));
-			new SaplingEntry(IL.AETHER_Skyroot_Sapling_Gold     .wild(1), tSkyrootWood, IL.AETHER_Skyroot_Leaves_Gold   .wild(1));
-			new SaplingEntry(IL.AETHER_Skyroot_Sapling_Purple   .wild(1), tSkyrootWood, IL.AETHER_Skyroot_Leaves_Purple .wild(1));
+			WoodEntry tSkyrootWood = 
+			new WoodEntry(IL.AETHER_Skyroot_Log.getWithMeta(1, 0), tSkyrootBeam, 1, 300);
+			new WoodEntry(IL.AETHER_Skyroot_Log.getWithMeta(1, 1), tSkyrootBeam, 1, 300);
+			new WoodEntry(IL.AETHER_Skyroot_Log.getWithMeta(1, 3), tSkyrootBeam, 1, 300);
+			
+			new SaplingEntry(IL.AETHER_Skyroot_Sapling_Blue  .wild(1), tSkyrootWood, IL.AETHER_Skyroot_Leaves_Blue  .wild(1));
+			new SaplingEntry(IL.AETHER_Skyroot_Sapling_Dark  .wild(1), tSkyrootWood, IL.AETHER_Skyroot_Leaves_Dark  .wild(1));
+			new SaplingEntry(IL.AETHER_Skyroot_Sapling_Green .wild(1), tSkyrootWood, IL.AETHER_Skyroot_Leaves_Green .wild(1));
+			new SaplingEntry(IL.AETHER_Skyroot_Sapling_Purple.wild(1), tSkyrootWood, IL.AETHER_Skyroot_Leaves_Purple.wild(1));
 		}
 		// Botania Planks
 		if (MD.BOTA.mLoaded) {
@@ -878,10 +882,17 @@ public class LoaderWoodDictionary implements Runnable {
 		}
 		// Et Futurum Logs/Beams
 		if (MD.EtFu.mLoaded) {
+			// TODO CHERRY, BAMBOO AND MANGROVE AND STUFF
 			OreDictionary.registerOre(OD.beamWood.toString(), ST.make(MD.EtFu, "log_stripped", 1, W));
 			OreDictionary.registerOre(OD.beamWood.toString(), ST.make(MD.EtFu, "log2_stripped", 1, W));
 			OreDictionary.registerOre(OD.beamWood.toString(), ST.make(MD.EtFu, "wood_stripped", 1, W));
 			OreDictionary.registerOre(OD.beamWood.toString(), ST.make(MD.EtFu, "wood2_stripped", 1, W));
+			
+			PlankEntry tCherry = new PlankEntry(ST.make(MD.EtFu, "wood_planks", 1, 3), ST.make(MD.EtFu, "wood_slab", 1, 3), ST.make(MD.EtFu, "cherry_stairs", 1, W), MT.WOODS.Sakura, 257);
+			new SaplingEntry(ST.make(MD.EtFu, "sapling", 1, 1), new WoodEntry(ST.make(MD.EtFu, "cherry_log", 1, 0), new BeamEntry(ST.make(MD.EtFu, "cherry_log", 1, 2), tCherry)), ST.make(MD.EtFu, "leaves", 1, 1));
+			new WoodEntry(ST.make(MD.EtFu, "cherry_log", 1, 1), new BeamEntry(ST.make(MD.EtFu, "cherry_log", 1, 3), tCherry));
+			
+			new SaplingEntry(IL.EtFu_Bamboo.get(1), new WoodEntry(ST.make(MD.EtFu, "bamboo_block", 1, 0), new BeamEntry(ST.make(MD.EtFu, "bamboo_block", 1, 1), new PlankEntry(ST.make(MD.EtFu, "bamboo_mosaic", 1, 0), ST.make(MD.EtFu, "bamboo_mosaic_slab", 1, 0), ST.make(MD.EtFu, "bamboo_mosaic_stairs", 1, W), MT.Bamboo, 259, IL.EtFu_Bamboo.get(1), 1, 1, 1), 1, 100, 2, 2, 2, MT.Bamboo, OP.stickLong.mat(MT.Bamboo, 1), 1, 1), new PlankEntry(ST.make(MD.EtFu, "wood_planks", 1, 4), ST.make(MD.EtFu, "wood_slab", 1, 4), ST.make(MD.EtFu, "bamboo_stairs", 1, W), MT.Bamboo, 258, IL.EtFu_Bamboo.get(1), 1, 1, 1), 1, 100, 2, 2, 2, NI, MT.Bamboo, null, OP.stickLong.mat(MT.Bamboo, 1), 1, 1), IL.EtFu_Bamboo.get(1));
 			
 			new WoodEntry(ST.make(MD.EtFu, "bark"          , 1, 0), WoodDictionary.BEAMS.get(BlocksGT.Beam1, 0));
 			new WoodEntry(ST.make(MD.EtFu, "bark"          , 1, 1), WoodDictionary.BEAMS.get(BlocksGT.Beam1, 1));

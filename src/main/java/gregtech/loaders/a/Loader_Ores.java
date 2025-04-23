@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2023 GregTech-6 Team
+ * Copyright (c) 2025 GregTech-6 Team
  *
  * This file is part of GregTech.
  *
@@ -260,7 +260,7 @@ public class Loader_Ores implements Runnable {
 		if (MD.TF.mLoaded) {
 		rockset(MD.TF, "tile.TFDeadrock"                          , 2, "twilight.deadrock"      , OP.oreDeadrock            , MT.STONES.Deadrock);
 		}
-		if (MD.AETHER.mLoaded) {
+		if (MD.AETHER.mLoaded && !MD.AETHEL.mLoaded) {
 		rockset(MD.AETHER, "holystone", 1, 0, "holystone"         , 1, "aether.holystone"       , OP.oreHolystone           , MT.STONES.Holystone);
 		}
 		if (MD.ERE.mLoaded) {

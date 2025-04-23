@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2023 GregTech-6 Team
+ * Copyright (c) 2025 GregTech-6 Team
  *
  * This file is part of GregTech.
  *
@@ -807,9 +807,9 @@ public class LoaderItemData implements Runnable {
 		OM.reg(OD.flower                            , ST.make(MD.HiL, "tile.hl_cotton", 1, W));
 		OM.reg("cropBerry"                          , ST.make(MD.HiL, "hl_berries", 1, W));
 		OM.reg("cropBerry"                          , ST.make(MD.AETHER, "enchantedBerry", 1, 0));
+		OM.reg("cropBlueberry"                      , ST.make(MD.AETHER, "blueBerry", 1, 0));
 		OM.reg("cropStrawberry"                     , ST.make(MD.AETHER, "rainbowStrawberry", 1, 0));
 		OM.reg("cropWyndberry"                      , ST.make(MD.AETHER, "wyndberry", 1, 0));
-		OM.reg("cropBlueberry"                      , ST.make(MD.AETHER, "blueBerry", 1, 0));
 		OM.reg("cropOrange"                         , ST.make(MD.AETHER, "orange", 1, 0));
 		OM.reg(OD.itemEgg                           , ST.make(MD.AETHER, "moaEgg", 1, W));
 		OM.reg(OD.slimeball                         , ST.make(MD.AETHER, "swetJelly", 1, 0));
@@ -1853,12 +1853,26 @@ public class LoaderItemData implements Runnable {
 		
 		OM.data(MD.BB, "boneShard"                          , 1,   W, MT.Bone               ,  U * 2);
 		
+		
+		OM.dat2(MD.MoCr, "silversword"                      , 1     , MT.Ag                 ,  U * 2, ANY.Wood, U2);
+		
+		
 		OM.data(MD.EtFu, "red_sandstone_slab"               , 1,   0, MT.RedSand            ,  U2* 9);
 		OM.data(MD.EtFu, "red_sandstone"                    , 1,   W, MT.RedSand            ,  U * 9);
 		OM.data(MD.EtFu, "rabbit_raw"                       , 1,   W, MT.MeatRaw            ,  U * 2, MT.Bone, U4);
 		OM.data(MD.EtFu, "rabbit_cooked"                    , 1,   W, MT.MeatCooked         ,  U * 2, MT.Bone, U4);
 		OM.data(MD.EtFu, "mutton_raw"                       , 1,   W, MT.MeatRaw            ,  U * 2, MT.Bone, U4);
 		OM.data(MD.EtFu, "mutton_cooked"                    , 1,   W, MT.MeatCooked         ,  U * 2, MT.Bone, U4);
+		OM.dat2(MD.EtFu, "netherite_sword"                  , 1     , MT.NetherizedDiamond  ,  U * 2, ANY.Wood, U2);
+		OM.dat2(MD.EtFu, "netherite_pickaxe"                , 1     , MT.NetherizedDiamond  ,  U * 3, ANY.Wood, U );
+		OM.dat2(MD.EtFu, "netherite_spade"                  , 1     , MT.NetherizedDiamond  ,  U * 1, ANY.Wood, U );
+		OM.dat2(MD.EtFu, "netherite_axe"                    , 1     , MT.NetherizedDiamond  ,  U * 3, ANY.Wood, U );
+		OM.dat2(MD.EtFu, "netherite_hoe"                    , 1     , MT.NetherizedDiamond  ,  U * 2, ANY.Wood, U );
+		OM.dat2(MD.EtFu, "netherite_helmet"                 , 1     , MT.NetherizedDiamond  ,  U * 5);
+		OM.dat2(MD.EtFu, "netherite_chestplate"             , 1     , MT.NetherizedDiamond  ,  U * 8);
+		OM.dat2(MD.EtFu, "netherite_leggings"               , 1     , MT.NetherizedDiamond  ,  U * 7);
+		OM.dat2(MD.EtFu, "netherite_boots"                  , 1     , MT.NetherizedDiamond  ,  U * 4);
+		
 		
 		OM.data(MD.GaSu, "mutton_raw"                       , 1,   W, MT.MeatRaw            ,  U * 2, MT.Bone, U4);
 		OM.data(MD.GaSu, "mutton_cooked"                    , 1,   W, MT.MeatCooked         ,  U * 2, MT.Bone, U4);
@@ -2021,6 +2035,8 @@ public class LoaderItemData implements Runnable {
 		OM.data(MD.HaC, "rabbitcookedItem"                  , 1,   W, MT.MeatCooked         ,  U * 1, MT.Bone,  U4);
 		OM.data(MD.HaC, "venisonrawItem"                    , 1,   W, MT.MeatRaw            ,  U * 2, MT.Bone,  U9);
 		OM.data(MD.HaC, "venisoncookedItem"                 , 1,   W, MT.MeatCooked         ,  U * 2, MT.Bone,  U9);
+		OM.data(MD.HaC, "muttonrawItem"                     , 1,   W, MT.MeatRaw            ,  U * 2, MT.Bone,  U9);
+		OM.data(MD.HaC, "muttoncookedItem"                  , 1,   W, MT.MeatCooked         ,  U * 2, MT.Bone,  U9);
 		
 		
 		OM.data(MD.FSP, "steamedBeef"                       , 1,   W, MT.MeatCooked         ,  U * 2, MT.Bone, U9);
@@ -2263,12 +2279,6 @@ public class LoaderItemData implements Runnable {
 		OM.data(MD.TC, "WandCap"                            , 1,   8, MT.VoidMetal          ,  5* U9);
 		OM.data(MD.TC, "ItemBaubleBlanks"                   , 1,   0, MT.Au                 ,  U    );
 		OM.data(MD.TC, "ItemBaubleBlanks"                   , 1,   2, MT.Au                 ,  U    , MT.Leather, U * 3);
-		OM.data(MD.TC, "ItemBaubleBlanks"                   , 1,   3, MT.Au                 ,  OP.ring.mAmount, MT.InfusedAir     , U4);
-		OM.data(MD.TC, "ItemBaubleBlanks"                   , 1,   4, MT.Au                 ,  OP.ring.mAmount, MT.InfusedEarth   , U4);
-		OM.data(MD.TC, "ItemBaubleBlanks"                   , 1,   5, MT.Au                 ,  OP.ring.mAmount, MT.InfusedFire    , U4);
-		OM.data(MD.TC, "ItemBaubleBlanks"                   , 1,   6, MT.Au                 ,  OP.ring.mAmount, MT.InfusedWater   , U4);
-		OM.data(MD.TC, "ItemBaubleBlanks"                   , 1,   7, MT.Au                 ,  OP.ring.mAmount, MT.InfusedOrder   , U4);
-		OM.data(MD.TC, "ItemBaubleBlanks"                   , 1,   8, MT.Au                 ,  OP.ring.mAmount, MT.InfusedEntropy , U4);
 		OM.data(MD.TC, "blockCandle"                        , 1,   W, MT.Tallow             ,  2* U3);
 		OM.data(MD.TC, "ItemZombieBrain"                    , 1,   W, MT.MeatRotten         ,  U * 1);
 		OM.data(MD.TC, "ItemGolemPlacer"                    , 1,   0, MT.Wheat              ,  U * 9);

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2024 GregTech-6 Team
+ * Copyright (c) 2025 GregTech-6 Team
  *
  * This file is part of GregTech.
  *
@@ -256,8 +256,8 @@ public class WD {
 	public static boolean dimWTCH(WorldProvider aProvider, String aProviderClassName) {return MD.WTCH.mLoaded && "WorldProviderDreamWorld".equalsIgnoreCase(aProviderClassName);}
 	
 	public static boolean dimAETHER(World aWorld) {return aWorld != null && dimAETHER(aWorld.provider);}
-	public static boolean dimAETHER(WorldProvider aProvider) {return MD.AETHER.mLoaded && dimAETHER(aProvider, UT.Reflection.getLowercaseClass(aProvider));}
-	public static boolean dimAETHER(WorldProvider aProvider, String aProviderClassName) {return MD.AETHER.mLoaded && "WorldProviderAether".equalsIgnoreCase(aProviderClassName);}
+	public static boolean dimAETHER(WorldProvider aProvider) {return (MD.AETHER.mLoaded || MD.AETHEL.mLoaded) && dimAETHER(aProvider, UT.Reflection.getLowercaseClass(aProvider));}
+	public static boolean dimAETHER(WorldProvider aProvider, String aProviderClassName) {return MD.AETHEL.mLoaded ? "AetherWorldProvider".equalsIgnoreCase(aProviderClassName) : MD.AETHER.mLoaded && "WorldProviderAether".equalsIgnoreCase(aProviderClassName);}
 	
 	public static boolean move(Entity aEntity, int aDimension, double aX, double aY, double aZ) {
 		WorldServer tTargetWorld = DimensionManager.getWorld(aDimension), tOriginalWorld = DimensionManager.getWorld(aEntity.worldObj.provider.dimensionId);

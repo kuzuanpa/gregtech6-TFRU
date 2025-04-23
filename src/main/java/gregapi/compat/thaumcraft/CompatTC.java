@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2023 GregTech-6 Team
+ * Copyright (c) 2025 GregTech-6 Team
  *
  * This file is part of GregTech.
  *
@@ -20,6 +20,7 @@
 package gregapi.compat.thaumcraft;
 
 import cpw.mods.fml.common.event.FMLModIdMappingEvent;
+import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import gregapi.code.ArrayListNoNulls;
 import gregapi.code.ItemStackContainer;
 import gregapi.compat.CompatBase;
@@ -33,6 +34,7 @@ import gregapi.util.ST;
 import gregapi.util.UT;
 import gregapi.wooddict.WoodDictionary;
 import net.minecraft.block.Block;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
@@ -44,6 +46,7 @@ import thaumcraft.api.crafting.CrucibleRecipe;
 import thaumcraft.api.crafting.IArcaneRecipe;
 import thaumcraft.api.crafting.InfusionEnchantmentRecipe;
 import thaumcraft.api.crafting.InfusionRecipe;
+import thaumcraft.api.internal.WeightedRandomLoot;
 import thaumcraft.api.research.ResearchCategories;
 import thaumcraft.api.research.ResearchCategoryList;
 import thaumcraft.api.research.ResearchItem;
@@ -65,18 +68,19 @@ public class CompatTC extends CompatBase implements ICompatTC {
 		LH.add("tc.aspect.radio"    , "Radiation");
 //      LH.add("tc.aspect.reflexio" , "Reflection");
 		
-		ThaumcraftApi            .class.getCanonicalName();
-		ThaumcraftApiHelper      .class.getCanonicalName();
-		Aspect                   .class.getCanonicalName();
-		AspectList               .class.getCanonicalName();
-		CrucibleRecipe           .class.getCanonicalName();
-		IArcaneRecipe            .class.getCanonicalName();
-		InfusionEnchantmentRecipe.class.getCanonicalName();
-		InfusionRecipe           .class.getCanonicalName();
-		ResearchCategories       .class.getCanonicalName();
-		ResearchCategoryList     .class.getCanonicalName();
-		ResearchItem             .class.getCanonicalName();
-		ResearchPage             .class.getCanonicalName();
+		ThaumcraftApi                    .class.getCanonicalName();
+		ThaumcraftApiHelper              .class.getCanonicalName();
+		Aspect                           .class.getCanonicalName();
+		AspectList                       .class.getCanonicalName();
+		CrucibleRecipe                   .class.getCanonicalName();
+		IArcaneRecipe                    .class.getCanonicalName();
+		InfusionEnchantmentRecipe        .class.getCanonicalName();
+		InfusionRecipe                   .class.getCanonicalName();
+		ResearchCategories               .class.getCanonicalName();
+		ResearchCategoryList             .class.getCanonicalName();
+		ResearchItem                     .class.getCanonicalName();
+		ResearchPage                     .class.getCanonicalName();
+		thaumcraft.common.lib.utils.Utils.class.getCanonicalName();
 		
 		TC.AER              .mAspect = Aspect.AIR;
 		TC.ALIENIS          .mAspect = Aspect.ELDRITCH;
@@ -196,6 +200,26 @@ public class CompatTC extends CompatBase implements ICompatTC {
 		ThaumcraftApi.registerEntityTag("TwilightForest.Knight Phantom"              , new AspectList().add(Aspect.SOUL, 20).add(Aspect.ARMOR, 20).add(Aspect.WEAPON, 20));
 		ThaumcraftApi.registerEntityTag("TwilightForest.Yeti"                        , new AspectList().add(Aspect.BEAST, 4).add(Aspect.MAN, 4).add(Aspect.COLD, 2));
 		ThaumcraftApi.registerEntityTag("TwilightForest.Yeti Boss"                   , new AspectList().add(Aspect.BEAST, 20).add(Aspect.MAN, 20).add(Aspect.COLD, 20));
+	}
+	
+	@Override public void onServerStarting(FMLServerStartingEvent aEvent) {
+		// These ItemStacks are Enchanted BEFORE being copied in Thaumcraft, which leads to them always having the SAME Enchantment...
+		for (WeightedRandomLoot tLoot : WeightedRandomLoot.lootBagCommon) {
+			if (tLoot != null && (ST.equal(tLoot.item, Items.book) || ST.equal(tLoot.item, Items.enchanted_book))) {
+				ST.REVERT_TO_BOOK_TO_FIX_STUPID.add(tLoot.item);
+			}
+		}
+	}
+	
+	@Override
+	public ItemStack[] lootbag(long aMeta) {
+		ST.fixBookStacks();
+		ItemStack[] rStacks = ST.array(8+RNGSUS.nextInt(5));
+		for (int i = 0; i < rStacks.length; i++) {
+			rStacks[i] = thaumcraft.common.lib.utils.Utils.generateLoot(UT.Code.bind2(aMeta), RNGSUS);
+			ST.fixBookStacks();
+		}
+		return rStacks;
 	}
 	
 	@Override

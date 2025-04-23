@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2023 GregTech-6 Team
+ * Copyright (c) 2025 GregTech-6 Team
  *
  * This file is part of GregTech.
  *
@@ -47,6 +47,7 @@ import gregapi.tileentity.data.ITileEntityProgress;
 import gregapi.tileentity.delegate.DelegatorTileEntity;
 import cn.kuzuanpa.ktfruaddon.api.tile.IMeterDetectable;
 import gregapi.tileentity.energy.ITileEntityEnergy;
+import gregapi.tileentity.multiblocks.ITileEntityMultiBlockController;
 import gregapi.util.ST;
 import gregapi.util.UT;
 import mcp.mobius.waila.api.IWailaConfigHandler;
@@ -303,6 +304,8 @@ public class MultiTileEntityBasicMachine extends TileEntityBase09FacingSingle im
 		if (SIDES_VALID[mFluidAutoOutput] || SIDES_VALID[mItemAutoOutput])
 		aList.add(Chat.DGRAY    + LH.get(LH.TOOL_TO_TOGGLE_AUTO_OUTPUTS_MONKEY_WRENCH));
 		aList.add(Chat.DGRAY    + LH.get(LH.TOOL_TO_RESET_SOFT_HAMMER));
+		if (this instanceof ITileEntityMultiBlockController)
+		aList.add(Chat.DGRAY    + LH.get(LH.TOOL_TO_BUILD_BUILDER_WAND));
 		aList.add(Chat.DGRAY    + LH.get(LH.TOOL_TO_DETAIL_MAGNIFYINGGLASS));
 		
 		super.addToolTips(aList, aStack, aF3_H);
@@ -1026,7 +1029,7 @@ public class MultiTileEntityBasicMachine extends TileEntityBase09FacingSingle im
 	}
 	
 	public boolean doSoundInterrupt() {
-		return UT.Sounds.send(mRequiresIgnition?SFX.MC_FIZZ:mNoConstantEnergy?SFX.IC_MACHINE_INTERRUPT:SFX.MC_CLICK, this);
+		return UT.Sounds.send(mRequiresIgnition?SFX.MC_FIZZ:mNoConstantEnergy?SFX.IC_MACHINE_INTERRUPT:SFX.MC_CLICK, this, F);
 	}
 	
 	public boolean checkStructure(boolean aForceReset) {

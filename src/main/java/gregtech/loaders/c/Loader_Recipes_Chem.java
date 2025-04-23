@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2023 GregTech-6 Team
+ * Copyright (c) 2025 GregTech-6 Team
  *
  * This file is part of GregTech.
  *
@@ -170,7 +170,7 @@ public class Loader_Recipes_Chem implements Runnable {
 		RM.Mixer        .addRecipe1(T, 16,   80, tIron                                 , MT.HCl         .fluid(U * 4, T)                                                            , MT.H              .gas  (U * 2, F), OM.dust(MT.FeCl2, U*3));
 		RM.Mixer        .addRecipe2(T, 16,  144, tIron, OM.dust(MT.FeCl3, U*8)                                                                                                                                          , OM.dust(MT.FeCl2, U*9));
 		}
-		
+
 		RM.Mixer        .addRecipe1(T,  16, 112, OM.dust(MT.UF4, U*5), MT.F.gas(U*2, T), NF, MT.UF6.gas(U*7, T));
 		RM.Mixer        .addRecipe0(T,  16, 144, FL.array(MT.H .gas   (U*2, T), MT.UF6   .gas   (U*7, T)), MT.HF  .gas   (U*4, T), OM.dust(MT.UF4   , U*5));
 		RM.Mixer        .addRecipe0(T,  16, 144, FL.array(MT.H .gas   (U*2, T), MT.U238F6.gas   (U*7, T)), MT.HF  .gas   (U*4, T), OM.dust(MT.U238F4, U*5));
@@ -456,6 +456,21 @@ public class Loader_Recipes_Chem implements Runnable {
 		RM.Centrifuge   .addRecipe0(T, 64,   64, FL.array(MT.D2O             .liquid(U, T)), FL.array(MT.T2O.liquid(U10, F)), ZL_IS);
 		
 		
+		RM.Melter       .addRecipe1(T, 16,  11 * 2, OM.dust(MT.Ice, U9)             , NF, FL.Water.make( 111), NI);
+		RM.Melter       .addRecipe1(T, 16,  25 * 2, OM.dust(MT.Ice, U4)             , NF, FL.Water.make( 250), NI);
+		RM.Melter       .addRecipe1(T, 16, 100 * 2, OM.dust(MT.Ice)                 , NF, FL.Water.make(1000), NI);
+		RM.Melter       .addRecipe1(T, 16,  25 * 2, gemChipped.mat(MT.Ice    , 1   ), NF, FL.Water.make( 250), NI);
+		RM.Melter       .addRecipe1(T, 16,  50 * 2, gemFlawed.mat(MT.Ice     , 1   ), NF, FL.Water.make( 500), NI);
+		RM.Melter       .addRecipe1(T, 16, 100 * 2, gem.mat(MT.Ice           , 1   ), NF, FL.Water.make(1000), NI);
+		RM.Melter       .addRecipe1(T, 16, 100 * 2, ST.make(Blocks.ice       , 1, W), NF, FL.Water.make(1000), NI);
+		RM.Melter       .addRecipe1(T, 16, 200 * 2, ST.make(Blocks.packed_ice, 1, W), NF, FL.Water.make(2000), NI);
+		RM.Melter       .addRecipe1(T, 16,  11 * 2, OM.dust(MT.Snow, U9)            , NF, FL.Water.make( 111), NI);
+		RM.Melter       .addRecipe1(T, 16,  25 * 2, OM.dust(MT.Snow, U4)            , NF, FL.Water.make( 250), NI);
+		RM.Melter       .addRecipe1(T, 16, 100 * 2, OM.dust(MT.Snow)                , NF, FL.Water.make(1000), NI);
+		RM.Melter       .addRecipe1(T, 16,  25 * 2, ST.make(Items.snowball   , 1, W), NF, FL.Water.make( 250), NI);
+		RM.Melter       .addRecipe1(T, 16, 100 * 2, ST.make(Blocks.snow      , 1, W), NF, FL.Water.make(1000), NI);
+
+
 		RM.Smelter      .addRecipe1(T, 50,  11, OM.dust(MT.Ice, U9)             , NF, FL.Water.make( 111), NI);
 		RM.Smelter      .addRecipe1(T, 50,  25, OM.dust(MT.Ice, U4)             , NF, FL.Water.make( 250), NI);
 		RM.Smelter      .addRecipe1(T, 50, 100, OM.dust(MT.Ice)                 , NF, FL.Water.make(1000), NI);

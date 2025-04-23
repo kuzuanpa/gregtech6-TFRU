@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2023 GregTech-6 Team
+ * Copyright (c) 2025 GregTech-6 Team
  *
  * This file is part of GregTech.
  *
@@ -27,8 +27,11 @@ import gregapi.tileentity.multiblocks.ITileEntityMultiBlockController;
 import gregapi.tileentity.multiblocks.MultiTileEntityMultiBlockPart;
 import gregapi.util.UT;
 import gregapi.util.WD;
+import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ChunkCoordinates;
 import net.minecraftforge.fluids.FluidStack;
 
 import java.util.List;
@@ -55,7 +58,7 @@ public abstract class MultiTileEntityTank3x3x3 extends MultiTileEntityTank {
 	}
 	
 	@Override
-	public boolean checkStructure2() {
+	public boolean checkStructure2(ChunkCoordinates aCoordinates, Entity aPlayer, IInventory aInventory) {
 		int tX = getOffsetXN(mFacing), tY = getOffsetYN(mFacing), tZ = getOffsetZN(mFacing);
 		if (worldObj.blockExists(tX-1, tY, tZ-1) && worldObj.blockExists(tX+1, tY, tZ-1) && worldObj.blockExists(tX-1, tY, tZ+1) && worldObj.blockExists(tX+1, tY, tZ+1)) {
 			boolean tSuccess = T;
@@ -63,7 +66,7 @@ public abstract class MultiTileEntityTank3x3x3 extends MultiTileEntityTank {
 				if (i == 0 && j == 0 && k == 0) {
 					if (getAir(tX+i, tY+j, tZ+k)) worldObj.setBlockToAir(tX+i, tY+j, tZ+k); else tSuccess = F;
 				} else {
-					if (!ITileEntityMultiBlockController.Util.checkAndSetTarget(this, tX+i, tY+j, tZ+k, mTankWalls, getMultiTileEntityRegistryID(), 0, MultiTileEntityMultiBlockPart.ONLY_FLUID)) tSuccess = F;
+					if (!ITileEntityMultiBlockController.Util.checkAndSetTarget(this, tX+i, tY+j, tZ+k, mTankWalls, getMultiTileEntityRegistryID(), 0, MultiTileEntityMultiBlockPart.ONLY_FLUID, aCoordinates, aPlayer, aInventory)) tSuccess = F;
 				}
 			}
 			return tSuccess;
@@ -86,7 +89,7 @@ public abstract class MultiTileEntityTank3x3x3 extends MultiTileEntityTank {
 				if (FL.temperature(mTank) >= mMaterial.mMeltingPoint && meltdown()) return;
 				
 				if (!mMagicProof && FL.magic(tFluid)) {
-					UT.Sounds.send(worldObj, SFX.MC_FIZZ, 1.0F, 0.5F, getCoords());
+					UT.Sounds.send(SFX.MC_FIZZ, this, F);
 					GarbageGT.trash(mTank);
 					int tX = getOffsetXN(mFacing), tY = getOffsetYN(mFacing), tZ = getOffsetZN(mFacing);
 					for (int i = -1; i <= 1; i++) for (int j = -1; j <= 1; j++) for (int k = -1; k <= 1; k++) {
@@ -96,7 +99,7 @@ public abstract class MultiTileEntityTank3x3x3 extends MultiTileEntityTank {
 					return;
 				}
 				if (!mAcidProof && FL.acid(mTank)) {
-					UT.Sounds.send(worldObj, SFX.MC_FIZZ, 1.0F, 0.5F, getCoords());
+					UT.Sounds.send(SFX.MC_FIZZ, this, F);
 					GarbageGT.trash(mTank);
 					int tX = getOffsetXN(mFacing), tY = getOffsetYN(mFacing), tZ = getOffsetZN(mFacing);
 					for (int i = -1; i <= 1; i++) for (int j = -1; j <= 1; j++) for (int k = -1; k <= 1; k++) {
@@ -107,15 +110,15 @@ public abstract class MultiTileEntityTank3x3x3 extends MultiTileEntityTank {
 				}
 				if (!mPlasmaProof && FL.plasma(mTank)) {
 					GarbageGT.trash(mTank);
-					UT.Sounds.send(worldObj, SFX.MC_FIZZ, 1.0F, 1.0F, getCoords());
+					UT.Sounds.send(SFX.MC_FIZZ, this, F);
 				} else
 				if (!mGasProof && FL.gas(mTank)) {
 					GarbageGT.trash(mTank);
-					UT.Sounds.send(worldObj, SFX.MC_FIZZ, 1.0F, 1.0F, getCoords());
+					UT.Sounds.send(SFX.MC_FIZZ, this, F);
 				} else
 				if (!allowFluid(tFluid)) {
 					GarbageGT.trash(mTank);
-					UT.Sounds.send(worldObj, SFX.MC_FIZZ, 1.0F, 1.0F, getCoords());
+					UT.Sounds.send(SFX.MC_FIZZ, this, F);
 				} else
 				if (SIDES_HORIZONTAL[mFacing] || FL.gas(mTank) || (FL.lighter(tFluid)?SIDES_TOP:SIDES_BOTTOM)[mFacing]) {
 					if (FL.move(mTank, getAdjacentTileEntity(mFacing)) > 0) updateInventory();

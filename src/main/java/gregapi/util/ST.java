@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2023 GregTech-6 Team
+ * Copyright (c) 2025 GregTech-6 Team
  *
  * This file is part of GregTech.
  *
@@ -339,6 +339,7 @@ public class ST {
 	public static ItemStackSet<ItemStackContainer> hashset(ItemStack... aStacks) {return new ItemStackSet<>(aStacks);}
 	public static ArrayListNoNulls<ItemStack> arraylist(ItemStack... aStacks) {return new ArrayListNoNulls<>(F, aStacks);}
 	public static ItemStack[] array(ItemStack... aStacks) {return aStacks;}
+	public static ItemStack[] array(int aLength) {return new ItemStack[aLength];}
 	
 	public static ItemStack make_(Item  aItem , long aSize, long aMeta) {return new ItemStack(aItem , UT.Code.bindInt(aSize), UT.Code.bindShort(aMeta));}
 	public static ItemStack make_(Block aBlock, long aSize, long aMeta) {return new ItemStack(aBlock, UT.Code.bindInt(aSize), UT.Code.bindShort(aMeta));}
@@ -1001,7 +1002,16 @@ public class ST {
 		return T;
 	}
 	
-	public static final List<String> LOOT_TABLES = new ArrayList<>();
+	public static final Collection<ItemStack> REVERT_TO_BOOK_TO_FIX_STUPID = ST.arraylist();
+	public static void fixBookStacks() {for (ItemStack tStack : REVERT_TO_BOOK_TO_FIX_STUPID) ST.set(tStack, ST.make(Items.book, 1, 0), T, T);}
+	
+	public static final List<String>
+	LOOT_TABLES         = new ArrayListNoNulls<>(F, "dungeonChest", "villageBlacksmith", "mineshaftCorridor", "strongholdLibrary", "strongholdCrossing", "strongholdCorridor", "pyramidDesertyChest", "pyramidJungleChest", "pyramidJungleDispenser", "bonusChest"),
+	LOOT_TABLES_VANILLA = new ArrayListNoNulls<>(F, "dungeonChest", "villageBlacksmith", "mineshaftCorridor", "strongholdLibrary", "strongholdCrossing", "strongholdCorridor", "pyramidDesertyChest", "pyramidJungleChest", "pyramidJungleDispenser", "bonusChest");
+	
+	public static ItemStack generateOneVanillaLoot() {
+		return ChestGenHooks.getOneItem(UT.Code.select("dungeonChest", ST.LOOT_TABLES_VANILLA), RNGSUS);
+	}
 	
 	public static boolean generateLoot(Random aRandom, String aLoot, IInventory aInventory) {
 		try {

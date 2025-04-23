@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2024 GregTech-6 Team
+ * Copyright (c) 2025 GregTech-6 Team
  *
  * This file is part of GregTech.
  *
@@ -62,6 +62,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.fluids.FluidStack;
@@ -77,10 +78,10 @@ import static gregapi.data.CS.*;
 /**
  * @author Gregorius Techneticies
  */
-public class MultiTileEntityCrucible extends TileEntityBase10MultiBlockBase implements ITileEntityCrucible, ITileEntityEnergy, ITileEntityGibbl, ITileEntityWeight, ITileEntityTemperature, ITileEntityMold, ITileEntityServerTickPost, ITileEntityEnergyDataCapacitor, IMultiBlockEnergy, IMultiBlockInventory, IMultiBlockFluidHandler, IFluidHandler, IWailaTile {
-    public static int GAS_RANGE = 5, FLAME_RANGE = 5;
-    public static long MAX_AMOUNT = 16*3*3*3*U, KG_PER_ENERGY = 100;
-    public static double HEAT_RESISTANCE_BONUS = 1.10;
+public class MultiTileEntityCrucible extends TileEntityBase10MultiBlockBase implements ITileEntityCrucible, ITileEntityEnergy, ITileEntityGibbl, ITileEntityWeight, ITileEntityTemperature, ITileEntityMold, ITileEntityServerTickPost, ITileEntityEnergyDataCapacitor, IMultiBlockEnergy, IMultiBlockInventory, IMultiBlockFluidHandler, IFluidHandler {
+	public static int GAS_RANGE = 5, FLAME_RANGE = 5;
+	public static long MAX_AMOUNT = 16*3*3*3*U, KG_PER_ENERGY = 100;
+	public static double HEAT_RESISTANCE_BONUS = 1.10;
 
 	protected boolean mAcidProof = F, mMeltDown = F;
 	protected byte mDisplayedHeight = 0, mCooldown = 100;
@@ -112,22 +113,22 @@ public class MultiTileEntityCrucible extends TileEntityBase10MultiBlockBase impl
 	}
 	
 	@Override
-	public boolean checkStructure2() {
+	public boolean checkStructure2(ChunkCoordinates aCoordinates, Entity aPlayer, IInventory aInventory) {
 		boolean tSuccess = T;
 		
 		if (getAir(xCoord, yCoord+1, zCoord)) worldObj.setBlockToAir(xCoord, yCoord+1, zCoord); else tSuccess = F;
 		if (getAir(xCoord, yCoord+2, zCoord)) worldObj.setBlockToAir(xCoord, yCoord+2, zCoord); else tSuccess = F;
 		
 		for (int i = -1; i < 2; i++) for (int j = -1; j < 2; j++) if (i != 0 || j != 0) {
-			if (!ITileEntityMultiBlockController.Util.checkAndSetTargetOffset(this, i, 0, j, mWalls, getMultiTileEntityRegistryID(), 0, MultiTileEntityMultiBlockPart.ONLY_ENERGY_IN)) tSuccess = F;
-			if (!ITileEntityMultiBlockController.Util.checkAndSetTargetOffset(this, i, 1, j, mWalls, getMultiTileEntityRegistryID(), 0, MultiTileEntityMultiBlockPart.ONLY_CRUCIBLE)) tSuccess = F;
-			if (!ITileEntityMultiBlockController.Util.checkAndSetTargetOffset(this, i, 2, j, mWalls, getMultiTileEntityRegistryID(), 0, MultiTileEntityMultiBlockPart.ONLY_ITEM_FLUID)) tSuccess = F;
+			if (!ITileEntityMultiBlockController.Util.checkAndSetTargetOffset(this, i, 0, j, mWalls, getMultiTileEntityRegistryID(), 0, MultiTileEntityMultiBlockPart.ONLY_ENERGY_IN , aCoordinates, aPlayer, aInventory)) tSuccess = F;
+			if (!ITileEntityMultiBlockController.Util.checkAndSetTargetOffset(this, i, 1, j, mWalls, getMultiTileEntityRegistryID(), 0, MultiTileEntityMultiBlockPart.ONLY_CRUCIBLE  , aCoordinates, aPlayer, aInventory)) tSuccess = F;
+			if (!ITileEntityMultiBlockController.Util.checkAndSetTargetOffset(this, i, 2, j, mWalls, getMultiTileEntityRegistryID(), 0, MultiTileEntityMultiBlockPart.ONLY_ITEM_FLUID, aCoordinates, aPlayer, aInventory)) tSuccess = F;
 		}
 		
 		if (tSuccess) for (int i = -1; i < 2; i++) for (int j = -1; j < 2; j++) if (i != 0 || j != 0) {
-			if (!ITileEntityMultiBlockController.Util.checkAndSetTargetOffset(this, i, 0, j, mWalls, getMultiTileEntityRegistryID(), 4, MultiTileEntityMultiBlockPart.ONLY_ENERGY_IN)) tSuccess = F;
-			if (!ITileEntityMultiBlockController.Util.checkAndSetTargetOffset(this, i, 1, j, mWalls, getMultiTileEntityRegistryID(), 4, MultiTileEntityMultiBlockPart.ONLY_CRUCIBLE)) tSuccess = F;
-			if (!ITileEntityMultiBlockController.Util.checkAndSetTargetOffset(this, i, 2, j, mWalls, getMultiTileEntityRegistryID(), 4, MultiTileEntityMultiBlockPart.ONLY_ITEM_FLUID)) tSuccess = F;
+			if (!ITileEntityMultiBlockController.Util.checkAndSetTargetOffset(this, i, 0, j, mWalls, getMultiTileEntityRegistryID(), 4, MultiTileEntityMultiBlockPart.ONLY_ENERGY_IN , aCoordinates, aPlayer, aInventory)) tSuccess = F;
+			if (!ITileEntityMultiBlockController.Util.checkAndSetTargetOffset(this, i, 1, j, mWalls, getMultiTileEntityRegistryID(), 4, MultiTileEntityMultiBlockPart.ONLY_CRUCIBLE  , aCoordinates, aPlayer, aInventory)) tSuccess = F;
+			if (!ITileEntityMultiBlockController.Util.checkAndSetTargetOffset(this, i, 2, j, mWalls, getMultiTileEntityRegistryID(), 4, MultiTileEntityMultiBlockPart.ONLY_ITEM_FLUID, aCoordinates, aPlayer, aInventory)) tSuccess = F;
 		}
 		
 		return tSuccess;
@@ -212,7 +213,7 @@ public class MultiTileEntityCrucible extends TileEntityBase10MultiBlockBase impl
 			OreDictItemData tData = OM.anydata_(tStack);
 			if (tData == null) {
 				slotTrash(0);
-				UT.Sounds.send(SFX.MC_FIZZ, this);
+				UT.Sounds.send(SFX.MC_FIZZ, this, F);
 			} else if (tData.mPrefix == null) {
 				List<OreDictMaterialStack> tList = new ArrayListNoNulls<>();
 				for (OreDictMaterialStack tMaterial : tData.getAllMaterialStacks()) if (tMaterial.mAmount > 0) tList.add(tMaterial.clone());
@@ -303,10 +304,10 @@ public class MultiTileEntityCrucible extends TileEntityBase10MultiBlockBase impl
 				mContent.remove(i--);
 			} else if (tMaterial.mMaterial.mGramPerCubicCentimeter <= WEIGHT_AIR_G_PER_CUBIC_CENTIMETER) {
 				GarbageGT.trash(mContent.remove(i--));
-				UT.Sounds.send(SFX.MC_FIZZ, this);
+				UT.Sounds.send(SFX.MC_FIZZ, this, F);
 			} else if (mTemperature >= tMaterial.mMaterial.mBoilingPoint || (mTemperature > C + 40 && tMaterial.mMaterial.contains(TD.Properties.FLAMMABLE) && !tMaterial.mMaterial.containsAny(TD.Properties.UNBURNABLE, TD.Processing.MELTING))) {
 				GarbageGT.trash(mContent.remove(i--));
-				UT.Sounds.send(SFX.MC_FIZZ, this);
+				UT.Sounds.send(SFX.MC_FIZZ, this, F);
 				if (tMaterial.mMaterial.mBoilingPoint >=  320) try {for (EntityLivingBase tLiving : (List<EntityLivingBase>)worldObj.getEntitiesWithinAABB(EntityLivingBase.class, box(-GAS_RANGE, -1, -GAS_RANGE, GAS_RANGE+1, GAS_RANGE+1, GAS_RANGE+1))) UT.Entities.applyTemperatureDamage(tLiving, tMaterial.mMaterial.mBoilingPoint, 4);} catch(Throwable e) {e.printStackTrace(ERR);}
 				if (tMaterial.mMaterial.mBoilingPoint >= 2000) for (int j = 0, k = Math.max(1, UT.Code.bindInt((9 * tMaterial.mAmount) / U)); j < k; j++) WD.fire(worldObj, xCoord-FLAME_RANGE+rng(2*FLAME_RANGE+1), yCoord-1+rng(2+FLAME_RANGE), zCoord-FLAME_RANGE+rng(2*FLAME_RANGE+1), rng(3) != 0);
 				if (tMaterial.mMaterial.contains(TD.Properties.EXPLOSIVE)) {
@@ -318,7 +319,7 @@ public class MultiTileEntityCrucible extends TileEntityBase10MultiBlockBase impl
 			} else if (!mAcidProof && tMaterial.mMaterial.contains(TD.Properties.ACID)) {
 				GarbageGT.trash(mContent);
 				GarbageGT.trash(tToBeAdded);
-				UT.Sounds.send(SFX.MC_FIZZ, this);
+				UT.Sounds.send(SFX.MC_FIZZ, this, F);
 				setToAir();
 				return;
 			} else if (mTemperature >= tMaterial.mMaterial.mMeltingPoint && (oTemperature <  tMaterial.mMaterial.mMeltingPoint || tNewContent)) {
@@ -368,7 +369,7 @@ public class MultiTileEntityCrucible extends TileEntityBase10MultiBlockBase impl
 		mTemperature = Math.max(mTemperature, Math.min(200, tTemperature));
 		
 		if (mTemperature > getTemperatureMax(SIDE_INSIDE)) {
-			UT.Sounds.send(SFX.MC_FIZZ, this);
+			UT.Sounds.send(SFX.MC_FIZZ, this, F);
 			GarbageGT.trash(mContent);
 			if (mTemperature >=  320) try {for (EntityLivingBase tLiving : (List<EntityLivingBase>)worldObj.getEntitiesWithinAABB(EntityLivingBase.class, box(-GAS_RANGE, -1, -GAS_RANGE, GAS_RANGE+1, GAS_RANGE+1, GAS_RANGE+1))) UT.Entities.applyTemperatureDamage(tLiving, mTemperature, 4);} catch(Throwable e) {e.printStackTrace(ERR);}
 			for (int j = 0, k = UT.Code.bindInt(mTemperature / 25); j < k; j++) WD.fire(worldObj, xCoord-FLAME_RANGE+rng(2*FLAME_RANGE+1), yCoord-1+rng(2+FLAME_RANGE), zCoord-FLAME_RANGE+rng(2*FLAME_RANGE+1), rng(3) != 0);
@@ -450,9 +451,9 @@ public class MultiTileEntityCrucible extends TileEntityBase10MultiBlockBase impl
 	public boolean breakBlock() {
 		GarbageGT.trash(mContent);
 		for (int i = -1; i < 2; i++) for (int j = -1; j < 2; j++) if (i != 0 || j != 0) {
-			ITileEntityMultiBlockController.Util.checkAndSetTargetOffset(this, i, 0, j, mWalls, getMultiTileEntityRegistryID(), 0, MultiTileEntityMultiBlockPart.ONLY_ENERGY_IN);
-			ITileEntityMultiBlockController.Util.checkAndSetTargetOffset(this, i, 1, j, mWalls, getMultiTileEntityRegistryID(), 0, MultiTileEntityMultiBlockPart.ONLY_CRUCIBLE);
-			ITileEntityMultiBlockController.Util.checkAndSetTargetOffset(this, i, 2, j, mWalls, getMultiTileEntityRegistryID(), 0, MultiTileEntityMultiBlockPart.ONLY_ITEM_FLUID);
+			ITileEntityMultiBlockController.Util.checkAndSetTargetOffset(this, i, 0, j, mWalls, getMultiTileEntityRegistryID(), 0, MultiTileEntityMultiBlockPart.ONLY_ENERGY_IN , null, null, null);
+			ITileEntityMultiBlockController.Util.checkAndSetTargetOffset(this, i, 1, j, mWalls, getMultiTileEntityRegistryID(), 0, MultiTileEntityMultiBlockPart.ONLY_CRUCIBLE  , null, null, null);
+			ITileEntityMultiBlockController.Util.checkAndSetTargetOffset(this, i, 2, j, mWalls, getMultiTileEntityRegistryID(), 0, MultiTileEntityMultiBlockPart.ONLY_ITEM_FLUID, null, null, null);
 		}
 		return super.breakBlock();
 	}
