@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022 GregTech-6 Team
+ * Copyright (c) 2025 GregTech-6 Team
  *
  * This file is part of GregTech.
  *
@@ -138,6 +138,9 @@ public class ToolCompat {
 				if (IL.TC_Greatwood_Log.equal(aBlock)) {
 					if ((aMeta & 3) < 2)
 					rReturn = aWorld.setBlock(aX, aY, aZ, BlocksGT.Beam3, aMeta, 3);
+				} else if (IL.AETHER_Skyroot_Log_Gold.equal(aBlock)) {
+					rReturn = aWorld.setBlock(aX, aY, aZ, BlocksGT.Beam3, (aMeta&12)|2, 3);
+					if (rReturn && (MD.AETHEL.mLoaded || (aMeta & 3) == 2)) tBark = OP.gem.mat(MT.AmberGolden, 1);
 				} else if (IL.AETHER_Skyroot_Log.equal(aBlock)) {
 					rReturn = aWorld.setBlock(aX, aY, aZ, BlocksGT.Beam3, (aMeta&12)|2, 3);
 				} else if (IL.AETHER_Skyroot_Log_Small.equal(aBlock)) {
@@ -172,7 +175,7 @@ public class ToolCompat {
 			if (IC_CROPTILE && aTileEntity instanceof ICropTile) {
 				int tDamage = 0;
 				for (int i = -1; i < 2; i++) for (int j = -1; j < 2; j++) for (int k = -1; k < 2; k++) if ((aTileEntity = WD.te(aWorld, aX+i, aY+j, aZ+k, T)) instanceof ICropTile && ((ICropTile)aTileEntity).harvest(T)) {
-					UT.Sounds.send(aWorld, SFX.MC_COLLECT, 0.2F, ((RNGSUS.nextFloat()-RNGSUS.nextFloat())*0.7F+1.0F)*2.0F, aX+i, aY+j, aZ+k);
+					UT.Sounds.send(SFX.MC_COLLECT, 0.2F, ((RNGSUS.nextFloat()-RNGSUS.nextFloat())*0.7F+1.0F)*2.0F, aWorld, aX+i, aY+j, aZ+k);
 					tDamage += 10000;
 				}
 				if (aCanCollect) for (ItemStack tDrop : WD.suckAll(aWorld, aX-1.5, aY-0.5, aZ-1.5, 4, 2, 4)) UT.Inventories.addStackToPlayerInventoryOrDrop(aEntityPlayer, tDrop, aWorld, aX, aY, aZ);
@@ -188,7 +191,7 @@ public class ToolCompat {
 						tDamage += 10000;
 					}
 					if (tMeta != WD.meta(aWorld, aX+i, aY+j, aZ+k) || tBlock != WD.block(aWorld, aX+i, aY+j, aZ+k)) {
-						UT.Sounds.send(aWorld, SFX.MC_COLLECT, 0.2F, ((RNGSUS.nextFloat()-RNGSUS.nextFloat())*0.7F+1.0F)*2.0F, aX+i, aY+j, aZ+k);
+						UT.Sounds.send(SFX.MC_COLLECT, 0.2F, ((RNGSUS.nextFloat()-RNGSUS.nextFloat())*0.7F+1.0F)*2.0F, aWorld, aX+i, aY+j, aZ+k);
 					}
 				}
 				if (aCanCollect) for (ItemStack tDrop : WD.suckAll(aWorld, aX-1.5, aY-0.5, aZ-1.5, 4, 2, 4)) UT.Inventories.addStackToPlayerInventoryOrDrop(aEntityPlayer, tDrop, aWorld, aX, aY, aZ);

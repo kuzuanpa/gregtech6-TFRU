@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2023 GregTech-6 Team
+ * Copyright (c) 2025 GregTech-6 Team
  *
  * This file is part of GregTech.
  *
@@ -549,6 +549,9 @@ public class Loader_Recipes_Food implements Runnable {
 		
 		RM.Mixer        .addRecipe0(T, 16,   16, FL.array(FL.RoyalJelly.make(100), FL.Honeydew.make(200)), FL.array(FL.Ambrosia.make(400)), ZL_IS);
 		
+		// Go ahead and try it IRL!
+		RM.Mixer        .addRecipe1(T, 16,   16, OM.dust(MT.Milk), FL.Soda.make(500), FL.Milk_Spoiled.make(1000), ZL_IS);
+		
 		//----------------------------------------------------------------------------
 		
 		RM.Distillery   .addRecipe1(T        , 16,  16, ST.tag(0), FL.RoyalJelly  .make(  10), FL.DistW      .make( 1), OM.dust(MT.Sugar));
@@ -574,8 +577,8 @@ public class Loader_Recipes_Food implements Runnable {
 		RM.Distillery   .addRecipe1(T        , 64, 128, OM.dust(MT.Gunpowder), FL.Lemonade     .make(250), FL.Grenade_Juice  .make(250), ZL_IS);
 		
 		for (FluidStack tWater : FL.waters(1000)) {
-		RM.Distillery   .addRecipe1(T, 16,   48, OM.dust(MT.Coffee)    , FL.mul(tWater, 3, 4, T), FL.make("potion.darkcoffee", 750), ZL_IS);
-		RM.Distillery   .addRecipe1(T, 16,   16, OM.dust(MT.Coffee, U3), FL.mul(tWater, 1, 4, T), FL.make("potion.darkcoffee", 250), ZL_IS);
+		RM.Distillery   .addRecipe1(T, 16,   48, OM.dust(MT.Coffee      ), FL.mul(tWater, 3, 4, T), FL.make("potion.darkcoffee", 750), ZL_IS);
+		RM.Distillery   .addRecipe1(T, 16,   16, OM.dust(MT.Coffee  , U3), FL.mul(tWater, 1, 4, T), FL.make("potion.darkcoffee", 250), ZL_IS);
 		
 		for (OreDictMaterial tMat : ANY.Flour.mToThis)
 		RM.Mixer        .addRecipe1(T, 16,   16, OM.dust(tMat           ), FL.mul(tWater, 1, 4, T), NF, IL.Food_Dough.get(2));
@@ -693,6 +696,16 @@ public class Loader_Recipes_Food implements Runnable {
 		RM.Coagulator       .addRecipe0(T,  0, 1024, FL.MilkGrC.make(1000), NF, IL.Food_Cheese.get(1));
 		RM.Coagulator       .addRecipe0(T,  0, 1024, FL.MilkSoy.make(250), NF, OM.dust(MT.Tofu));
 		
+		
+		RM.Melter           .addRecipe0(T, 16,    1, FL.Oil_Sunflower.make(1), FL.Oil_Frying.make(1), ZL_IS);
+		RM.Melter           .addRecipe0(T, 16,    1, FL.Oil_Olive    .make(1), FL.Oil_Frying.make(1), ZL_IS);
+		RM.Melter           .addRecipe0(T, 16,    1, FL.Oil_Nut      .make(1), FL.Oil_Frying.make(1), ZL_IS);
+		RM.Melter           .addRecipe0(T, 16,    1, FL.Oil_Hemp     .make(1), FL.Oil_Frying.make(1), ZL_IS);
+		RM.Melter           .addRecipe0(T, 16,    1, FL.Oil_Lin      .make(1), FL.Oil_Frying.make(1), ZL_IS);
+		RM.Melter           .addRecipe0(T, 16,    1, FL.Oil_Seed     .make(1), FL.Oil_Frying.make(1), ZL_IS);
+		RM.Melter           .addRecipe0(T, 16,    1, FL.Oil_Fish     .make(1), FL.Oil_Frying.make(1), ZL_IS);
+		RM.Melter           .addRecipe0(T, 16,    1, FL.Oil_Whale    .make(1), FL.Oil_Frying.make(1), ZL_IS);
+		RM.Melter           .addRecipe0(T, 16,    1, FL.Ice          .make(1), FL.Water     .make(1), ZL_IS);
 		
 		RM.Smelter          .addRecipe0(T, 16,    1, FL.Oil_Sunflower.make(1), FL.Oil_Frying.make(1), ZL_IS);
 		RM.Smelter          .addRecipe0(T, 16,    1, FL.Oil_Olive    .make(1), FL.Oil_Frying.make(1), ZL_IS);

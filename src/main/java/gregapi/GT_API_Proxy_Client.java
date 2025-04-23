@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2024 GregTech-6 Team
+ * Copyright (c) 2025 GregTech-6 Team
  *
  * This file is part of GregTech.
  *
@@ -28,6 +28,7 @@ import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.ClientTickEvent;
 import cpw.mods.fml.common.gameevent.TickEvent.Phase;
+import cpw.mods.fml.common.registry.GameRegistry;
 import gregapi.api.Abstract_Mod;
 import gregapi.block.IBlockBase;
 import gregapi.block.ToolCompat;
@@ -194,12 +195,18 @@ public class GT_API_Proxy_Client extends GT_API_Proxy {
 	public void onTextureStitchedPre(TextureStitchEvent.Pre aEvent) {
 		// You should thank me for fixing this Fluid Bug. Seriously, some people just don't set the Icons of their registered Fluids...
 		for (Fluid aFluid : FluidRegistry.getRegisteredFluids().values()) {
-			if (aFluid.getIcon() == null || FluidsGT.BROKEN.contains(aFluid.getName())) try {
-				Block tBlock = aFluid.getBlock();
-				aFluid.setIcons((ST.valid(tBlock) ? tBlock : Blocks.water).getIcon(0, 0));
-			} catch(Throwable e) {
-				e.printStackTrace(ERR);
-				try {aFluid.setIcons(Blocks.water.getIcon(0, 0));} catch(Throwable f) {f.printStackTrace(ERR);}
+			// Check if it is whitelisted first, because those are not actually broken, they just behave like that early on.
+			if (!FluidsGT.BORKEN.contains(aFluid.getName())) {
+				// Fluids without an Icon or with a broken Icon need to be fixed.
+				if (aFluid.getIcon() == null || FluidsGT.BROKEN.contains(aFluid.getName())) try {
+					Block tBlock = aFluid.getBlock();
+					// set it to its Block's Icon, or Water if no Block exists.
+					aFluid.setIcons((ST.valid(tBlock) ? tBlock : Blocks.water).getIcon(0, 0));
+				} catch(Throwable e) {
+					// complete failure, set it to Water!
+					e.printStackTrace(ERR);
+					try {aFluid.setIcons(Blocks.water.getIcon(0, 0));} catch(Throwable f) {f.printStackTrace(ERR);}
+				}
 			}
 		}
 	}
@@ -228,6 +235,7 @@ public class GT_API_Proxy_Client extends GT_API_Proxy {
 			byte aBlockMeta = UT.Code.bind4(aMeta);
 			Block aBlock = ST.block(aEvent.itemStack);
 			Item aItem = ST.item(aEvent.itemStack);
+			OreDictItemData tData = OM.anydata_(aEvent.itemStack);
 			
 			if (aEvent.itemStack.getTagCompound() == null) {
 				if (aBlock == Blocks.dirt && aBlockMeta == 1) {
@@ -244,8 +252,27 @@ public class GT_API_Proxy_Client extends GT_API_Proxy {
 				}
 			}
 			
-			if (MD.Mek.owns(aRegName)) {
-				aEvent.toolTip.set(0, aEvent.toolTip.get(0).replaceAll("Osmium", MT.Ge.mNameLocal));
+			if (MD.Mek.owns(aRegName)) aEvent.toolTip.set(0, aEvent.toolTip.get(0).replaceAll("Osmium", MT.Ge.mNameLocal));
+			if (MD.BP .owns(aRegName)) aEvent.toolTip.set(0, aEvent.toolTip.get(0).replaceAll("Infused Teslatite", MT.PurpleAlloy.mNameLocal).replaceAll("Teslatite", MT.Nikolite.mNameLocal));
+			if (MD.BP.mLoaded) aEvent.toolTip.set(0, aEvent.toolTip.get(0).replaceAll("Teslatite", MT.Nikolite.mNameLocal));
+			
+			if (!(aItem instanceof ItemFluidDisplay) && SHOW_INTERNAL_NAMES) {
+				if (tData != null && tData.validData()) {
+					if (tData.mBlackListed) {
+						if (ST.isGT(aItem))
+						aEvent.toolTip.add(1, LH.Chat.ORANGE + tData.toString());
+						else
+						aEvent.toolTip.add(1, LH.Chat.DCYAN + aRegName + LH.Chat.WHITE + " - " + LH.Chat.CYAN + aMeta + LH.Chat.WHITE + " - " + LH.Chat.ORANGE + tData.toString());
+					} else {
+						if (ST.isGT(aItem))
+						aEvent.toolTip.add(1, LH.Chat.GREEN + tData.toString());
+						else
+						aEvent.toolTip.add(1, LH.Chat.DCYAN + aRegName + LH.Chat.WHITE + " - " + LH.Chat.CYAN + aMeta + LH.Chat.WHITE + " - " + LH.Chat.GREEN + tData.toString());
+					}
+				} else {
+					if (!ST.isGT(aItem))
+					aEvent.toolTip.add(1, LH.Chat.DCYAN + aRegName + LH.Chat.WHITE + " - " + LH.Chat.CYAN + aMeta);
+				}
 			}
 			
 			if (ItemsGT.RECIPE_REMOVED_USE_TRASH_BIN_INSTEAD.contains(aEvent.itemStack, T)) {
@@ -287,26 +314,8 @@ public class GT_API_Proxy_Client extends GT_API_Proxy {
 				aEvent.toolTip.add(LH.Chat.DGRAY + LH.get(LH.TOOLTIP_BEACON_PAYMENT));
 			}
 			
-			OreDictItemData tData = OM.anydata_(aEvent.itemStack);
-			
-			if (!(aItem instanceof ItemFluidDisplay) && SHOW_INTERNAL_NAMES) {
-				if (tData != null && tData.validData()) {
-					if (tData.mBlackListed) {
-						if (ST.isGT(aItem))
-						aEvent.toolTip.add(LH.Chat.ORANGE + tData.toString());
-						else
-						aEvent.toolTip.add(LH.Chat.DCYAN + aRegName + LH.Chat.WHITE + " - " + LH.Chat.CYAN + aMeta + LH.Chat.WHITE + " - " + LH.Chat.ORANGE + tData.toString());
-					} else {
-						if (ST.isGT(aItem))
-						aEvent.toolTip.add(LH.Chat.GREEN + tData.toString());
-						else
-						aEvent.toolTip.add(LH.Chat.DCYAN + aRegName + LH.Chat.WHITE + " - " + LH.Chat.CYAN + aMeta + LH.Chat.WHITE + " - " + LH.Chat.GREEN + tData.toString());
-					}
-				} else {
-					if (!ST.isGT(aItem))
-					aEvent.toolTip.add(LH.Chat.DCYAN + aRegName + LH.Chat.WHITE + " - " + LH.Chat.CYAN + aMeta);
-				}
-			}
+			long tBurnValue = GameRegistry.getFuelValue(ST.amount(1, aEvent.itemStack));
+			if (tBurnValue > 0) aEvent.toolTip.add(LH.Chat.RED + LH.get(LH.TOOLTIP_FURNACE_FUEL) + LH.Chat.WHITE + tBurnValue + " ("+(tBurnValue*EU_PER_FURNACE_TICK)+LH.Chat._RED+"HU"+LH.Chat.WHITE+")");
 			
 			if (tData != null) {
 				if (tData.validPrefix()) {
@@ -315,10 +324,10 @@ public class GT_API_Proxy_Client extends GT_API_Proxy {
 						if (tToolTip != null) aEvent.toolTip.add(tToolTip);
 					}
 				} else {
-					if (IL.RC_Firestone_Refined.equal(aEvent.itemStack, T, T)) aEvent.toolTip.add(LH.Chat.CYAN + "Works in Burning Boxes ("+(800*EU_PER_LAVA)+" HU per Lava Block)"); else
-					if (IL.RC_Firestone_Cracked.equal(aEvent.itemStack, T, T)) aEvent.toolTip.add(LH.Chat.CYAN + "Works in Burning Boxes ("+(600*EU_PER_LAVA)+" HU per Lava Block)"); else
-					if (IL.TF_Pick_Giant       .equal(aEvent.itemStack, T, T)) aEvent.toolTip.add(LH.Chat.CYAN + "Can be repaired with Knightmetal Ingots on the Anvil"); else
-					if (IL.TF_Sword_Giant      .equal(aEvent.itemStack, T, T)) aEvent.toolTip.add(LH.Chat.CYAN + "Can be repaired with Ironwood Ingots on the Anvil"); else
+					if (IL.RC_Firestone_Refined.equal(aEvent.itemStack, T, T)) aEvent.toolTip.add(LH.Chat.CYAN + "GT6 Burning Boxes: "+LH.Chat.WHITE+(800*EU_PER_LAVA)+LH.Chat._RED+"HU"+LH.Chat._CYAN+"per Lava Block"); else
+					if (IL.RC_Firestone_Cracked.equal(aEvent.itemStack, T, T)) aEvent.toolTip.add(LH.Chat.CYAN + "GT6 Burning Boxes: "+LH.Chat.WHITE+(600*EU_PER_LAVA)+LH.Chat._RED+"HU"+LH.Chat._CYAN+"per Lava Block"); else
+					if (IL.TF_Pick_Giant       .equal(aEvent.itemStack, T, T)) aEvent.toolTip.add(LH.Chat.CYAN + "Repairable with Knightmetal Ingots on the Vanilla Anvil"); else
+					if (IL.TF_Sword_Giant      .equal(aEvent.itemStack, T, T)) aEvent.toolTip.add(LH.Chat.CYAN + "Repairable with Ironwood Ingots on the Vanilla Anvil"); else
 					if (IL.TF_Lamp_of_Cinders  .equal(aEvent.itemStack, T, T)) aEvent.toolTip.add(LH.Chat.CYAN + "Can be used as a Lighter for GT6 things and TNT");
 				}
 				if (tData.validMaterial()) {
@@ -465,19 +474,32 @@ public class GT_API_Proxy_Client extends GT_API_Proxy {
 				} else {
 					aEvent.toolTip.add(LH.Chat.DGRAY + "Enable F3+H Mode for Info about contained Materials.");
 				}
-				if (ST.isGT(aItem) && tData.validData()) {
-					if (tData.mMaterial.mMaterial.mOriginalMod == null) {
-						aEvent.toolTip.add(LH.Chat.BLUE + "Material from an Unknown Mod");
-					} else if (tData.mMaterial.mMaterial.mOriginalMod == MD.MC) {
-						aEvent.toolTip.add(LH.Chat.BLUE + "Vanilla Material");
-					} else if (tData.mMaterial.mMaterial.mOriginalMod == MD.GAPI) {
-						if (tData.mMaterial.mMaterial.mID > 0 && tData.mMaterial.mMaterial.mID < 8000) {
-							aEvent.toolTip.add(LH.Chat.BLUE + "Material from the Periodic Table of Elements");
+				
+				if (tData.validData()) {
+					if (ST.isGT(aItem)) {
+						if (tData.mMaterial.mMaterial.mOriginalMod == null) {
+							aEvent.toolTip.add(LH.Chat.BLUE + "Material from an Unknown Mod");
+						} else if (tData.mMaterial.mMaterial.mOriginalMod == MD.MC) {
+							aEvent.toolTip.add(LH.Chat.BLUE + "Vanilla Material");
+						} else if (tData.mMaterial.mMaterial.mOriginalMod == MD.GAPI) {
+							if (tData.mMaterial.mMaterial.mID > 0 && tData.mMaterial.mMaterial.mID < 8000) {
+								aEvent.toolTip.add(LH.Chat.BLUE + "Material from the Periodic Table of Elements");
+							} else {
+								aEvent.toolTip.add(LH.Chat.BLUE + "Random Material handled by Greg API");
+							}
 						} else {
-							aEvent.toolTip.add(LH.Chat.BLUE + "Random Material handled by Greg API");
+							aEvent.toolTip.add(LH.Chat.BLUE + "Material from " + tData.mMaterial.mMaterial.mOriginalMod.mName);
 						}
 					} else {
-						aEvent.toolTip.add(LH.Chat.BLUE + "Material from " + tData.mMaterial.mMaterial.mOriginalMod.mName);
+						if ((tData.mMaterial.mMaterial == MT.Fe || tData.mMaterial.mMaterial == MT.Fe2O3) && tData.mPrefix.containsAny(TD.Prefix.ORE, TD.Prefix.ORE_PROCESSING_BASED) && !aEvent.toolTip.get(0).contains("Native")) {
+							aEvent.toolTip.set(0, aEvent.toolTip.get(0).replaceAll("Banded Iron", MT.Fe2O3.mNameLocal).replaceAll("Iron", MT.Fe2O3.mNameLocal));
+						}
+						if (tData.mMaterial.mMaterial == MT.Au && tData.mPrefix.containsAny(TD.Prefix.ORE, TD.Prefix.ORE_PROCESSING_BASED) && !aEvent.toolTip.get(0).contains("Native")) {
+							aEvent.toolTip.set(0, aEvent.toolTip.get(0).replaceAll("Gold", "Native Gold"));
+						}
+						if (tData.mMaterial.mMaterial == MT.Cu && tData.mPrefix.containsAny(TD.Prefix.ORE, TD.Prefix.ORE_PROCESSING_BASED) && !aEvent.toolTip.get(0).contains("Native")) {
+							aEvent.toolTip.set(0, aEvent.toolTip.get(0).replaceAll("Copper", "Native Copper"));
+						}
 					}
 				}
 			}
@@ -485,7 +507,7 @@ public class GT_API_Proxy_Client extends GT_API_Proxy {
 			// Remove all Nulls and fix eventual Formatting mistakes.
 			for (int i = 1, j = aEvent.toolTip.size(); i < j; i++) {
 				String tTooltip = aEvent.toolTip.get(i);
-				if (tTooltip == null) {aEvent.toolTip.remove(i--); j--;} else aEvent.toolTip.set(i, tTooltip + LH.Chat.RESET_TOOLTIP);
+				if (tTooltip == null || LH.Chat.BASICALLY_EMPTY_STRINGS.contains(tTooltip)) {aEvent.toolTip.remove(i--); j--;} else aEvent.toolTip.set(i, tTooltip + LH.Chat.RESET_TOOLTIP);
 			}
 		} catch(Throwable e) {
 			e.printStackTrace(ERR);

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2024 GregTech-6 Team
+ * Copyright (c) 2025 GregTech-6 Team
  *
  * This file is part of GregTech.
  *
@@ -30,25 +30,25 @@ import net.minecraft.world.IBlockAccess;
  * @author Gregorius Techneticies
  */
 public class PacketSound extends PacketCoordinates {
-	private String mSoundName;
-	private float mSoundStrength, mSoundPitch;
+	private String mSound;
+	private float mVolume, mPitch;
 	
 	public PacketSound(int aDecoderType) {
 		super(aDecoderType);
 	}
 	
-	public PacketSound(String aSoundName, float aSoundStrength, float aSoundPitch, ChunkCoordinates aCoords) {
+	public PacketSound(String aSound, float aVolume, float aPitch, ChunkCoordinates aCoords) {
 		super(aCoords);
-		mSoundName = aSoundName;
-		mSoundStrength = aSoundStrength;
-		mSoundPitch = aSoundPitch;
+		mSound = aSound;
+		mVolume = aVolume;
+		mPitch = aPitch;
 	}
 	
-	public PacketSound(String aSoundName, float aSoundStrength, float aSoundPitch, int aX, int aY, int aZ) {
+	public PacketSound(String aSound, float aVolume, float aPitch, int aX, int aY, int aZ) {
 		super(aX, aY, aZ);
-		mSoundName = aSoundName;
-		mSoundStrength = aSoundStrength;
-		mSoundPitch = aSoundPitch;
+		mSound = aSound;
+		mVolume = aVolume;
+		mPitch = aPitch;
 	}
 	
 	@Override
@@ -58,9 +58,9 @@ public class PacketSound extends PacketCoordinates {
 	
 	@Override
 	public ByteArrayDataOutput encode2(ByteArrayDataOutput aData) {
-		aData.writeUTF(mSoundName);
-		aData.writeFloat(mSoundStrength);
-		aData.writeFloat(mSoundPitch);
+		aData.writeUTF(mSound);
+		aData.writeFloat(mVolume);
+		aData.writeFloat(mPitch);
 		return aData;
 	}
 	
@@ -71,6 +71,6 @@ public class PacketSound extends PacketCoordinates {
 	
 	@Override
 	public void process(IBlockAccess aWorld, INetworkHandler aNetworkHandler) {
-		UT.Sounds.play(mSoundName, 2, mSoundStrength, mSoundPitch, mX, mY, mZ);
+		UT.Sounds.play(mSound, 2, mVolume, mPitch, mX, mY, mZ);
 	}
 }

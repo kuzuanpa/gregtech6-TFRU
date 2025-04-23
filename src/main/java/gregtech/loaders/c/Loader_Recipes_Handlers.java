@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2024 GregTech-6 Team
+ * Copyright (c) 2025 GregTech-6 Team
  *
  * This file is part of GregTech.
  *
@@ -362,6 +362,7 @@ public class Loader_Recipes_Handlers implements Runnable {
 		RM.Lathe                .add(new RecipeMapHandlerPrefix(bolt                                                , 1, NF,  16, 0,    64, NF, screw                                   , 1, NI, NI, T, T, F, new And(ANTIMATTER.NOT, COATED.NOT, FURNACE.NOT)));
 		RM.Lathe                .add(new RecipeMapHandlerPrefix(nugget                                              , 1, NF,  16, 0,    64, NF, round                                   , 1, NI, NI, T, T, F, new And(ANTIMATTER.NOT, COATED.NOT, FURNACE.NOT, LAYERED.NOT)));
 		RM.Lathe                .add(new RecipeMapHandlerPrefix(plateGem                                            , 1, NF,  16, 0,    64, NF, lens                                    , 1, NI, NI, T, T, F, new And(ANTIMATTER.NOT, COATED.NOT, FURNACE.NOT)));
+		RM.Lathe                .add(new RecipeMapHandlerPrefix(gem                                                 , 1, NF,  16, 0,    64, NF, ring                                    , 3, NI, NI, T, T, F, new And(ANTIMATTER.NOT, COATED.NOT, FURNACE.NOT)));
 		RM.Lathe                .add(new RecipeMapHandlerPrefix(ingot                                               , 1, NF,  16, 0,    64, NF, stick                                   , 1, NI, NI, T, T, F, new And(ANTIMATTER.NOT, COATED.NOT, FURNACE.NOT, LAYERED.NOT)));
 		RM.Lathe                .add(new RecipeMapHandlerPrefix(billet                                              , 1, NF,  16, 0,    64, NF, stick                                   , 1, NI, NI, T, T, F, new And(ANTIMATTER.NOT, COATED.NOT, FURNACE.NOT, LAYERED.NOT)));
 		RM.Lathe                .add(new RecipeMapHandlerPrefix(bouleGt                                             , 1, NF,  16, 0,    64, NF, stickLong                               , 3, NI, NI, T, T, F, new And(ANTIMATTER.NOT, COATED.NOT, FURNACE.NOT, LAYERED.NOT)));
@@ -371,6 +372,7 @@ public class Loader_Recipes_Handlers implements Runnable {
 		RM.Lathe                .add(new RecipeMapHandlerPrefix(bolt                                                , 1, NF,  16, 16/ 8, 0, NF, screw                                   , 1, NI, NI, T, T, F, new And(ANTIMATTER.NOT, COATED.NOT, FURNACE)));
 		RM.Lathe                .add(new RecipeMapHandlerPrefix(nugget                                              , 1, NF,  16, 16/ 9, 0, NF, round                                   , 1, NI, NI, T, T, F, new And(ANTIMATTER.NOT, COATED.NOT, FURNACE, LAYERED.NOT)));
 		RM.Lathe                .add(new RecipeMapHandlerPrefix(plateGem                                            , 1, NF,  16, 16   , 0, NF, lens                                    , 1, NI, NI, T, T, F, new And(ANTIMATTER.NOT, COATED.NOT, FURNACE)));
+		RM.Lathe                .add(new RecipeMapHandlerPrefix(gem                                                 , 1, NF,  16, 16   , 0, NF, ring                                    , 3, NI, NI, T, T, F, new And(ANTIMATTER.NOT, COATED.NOT, FURNACE)));
 		RM.Lathe                .add(new RecipeMapHandlerPrefix(ingot                                               , 1, NF,  16, 16   , 0, NF, stick                                   , 1, NI, NI, T, T, F, new And(ANTIMATTER.NOT, COATED.NOT, FURNACE, LAYERED.NOT)));
 		RM.Lathe                .add(new RecipeMapHandlerPrefix(billet                                              , 1, NF,  16, 16   , 0, NF, stick                                   , 1, NI, NI, T, T, F, new And(ANTIMATTER.NOT, COATED.NOT, FURNACE, LAYERED.NOT)));
 		RM.Lathe                .add(new RecipeMapHandlerPrefix(bouleGt                                             , 1, NF,  16, 16* 4, 0, NF, stickLong                               , 3, NI, NI, T, T, F, new And(ANTIMATTER.NOT, COATED.NOT, FURNACE, LAYERED.NOT)));
@@ -753,6 +755,8 @@ public class Loader_Recipes_Handlers implements Runnable {
 		RM.Generifier   .add(new RecipeMapHandlerMaterial(tMaterial                 , NF                                ,   0,   1, NF, MT.Jasper               , NI, T, tConditionP));
 		for (OreDictMaterial tMaterial : ANY.TigerEye.mToThis) if (tMaterial != MT.TigerEyeYellow && !tMaterial.mHidden)
 		RM.Generifier   .add(new RecipeMapHandlerMaterial(tMaterial                 , NF                                ,   0,   1, NF, MT.TigerEyeYellow       , NI, T, tConditionP));
+		for (OreDictMaterial tMaterial : ANY.Amber.mToThis) if (tMaterial != MT.Amber&& !tMaterial.mHidden)
+		RM.Generifier   .add(new RecipeMapHandlerMaterial(tMaterial                 , NF                                ,   0,   1, NF, MT.Amber                , NI, T, tConditionP));
 		for (OreDictMaterial tMaterial : ANY.CaF2.mToThis) if (tMaterial != MT.CaF2 && !tMaterial.mHidden)
 		RM.Generifier   .add(new RecipeMapHandlerMaterial(tMaterial                 , NF                                ,   0,   1, NF, MT.CaF2                 , NI, T, tConditionP));
 		for (OreDictMaterial tMaterial : ANY.Rubber.mToThis) if (tMaterial != MT.Rubber && !tMaterial.mHidden)

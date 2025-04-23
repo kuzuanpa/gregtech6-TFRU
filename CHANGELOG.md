@@ -1,21 +1,53 @@
 This is the most recent Changelog. It also contains some of the changes inside the >>>UPCOMING<<< Versions (most of the time). This is for 1.7.10 btw.
 
 
-6.17.03: (Not released yet)
+6.17.04: (Not released yet)
 Nothing (I tend to only add finished Stuff to the Changelog).
 
 
-6.17.02: (Not released yet)
+6.17.03: (Not released yet)
+[COMPAT] Aether Legacy should now have a similar level of Compat as Aether 2. (dear whoever is responsible for this: Items and Blocks have to be registered during the preInit Phase in 1.7.10. Someone on the Aether Legacy Team must have decided to move the loading of Items from preInit to Init, which breaks quite a lot of shit in 1.7.10)
+Zanite now electrolyzes into the same Stuff that Tazanite does.
+Gravitite is now considered a Type of Diamond in most of my Recipes.
+Golden Amber can now be used like regular Amber, and is also available through debarking Golden Oak.
+Skyroot Poison Buckets now contain 1000L of Poison 2 Potion, to give it another way of obtaining.
+Mossy Holystone got Moss Crafting Support now, and various Holystone shapes can now be crafted.
+There now is an Aether Portal Room in some GT6 Dungeons.
+[COMPAT] Removed the annoying Vanilla NEI Usage Handlers for Furnace Fuel and Furnace Smelting, as there is better NEI Handlers and Tooltips. (Does not target NEI-NH)
+[COMPAT] Et Futurum Ore Data for many Deepslate Ores.
+[COMPAT] Ars Magica Witchwood is now in the Wood Dictionary.
+[ADDED] The Melter, which is just an earlier Version of the Smelter. Works on most Furnace-able Materials.
+[ADDED] Wax Cracking, what is Wax Cracking? It is the "final" Ore Processing Step that involves Steam and Molten Wax, and exists purely because of needing some productive way to get rid of Wax.
+[ADDED] Glowstone, Redstone, Cinnabar, Nikolite, Carminite and Ambers can now be crystallized using Cryotheum in a Bath, either by using crushed Ores or by sacrificing about half of a Block of Dust.
+[ADDED] Signs to the Center Street Worldgen to indicate where which Biomes are. Bottommost Biomes are closest (read it like Highway Street Signs), it looks at the Biomes roughly 100 blocks to the left and right sides of the Road.
+[ADDED] The GT6 Builder Wand can now place GT6 Multiblock Parts from your Inventory in a 3x3x3 around the clicked Multiblock Part (range limit so you dont build behind walls).
+[FIXED] Ars Magicka had a broken Fluid Block.
+
+
+6.17.02:
+[COMPAT] Et Futurum Wood Data for Cherry and Bamboo.
+[COMPAT] Unboxinator can now unbox Thaumcraft Loot Bags. I am glad Azanor arbitrarily decided to have a maximum of 12 Items outputted by those, otherwise I would've had trouble fitting it into the Unboxinators output slots.
+[FIXED] Thaumcraft Loot Bags are now actually randomizing the Enchantments on the Books they drop instead of repeating the exact same Enchantment over and over until you relaunch the Game.
 [FIXED] A bunch of Bugs related to saving and loading Worlds, in regards to GT6 Specific Data.
 [FIXED] Some Bug with Bukkit/Cauldron/etc. where things like Mini Portals and Ender Garbage Bins did not work correctly because of certain Events being thrown with weird Paths, triggering "loaded a different Save File" detection, which for Servers should flat out not be possible in the first place.
 [FIXED] Rivers, Lakes, Oceans and Beaches do no longer dry placed Grass Bales.
 [FIXED] Air vents were collecting Air even when submerged in Liquids or other Gasses.
 [FIXED] Something that made Mass Storages jam somehow, I think. I dont know how to replicate it, so I dont know if it's fixed.
 [FIXED] Potion Fluids now use the Potion's getLiquidColor() instead of a hardcoded Texture.
+[CHANGED] Cows, Sheep, Pigs and Horses break Tall Grass that they walk through.
 [CHANGED] Platinum Group Metals, their Sludge and Rare Earth now have better Thaumcraft Aspects.
 [CHANGED] Roasters of higher Tiers no longer have overclocking penalty.
 [CHANGED] Zirconium now has durability and speed identical to Diamonds.
 [CHANGED] Rock Salt is mostly named Sylvite now, except in its Dust form.
+[ADDED] Extruder Recipe for Redstone Dust to Obsidian Block using the Cobble Generator Item. Yes this is a vanilla exploit I turned into a Recipe.
+[ADDED]
+Loot Crates, which can be made from about 3 Units of tediously crafted Gold, and look exactly like all the other Wooden Crates.
+Each Loot Crate will net you 1 random Stack of Vanilla Loot Table Loot when Unboxinated or rightclicked with a Crowbar.
+The primary purpose is to ensure you dont need to constantly explore to get certain things, while not making it too easy.
+Also this does serve as a more complicated version of IC2s Scrapbox Mechanic, where here you need Gold instead of Garbage to do this.
+I chose Gold because it is the most common useless Metal in Modded Minecraft, especially since you can melt down Notch Apples and such.
+I made sure all its ingredients are automatable without the Crucible, but it still requires a big Setup if you really want to automate this.
+Yes, it is possible for Loot Crates to drop a stack of GregTech Crates. See it like buying a bunch of cheaper Metal for Gold or so.
 
 
 6.17.01:

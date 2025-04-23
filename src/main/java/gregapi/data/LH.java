@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2023 GregTech-6 Team
+ * Copyright (c) 2025 GregTech-6 Team
  *
  * This file is part of GregTech.
  *
@@ -19,6 +19,7 @@
 
 package gregapi.data;
 
+import gregapi.code.HashSetNoNulls;
 import gregapi.code.TagData;
 import gregapi.lang.LanguageHandler;
 import gregapi.tileentity.behavior.TE_Behavior_Energy_Converter;
@@ -31,6 +32,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 
 import java.util.List;
+import java.util.Set;
 
 import static gregapi.data.CS.*;
 
@@ -143,6 +145,7 @@ public class LH {
 	, TOOL_TO_OPEN_CROWBAR = "gt.lang.use.crowbar.to.open"
 	, TOOL_TO_UNCOVER_CROWBAR = "gt.lang.use.crowbar.to.uncover"
 	, TOOL_TO_DECALCIFY_CHISEL = "gt.lang.use.chisel.to.decalcify"
+	, TOOL_TO_BUILD_BUILDER_WAND = "gt.lang.use.builder.wand.to.ease.building"
 	, TOOL_TO_DETAIL_MAGNIFYINGGLASS = "gt.lang.use.magnifyingglass.to.detail"
 	, TOOL_TO_MEASURE_GEIGER_COUNTER = "gt.lang.use.geigercoutner.to.measure"
 	, TOOL_TO_MEASURE_THERMOMETER = "gt.lang.use.thermometer.to.measure"
@@ -193,6 +196,7 @@ public class LH {
 	, TOOLTIP_BLASTRANGE = "gt.lang.blastrange"
 	, TOOLTIP_BLASTFORTUNE = "gt.lang.blastfortune"
 	, TOOLTIP_BLASTRESISTANCE = "gt.lang.blastresistance"
+	, TOOLTIP_FURNACE_FUEL = "gt.lang.furnacefuel"
 	, TOOLTIP_RAILSPEED = "gt.lang.railspeed"
 	, TOOLTIP_WALKSPEED = "gt.lang.walkspeed"
 	, TOOLTIP_GRAVITY = "gt.lang.gravity"
@@ -527,6 +531,7 @@ public class LH {
 		add(TOOL_TO_OPEN_CROWBAR                        , "Use Crowbar to open this by harvesting");
 		add(TOOL_TO_UNCOVER_CROWBAR                     , "Use Crowbar to remove Covers");
 		add(TOOL_TO_DECALCIFY_CHISEL                    , "Use Chisel to decalcify");
+		add(TOOL_TO_BUILD_BUILDER_WAND                  , "Use Builder Wand to ease building");
 		add(TOOL_TO_DETAIL_MAGNIFYINGGLASS              , "Use Magnifying Glass to see Details");
 		add(TOOL_TO_MEASURE_GEIGER_COUNTER              , "Use Geiger Counter to Measure");
 		add(TOOL_TO_MEASURE_THERMOMETER                 , "Use Thermometer to Measure");
@@ -592,6 +597,7 @@ public class LH {
 		add(TOOLTIP_BLASTRANGE                          , "Blast Range: ");
 		add(TOOLTIP_BLASTFORTUNE                        , "Blast Fortune Level: ");
 		add(TOOLTIP_BLASTRESISTANCE                     , "Blast Resistance: ");
+		add(TOOLTIP_FURNACE_FUEL                        , "Fuel Value: ");
 		add(TOOLTIP_RAILSPEED                           , "Rail Speed: ");
 		add(TOOLTIP_WALKSPEED                           , "This Block alters the Walk Speed");
 		add(TOOLTIP_GRAVITY                             , "This Block is affected by Gravity");
@@ -676,6 +682,32 @@ public class LH {
 	}
 
 	public static class Chat {
+		public static final Set<String> BASICALLY_EMPTY_STRINGS = new HashSetNoNulls<>(F, "", " ", "  ", "   ", "    ");
+		
+		static {
+			for (EnumChatFormatting tEnum1 : EnumChatFormatting.values()) {
+				// Literally just formatting without Text in it.
+				BASICALLY_EMPTY_STRINGS.add(    tEnum1.toString()    );
+				BASICALLY_EMPTY_STRINGS.add(    tEnum1.toString()+" ");
+				BASICALLY_EMPTY_STRINGS.add(" "+tEnum1.toString()    );
+				for (EnumChatFormatting tEnum2 : EnumChatFormatting.values()) {
+					// Literally just formatting without Text in it.
+					BASICALLY_EMPTY_STRINGS.add(    tEnum1.toString()+     tEnum2.toString()    );
+					BASICALLY_EMPTY_STRINGS.add(    tEnum1.toString()+     tEnum2.toString()+" ");
+					BASICALLY_EMPTY_STRINGS.add(" "+tEnum1.toString()+     tEnum2.toString()    );
+					BASICALLY_EMPTY_STRINGS.add(" "+tEnum1.toString()+     tEnum2.toString()+" ");
+					BASICALLY_EMPTY_STRINGS.add(    tEnum1.toString()+" " +tEnum2.toString()    );
+					BASICALLY_EMPTY_STRINGS.add(    tEnum1.toString()+" " +tEnum2.toString()+" ");
+					BASICALLY_EMPTY_STRINGS.add(" "+tEnum1.toString()+" " +tEnum2.toString()    );
+					BASICALLY_EMPTY_STRINGS.add(" "+tEnum1.toString()+" " +tEnum2.toString()+" ");
+					BASICALLY_EMPTY_STRINGS.add(    tEnum1.toString()+"  "+tEnum2.toString()    );
+					BASICALLY_EMPTY_STRINGS.add(    tEnum1.toString()+"  "+tEnum2.toString()+" ");
+					BASICALLY_EMPTY_STRINGS.add(" "+tEnum1.toString()+"  "+tEnum2.toString()    );
+					BASICALLY_EMPTY_STRINGS.add(" "+tEnum1.toString()+"  "+tEnum2.toString()+" ");
+				}
+			}
+		}
+		
 		public static final String
 		   BLACK          = EnumChatFormatting.BLACK.toString()
 		,  DBLUE          = EnumChatFormatting.DARK_BLUE.toString()
