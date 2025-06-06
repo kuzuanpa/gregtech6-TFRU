@@ -55,6 +55,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidHandler;
 import net.minecraftforge.fluids.IFluidTank;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 

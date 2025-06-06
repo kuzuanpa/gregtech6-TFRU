@@ -19,16 +19,7 @@
 
 package gregapi.tileentity.base;
 
-import static gregapi.data.CS.*;
-
-import java.util.List;
-
-import gregapi.block.multitileentity.IMultiTileEntity.IMTE_GetBlockHardness;
-import gregapi.block.multitileentity.IMultiTileEntity.IMTE_GetExplosionResistance;
-import gregapi.block.multitileentity.IMultiTileEntity.IMTE_GetLightOpacity;
-import gregapi.block.multitileentity.IMultiTileEntity.IMTE_GetSubItems;
-import gregapi.block.multitileentity.IMultiTileEntity.IMTE_SyncDataByte;
-import gregapi.block.multitileentity.IMultiTileEntity.IMTE_SyncDataByteArray;
+import gregapi.block.multitileentity.IMultiTileEntity.*;
 import gregapi.block.multitileentity.MultiTileEntityBlockInternal;
 import gregapi.code.TagData;
 import gregapi.data.MT;
@@ -45,6 +36,10 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+
+import java.util.List;
+
+import static gregapi.data.CS.*;
 
 /**
  * @author Gregorius Techneticies
@@ -72,13 +67,13 @@ public abstract class TileEntityBase07Paintable extends TileEntityBase06Covers i
 				for (int i = 0; i < 4; i++) ST.place(worldObj,xCoord,yCoord,zCoord, OP.scrapGt.mat(mMaterial,getRandomNumber(18)));
 				DEB.println("Machine overcharged with: " + aVoltage + " " + aEnergyType.getLocalisedNameLong());
 			}else breakPreventCount++;
-			UT.Sounds.send(worldObj, SFX.IC_MACHINE_INTERRUPT, 1, 1, getCoords());
+			UT.Sounds.send(SFX.IC_MACHINE_INTERRUPT, 1, 1, worldObj, getCoords());
 			return;
 		}
 		if(TD.Energy.ALL_ELECTRIC.contains(aEnergyType))explode(4);
 		else setToFire();
 		// Yes, I will annoy people with that a lot, even when they disable Explosions.
-		UT.Sounds.send(worldObj, TD.Energy.ALL_ELECTRIC.contains(aEnergyType)?SFX.IC_MACHINE_OVERLOAD:SFX.MC_EXPLODE, 1, 1, getCoords());
+		UT.Sounds.send(TD.Energy.ALL_ELECTRIC.contains(aEnergyType)?SFX.IC_MACHINE_OVERLOAD:SFX.MC_EXPLODE, 1, 1, worldObj, getCoords());
 		// The Noise should make the position obvious.
 		DEB.println("Machine overcharged with: " + aVoltage + " " + aEnergyType.getLocalisedNameLong());
 	}

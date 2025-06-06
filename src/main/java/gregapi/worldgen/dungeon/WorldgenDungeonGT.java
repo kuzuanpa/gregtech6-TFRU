@@ -107,7 +107,7 @@ public class WorldgenDungeonGT extends WorldgenObject {
 	public HashSetNoNulls<TagData> mTags = new HashSetNoNulls<>();
 
 	@SafeVarargs
-	public WorldgenDungeonGT(String aName, boolean aDefault, int aProbability, int aMinSize, int aMaxSize, int aMinY, int aMaxY, int aRoomChance, boolean aOverworld, boolean aNether, boolean aEnd, boolean aPortalNether, boolean aPortalEnd, boolean aPortalTwilight, boolean aPortalAether, boolean aPortalMyst, List<WorldgenObject>... aLists) {
+	public WorldgenDungeonGT(String aName, boolean aDefault, int aProbability, int aMinSize, int aMaxSize, int aMinY, int aMaxY, int aRoomChance, boolean aOverworld, boolean aNether, boolean aEnd, boolean aPortalNether, boolean aPortalEnd, boolean aPortalTwilight, boolean aPortalAether, boolean aPortalMyst, boolean aZPM, List<WorldgenObject>... aLists) {
 		super(aName, aDefault, aLists);
 		mProbability        = Math.max(1,           getConfigFile().get(mCategory, "Probability"      , aProbability   ));
 		mMinSize            = Math.max(2,           getConfigFile().get(mCategory, "MinSize"          , aMinSize       ));
@@ -120,7 +120,7 @@ public class WorldgenDungeonGT extends WorldgenObject {
 		mPortalTwilight     =                       getConfigFile().get(mCategory, "PortalTwilight"   , aPortalTwilight);
 		mPortalAether       =                       getConfigFile().get(mCategory, "PortalAether"     , aPortalAether  );
 		mPortalMyst         =                       getConfigFile().get(mCategory, "PortalMyst"       , aPortalMyst    );
-		mZPM                =                       getConfigFile().get(mCategory, "ZPMs"             , T);
+		mZPM                =                       getConfigFile().get(mCategory, "ZPMs"             , aZPM);
 
 		if (!getConfigFile().get(mCategory, "Room.Workshop"          , T)) mTags.add(TAG_WORKSHOP);
 		if (!getConfigFile().get(mCategory, "Room.Mining.Bedrock"    , T)) mTags.add(TAG_MINING_BEDROCK);
@@ -133,7 +133,7 @@ public class WorldgenDungeonGT extends WorldgenObject {
 	}
 
 	@SafeVarargs
-	public WorldgenDungeonGT(String aName, boolean aDefault, int aProbability, int aMinSize, int aMaxSize, int aMinY, int aMaxY, int aRoomChance, boolean aOverworld, boolean aNether, boolean aEnd, boolean aPortalNether, boolean aPortalEnd, boolean aPortalTwilight, boolean aPortalMyst,boolean aZPM, List<WorldgenObject>... aLists) {
+	public WorldgenDungeonGT(String aName, boolean aDefault, int aProbability, int aMinSize, int aMaxSize, int aMinY, int aMaxY, int aRoomChance, boolean aOverworld, boolean aNether, boolean aEnd, boolean aPortalNether, boolean aPortalEnd, boolean aPortalTwilight, boolean aPortalMyst, boolean aZPM, List<WorldgenObject>... aLists) {
 		super(aName, aDefault, aLists);
 		mProbability        = Math.max(1,           getConfigFile().get(mCategory, "Probability"      , aProbability   ));
 		mMinSize            = Math.max(2,           getConfigFile().get(mCategory, "MinSize"          , aMinSize       ));
