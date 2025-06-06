@@ -177,6 +177,15 @@ public class Loader_Recipes_Temporary implements Runnable {
 		}
 		
 		
+		if (MD.HOWL.mLoaded) {
+			RM.biomass(ST.make(MD.HOWL, "wolfsbane", 8, W));
+			
+			RM.Squeezer.addRecipe1(T, 16, 16, ST.make(MD.HOWL, "wolfsbane", 1, W), NF, DYE_FLUIDS_FLOWER[DYE_INDEX_Purple], ST.make(Items.dye, 2, DYE_INDEX_Purple));
+			RM.Juicer  .addRecipe1(T, 16, 16, ST.make(MD.HOWL, "wolfsbane", 1, W), NF, DYE_FLUIDS_FLOWER[DYE_INDEX_Purple], ST.make(Items.dye, 2, DYE_INDEX_Purple));
+			RM.ic2_extractor(ST.make(MD.HOWL, "wolfsbane", 1, W), ST.make(Items.dye, 3, DYE_INDEX_Purple));
+		}
+		
+		
 		if (MD.HEE.mLoaded) {
 			RM.biomass(ST.make(MD.HEE, "crossed_decoration", 8, W));
 			RM.biomass(ST.make(MD.HEE, "death_flower"      , 8, W));
@@ -656,6 +665,7 @@ public class Loader_Recipes_Temporary implements Runnable {
 		RM.generify   (FL.make("chlorine"              , 5), FL.make("rc chlorine", 1));
 		RM.generify   (FL.make("heavywater"            , 1), FL.Heavy_Reiker.make(1));
 		RM.genericycle(FL.XP                      .make( 3), FL.Mob.make(10), FL.XP_Molten.make(3));
+		RM.genericycle(FL.Potion_Poison_2         .make( 1), FL.Poison.make(1));
 		RM.genericycle(FL.Redstone_TE             .make(25), FL.Redstone.make(36));
 		RM.genericycle(FL.Lubricant               .make( 1), FL.LubRoCant.make(1));
 		RM.generify   (FL.Oil_Canola              .make( 2), FL.lube(1));

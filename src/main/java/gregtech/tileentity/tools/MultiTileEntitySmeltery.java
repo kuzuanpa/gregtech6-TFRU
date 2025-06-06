@@ -431,21 +431,21 @@ public class MultiTileEntitySmeltery extends TileEntityBase07Paintable implement
 						ItemStack tOutputStack = OP.scrapGt.mat(tLightest.mMaterial, 1);
 						if (tOutputStack == null || tLightest.mAmount < OP.scrapGt.mAmount) {
 							tLightest.mAmount = 0;
-							aPlayer.addExhaustion(0.1F);
+							UT.Entities.exhaust(aPlayer);
 							UT.Entities.applyTemperatureDamage(aPlayer, mTemperature, 1, 5.0F);
 							return T;
 						}
 						if (aStack == null) {
 							aPlayer.inventory.setInventorySlotContents(aPlayer.inventory.currentItem, tOutputStack);
 							tLightest.mAmount-=OP.scrapGt.mAmount;
-							aPlayer.addExhaustion(0.1F);
+							UT.Entities.exhaust(aPlayer);
 							UT.Entities.applyTemperatureDamage(aPlayer, mTemperature, 1, 5.0F);
 							return T;
 						}
 						if (ST.equal(aStack, tOutputStack) && aStack.stackSize < aStack.getMaxStackSize()) {
 							aStack.stackSize++;
 							tLightest.mAmount-=OP.scrapGt.mAmount;
-							aPlayer.addExhaustion(0.1F);
+							UT.Entities.exhaust(aPlayer);
 							UT.Entities.applyTemperatureDamage(aPlayer, mTemperature, 1, 5.0F);
 							return T;
 						}
@@ -464,7 +464,7 @@ public class MultiTileEntitySmeltery extends TileEntityBase07Paintable implement
 									if (ST.valid(tStack)) {
 										tLightest.mAmount -= UT.Code.units(tAmount - tFluid.amount, tLightest.mMaterial.mLiquid.amount, tLightest.mMaterial.mLiquidUnit, T);
 										aStack.stackSize--;
-										UT.Inventories.addStackToPlayerInventoryOrDrop(aPlayer, tStack, T);
+										ST.give(aPlayer, tStack, T);
 										return T;
 									}
 								}
@@ -478,13 +478,13 @@ public class MultiTileEntitySmeltery extends TileEntityBase07Paintable implement
 								if (FL.equal(tFluidData.mMaterial.mLiquid, tFluid)) {
 									if (addMaterialStacks(new ArrayListNoNulls<>(F, OM.stack(tFluidData.mMaterial, UT.Code.units(tFluid.amount, tFluidData.mMaterial.mLiquid.amount, tFluidData.mMaterial.mLiquidUnit, F))), UT.Code.bind(FL.temperature(tFluid), tFluidData.mMaterial.mMeltingPoint+25, tFluidData.mMaterial.mBoilingPoint-1))) {
 										aStack.stackSize--;
-										UT.Inventories.addStackToPlayerInventoryOrDrop(aPlayer, tStack, T);
+										ST.give(aPlayer, tStack, T);
 										return T;
 									}
 								} else {
 									if (addMaterialStacks(new ArrayListNoNulls<>(F, OM.stack(tFluidData.mMaterial, UT.Code.units(tFluid.amount, tFluidData.mAmount, U, F))), UT.Code.bind(FL.temperature(tFluid), tFluidData.mMaterial.mMeltingPoint+25, tFluidData.mMaterial.mBoilingPoint-1))) {
 										aStack.stackSize--;
-										UT.Inventories.addStackToPlayerInventoryOrDrop(aPlayer, tStack, T);
+										ST.give(aPlayer, tStack, T);
 										return T;
 									}
 								}
@@ -520,17 +520,17 @@ public class MultiTileEntitySmeltery extends TileEntityBase07Paintable implement
 			if (tLightest != null && mTemperature < tLightest.mMaterial.mMeltingPoint) {
 				if (tLightest.mAmount < OP.scrapGt.mAmount) {
 					tLightest.mAmount = 0;
-					((EntityPlayer)aPlayer).addExhaustion(0.1F);
+					UT.Entities.exhaust(aPlayer);
 					return 500;
 				}
 				ItemStack tOutputStack = OP.scrapGt.mat(tLightest.mMaterial, UT.Code.bindStack(tLightest.mAmount / OP.scrapGt.mAmount));
 				if (tOutputStack == null) {
 					tLightest.mAmount = 0;
-					((EntityPlayer)aPlayer).addExhaustion(0.1F);
+					UT.Entities.exhaust(aPlayer);
 					return 500;
 				}
-				if (UT.Inventories.addStackToPlayerInventory((EntityPlayer)aPlayer, tOutputStack)) {
-					((EntityPlayer)aPlayer).addExhaustion(0.1F * tOutputStack.stackSize);
+				if (ST.add(aPlayer, tOutputStack)) {
+					UT.Entities.exhaust(aPlayer, 0.1F * tOutputStack.stackSize);
 					tLightest.mAmount -= OP.scrapGt.mAmount * tOutputStack.stackSize;
 					return 1000 * tOutputStack.stackSize;
 				}

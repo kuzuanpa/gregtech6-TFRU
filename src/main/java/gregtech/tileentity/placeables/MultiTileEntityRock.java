@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2023 GregTech-6 Team
+ * Copyright (c) 2025 GregTech-6 Team
  *
  * This file is part of GregTech.
  *
@@ -30,7 +30,6 @@ import gregapi.tileentity.ITileEntityQuickObstructionCheck;
 import gregapi.tileentity.notick.TileEntityBase03MultiTileEntities;
 import gregapi.util.OM;
 import gregapi.util.ST;
-import gregapi.util.UT;
 import gregapi.util.WD;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -52,15 +51,15 @@ import static gregapi.data.CS.*;
 /**
  * @author Gregorius Techneticies
  */
-public class MultiTileEntityRock extends TileEntityBase03MultiTileEntities implements IMTE_CanEntityDestroy, IMTE_IgnorePlayerCollisionWhenPlacing, IMTE_OnToolClick, IMTE_OnNeighborBlockChange, IMTE_GetBlockHardness, IMTE_IsSideSolid, IMTE_GetLightOpacity, IMTE_GetExplosionResistance, ITileEntityQuickObstructionCheck, IMTE_GetCollisionBoundingBoxFromPool, IMTE_GetSelectedBoundingBoxFromPool, IMTE_SetBlockBoundsBasedOnState {
-	public static final ITexture sStoneTexture = BlockTextureCopied.get(Blocks.stone), sSnowTexture = BlockTextureCopied.get(Blocks.snow_layer);
+public class MultiTileEntityRock extends TileEntityBase03MultiTileEntities implements IMTE_CanPlaceSnowLayerOnRemoval, IMTE_CanEntityDestroy, IMTE_IgnorePlayerCollisionWhenPlacing, IMTE_OnToolClick, IMTE_OnNeighborBlockChange, IMTE_GetBlockHardness, IMTE_IsSideSolid, IMTE_GetLightOpacity, IMTE_GetExplosionResistance, ITileEntityQuickObstructionCheck, IMTE_GetCollisionBoundingBoxFromPool, IMTE_GetSelectedBoundingBoxFromPool, IMTE_SetBlockBoundsBasedOnState {
+	public static final ITexture sStoneTexture = BlockTextureCopied.get(Blocks.stone);
 	public ITexture mTexture = sStoneTexture;
 	public ItemStack mRock;
 	public float mMinX = PX_P[5], mMinZ = PX_P[5], mMaxX = PX_N[5], mMaxY = PX_P[2], mMaxZ = PX_N[5];
 	
 	@Override
 	public void readFromNBT2(NBTTagCompound aNBT) {
-		Random tRandom = new Random(xCoord^yCoord^zCoord);
+		Random tRandom = WD.random(this);
 		mMinX = PX_P[4 + tRandom.nextInt(4)];
 		mMinZ = PX_P[4 + tRandom.nextInt(4)];
 		mMaxX = PX_N[4 + tRandom.nextInt(4)];
@@ -86,7 +85,7 @@ public class MultiTileEntityRock extends TileEntityBase03MultiTileEntities imple
 	public long onToolClick(String aTool, long aRemainingDurability, long aQuality, Entity aPlayer, List<String> aChatReturn, IInventory aPlayerInventory, boolean aSneaking, ItemStack aStack, byte aSide, float aHitX, float aHitY, float aHitZ) {
 		if (isServerSide() && aTool.equals(TOOL_magnifyingglass)) {
 			if (aPlayer instanceof EntityPlayer && aSneaking) {
-				UT.Inventories.addStackToPlayerInventoryOrDrop((EntityPlayer)aPlayer, getRock(1), T, worldObj, xCoord+0.5, yCoord+0.5, zCoord+0.5);
+				ST.give(aPlayer, getRock(1), T, worldObj, xCoord+0.5, yCoord+0.5, zCoord+0.5);
 				playCollect();
 				setToAir();
 				return 0;
@@ -143,7 +142,7 @@ public class MultiTileEntityRock extends TileEntityBase03MultiTileEntities imple
 	@Override
 	public boolean onBlockActivated2(EntityPlayer aPlayer, byte aSide, float aHitX, float aHitY, float aHitZ) {
 		if (isClientSide()) return T;
-		UT.Inventories.addStackToPlayerInventoryOrDrop(aPlayer, getRock(1), T, worldObj, xCoord+0.5, yCoord+0.5, zCoord+0.5);
+		ST.give(aPlayer, getRock(1), T, worldObj, xCoord+0.5, yCoord+0.5, zCoord+0.5);
 		playCollect();
 		return setToAir();
 	}
@@ -191,12 +190,9 @@ public class MultiTileEntityRock extends TileEntityBase03MultiTileEntities imple
 	
 	@Override
 	public int getRenderPasses(Block aBlock, boolean[] aShouldSideBeRendered) {
-		if (worldObj == null) {
-			mTexture = sStoneTexture; return 1;
-		}
-		for (byte tSide : ALL_SIDES_HORIZONTAL) if (getBlockAtSide(tSide) == Blocks.snow_layer) {
-			mTexture = sSnowTexture; return 2;
-		}
+		if (worldObj == null) {mTexture = sStoneTexture; return 1;}
+		if (hasSnow()) {mTexture = SNOW_TEXTURE; return 2;}
+		
 		Block tBlock = getBlockAtSide(SIDE_BOTTOM);
 		if (tBlock == BlocksGT.Diggables) {
 			mTexture = BlockTextureCopied.get(BlocksGT.Kimberlite, SIDE_ANY, 0); return 1;

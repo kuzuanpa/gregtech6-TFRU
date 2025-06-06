@@ -19,6 +19,7 @@
 
 package gregtech.entities;
 
+import gregapi.damage.DamageSourceCombat;
 import gregapi.data.*;
 import gregapi.util.OM;
 import gregapi.util.ST;
@@ -26,10 +27,7 @@ import gregapi.util.UT;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.monster.EntityPigZombie;
-import net.minecraft.entity.monster.EntitySkeleton;
-import net.minecraft.entity.monster.EntitySpider;
-import net.minecraft.entity.monster.EntityZombie;
+import net.minecraft.entity.monster.*;
 import net.minecraft.entity.passive.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -41,15 +39,16 @@ import java.util.List;
 import static gregapi.data.CS.*;
 
 public class Override_Drops {
-	public static void handleDrops(EntityLivingBase aDead, String aClass, List<EntityItem> aDrops, int aLooting, boolean aBurn, boolean aPlayerKill) {
+	public static void handleDrops(EntityLivingBase aDead, String aClass, List<EntityItem> aDrops, DamageSource aDamage, int aLooting, boolean aBurn, boolean aPlayerKill) {
 		if (UT.Code.stringInvalid(aClass) || "EntityTFLichMinion".equalsIgnoreCase(aClass) || "EntitySkeletonBoss".equalsIgnoreCase(aClass)) return;
 		final boolean aSpace = aClass.startsWith("entityevolved") || aClass.startsWith("entityalien");
 		boolean tReplaceIron = aClass.startsWith("entitygaia");
 		
 		int tRandomNumber = RNGSUS.nextInt(Math.max(36, 144-aLooting*3)), tIntestinesAmount = 0;
 		
-		
-		if (aDead instanceof EntityAnimal && aDead.isChild()) {
+		if (aDead instanceof EntityPlayer) {
+			// Do Nothing
+		} else if (aDead instanceof EntityAnimal && aDead.isChild()) {
 			tReplaceIron = T;
 		} else if ("ZombieFarmer".equalsIgnoreCase(aClass)) {
 			tReplaceIron = T;
@@ -61,6 +60,8 @@ public class Override_Drops {
 			if (RNGSUS.nextInt( 3) == 0) aDrops.add(ST.entity(aDead, RNGSUS.nextBoolean()?ST.copy(tGrass):IL.Stick.get(1)));
 			if (RNGSUS.nextInt( 5) == 0) aDrops.add(ST.entity(aDead, RNGSUS.nextBoolean()?ST.copy(tGrass):IL.Mud_Ball.get(1)));
 			if (RNGSUS.nextInt(10) == 0) aDrops.add(ST.entity(aDead, RNGSUS.nextBoolean()?ST.copy(tGrass):IL.Tool_Matches.get(1)));
+			if (RNGSUS.nextInt(10) == 0) aDrops.add(ST.entity(aDead, IL.Bag_Loot_Sapling.get(1)));
+			if (RNGSUS.nextInt(10) == 0) aDrops.add(ST.entity(aDead, IL.Bag_Loot_Seeds.get(1)));
 			
 			if (tRandomNumber == 0) {
 			aDrops.add(ST.entity(aDead, UT.Code.select(OP.toolHeadHoe.mat(MT.Bronze, 1)
@@ -77,6 +78,8 @@ public class Override_Drops {
 			, IL.Bottle_Beer.get(1+RNGSUS.nextInt(3))
 			, IL.Food_Can_Veggie_6.get(1+RNGSUS.nextInt(2))
 			, IL.Food_Can_Fruit_2.get(1+RNGSUS.nextInt(2))
+			, IL.Bag_Loot_Sapling.get(1+RNGSUS.nextInt(2))
+			, IL.Bag_Loot_Seeds.get(1+RNGSUS.nextInt(2))
 			)));
 			}
 			
@@ -89,6 +92,7 @@ public class Override_Drops {
 			if (RNGSUS.nextInt( 3) == 0) aDrops.add(ST.entity(aDead, IL.Stick.get(1)));
 			if (RNGSUS.nextInt( 5) == 0) aDrops.add(ST.entity(aDead, OP.rockGt.mat(RNGSUS.nextBoolean()?MT.Ag:MT.Au, 1)));
 			if (RNGSUS.nextInt(10) == 0) aDrops.add(ST.entity(aDead, IL.Tool_Matches.get(1)));
+			if (RNGSUS.nextInt(20) == 0) aDrops.add(ST.entity(aDead, IL.Bag_Loot_Gems.get(1)));
 			
 			if (tRandomNumber == 0) {
 			aDrops.add(ST.entity(aDead, UT.Code.select(OP.toolHeadPickaxe.mat(MT.Bronze, 1)
@@ -107,6 +111,7 @@ public class Override_Drops {
 			, IL.Food_Can_Fish_4.get(1+RNGSUS.nextInt(2))
 			, IL.Food_Can_Chum_4.get(1+RNGSUS.nextInt(2))
 			, IL.Dynamite.get(1+RNGSUS.nextInt(6))
+			, IL.Bag_Loot_Gems.get(1+RNGSUS.nextInt(2))
 			)));
 			}
 			
@@ -226,6 +231,7 @@ public class Override_Drops {
 			if (RNGSUS.nextInt( 3) == 0) aDrops.add(ST.entity(aDead, IL.Stick.get(1)));
 			if (RNGSUS.nextInt(20) == 0) aDrops.add(ST.entity(aDead, IL.Tool_Matches.get(1)));
 			if (RNGSUS.nextInt(10) == 0) aDrops.add(ST.entity(aDead, OP.bulletGtSmall.mat(MT.Steel, 1+RNGSUS.nextInt(2))));
+			if (RNGSUS.nextInt(20) == 0) aDrops.add(ST.entity(aDead, IL.Bag_Loot_Gems.get(1)));
 			
 			if (tRandomNumber == 0) {
 			aDrops.add(ST.entity(aDead, UT.Code.select(ST.make(Items.name_tag, 1, 0)
@@ -246,6 +252,7 @@ public class Override_Drops {
 			, IL.Compass_North.get(1)
 			, IL.Pill_Iodine.get(1)
 			, IL.Duct_Tape.get(1, IL.Tool_MatchBox_Full.get(1))
+			, IL.Bag_Loot_Gems.get(1+RNGSUS.nextInt(2))
 			)));
 			}
 			
@@ -366,6 +373,9 @@ public class Override_Drops {
 			tReplaceIron = T;
 			
 			if (aPlayerKill) {
+				if (RNGSUS.nextInt(50) == 0) aDrops.add(ST.entity(aDead, IL.Bag_Loot_Sapling.get(1)));
+				if (RNGSUS.nextInt(50) == 0) aDrops.add(ST.entity(aDead, IL.Bag_Loot_Seeds.get(1)));
+				
 				if (MOBS_DROP_JUNK) {
 					if (RNGSUS.nextInt( 2) == 0) aDrops.add(ST.entity(aDead, RNGSUS.nextBoolean()?OP.rockGt.mat(aSpace?MT.STONES.SpaceRock:MT.Stone, 1):aSpace?OP.rockGt.mat(MT.MeteoricIron, 1):ST.make(Items.flint, 1, 0)));
 					if (RNGSUS.nextInt( 5) == 0) aDrops.add(ST.entity(aDead, aSpace?OP.stick.mat(MT.Plastic, 1):IL.Stick.get(1)));
@@ -382,29 +392,18 @@ public class Override_Drops {
 					).get(1)));
 					}
 				}
-				if (MOBS_DROP_BOOK) {
-					if (((EntityZombie)aDead).isVillager()) for (int i = 0, j = 1+RNGSUS.nextInt(3); i < j; i++) switch(RNGSUS.nextInt(20)) {
-					case  0: aDrops.add(ST.entity(aDead, ST.book("Manual_Hunting_Creeper")));  break;
-					case  1: aDrops.add(ST.entity(aDead, ST.book("Manual_Hunting_Skeleton"))); break;
-					case  2: aDrops.add(ST.entity(aDead, ST.book("Manual_Hunting_Zombie")));   break;
-					case  3: aDrops.add(ST.entity(aDead, ST.book("Manual_Hunting_Spider")));   break;
-					case  4: aDrops.add(ST.entity(aDead, ST.book("Manual_Hunting_End")));      break;
-					case  5: aDrops.add(ST.entity(aDead, ST.book("Manual_Hunting_Blaze")));    break;
-					case  6: aDrops.add(ST.entity(aDead, ST.book("Manual_Hunting_Witch")));    break;
-					case  7: aDrops.add(ST.entity(aDead, ST.book("Manual_Elements")));         break;
-					case  8: aDrops.add(ST.entity(aDead, ST.book("Manual_Alloys")));           break;
-					case  9: aDrops.add(ST.entity(aDead, ST.book("Manual_Smeltery")));         break;
-					case 10: aDrops.add(ST.entity(aDead, ST.book("Manual_Extenders")));        break;
-					case 11: aDrops.add(ST.entity(aDead, ST.book("Manual_Printer")));          break;
-					case 12: aDrops.add(ST.entity(aDead, ST.book("Manual_Steam")));            break;
-					case 13: aDrops.add(ST.entity(aDead, ST.book("Manual_Reactors")));         break;
-					case 14: aDrops.add(ST.entity(aDead, ST.book("Manual_Random")));           break;
-					default: aDrops.add(ST.entity(aDead, ST.book(UT.Books.MATERIAL_DICTIONARIES.get(RNGSUS.nextInt(UT.Books.MATERIAL_DICTIONARIES.size()))))); break;
-					}
+				if (MOBS_DROP_BOOK && ((EntityZombie)aDead).isVillager()) {
+					aDrops.add(ST.entity(aDead, IL.Book_Loot_Guide  .get(1+RNGSUS.nextInt(3))));
+					aDrops.add(ST.entity(aDead, IL.Book_Loot_MatDict.get(1+RNGSUS.nextInt(3))));
 				}
 			}
 		} else if (aDead instanceof EntitySpider) {
 			tReplaceIron = T;
+			
+			// Let a Spider Eye drop if not killed by a Player.
+			if (!aPlayerKill && aClass.contains("spider") && RNGSUS.nextInt(4) == 0) {
+				aDrops.add(ST.entity(aDead, ST.make(Items.spider_eye, 1, 0)));
+			}
 			
 			if (aPlayerKill && MOBS_DROP_JUNK) {
 			
@@ -433,6 +432,11 @@ public class Override_Drops {
 			)));
 			}
 			
+			}
+		} else if (aDead instanceof EntityWitch) {
+			tReplaceIron = T;
+			if (aPlayerKill || tRandomNumber == 0) {
+				aDrops.add(ST.entity(aDead, IL.Bottle_Loot.get(1+RNGSUS.nextInt(aLooting+1))));
 			}
 		} else if (aClass.equalsIgnoreCase("EntityHoglin")) {
 			for (int i = 0; i < 2; i++) if (RNGSUS.nextInt(100) <= 25 + aLooting * 5) {
@@ -665,7 +669,7 @@ public class Override_Drops {
 		
 		while (aDrops.remove(null));
 		
-		for (EntityItem tEntity : aDrops) if (tEntity != null) {ItemStack tStack = tEntity.getEntityItem(); if (ST.valid(tStack)) {
+		if (!(aDead instanceof EntityPlayer)) for (EntityItem tEntity : aDrops) if (tEntity != null) {ItemStack tStack = tEntity.getEntityItem(); if (ST.valid(tStack)) {
 			// Replace some of the Arrows with Headless Arrows.
 			if (MOBS_DROP_JUNK && ST.item_(tStack) == Items.arrow && RNGSUS.nextInt(aLooting * 2 + 4) < 3) {
 				ST.set(tStack, OP.arrowGtWood.mat(MT.Empty, 1), F, F);
@@ -732,6 +736,30 @@ public class Override_Drops {
 		}}
 		
 		if (MOBS_DROP_MEAT) while (tIntestinesAmount-->0) aDrops.add(ST.entity(aDead, IL.Food_Scrap_Meat.get(1)));
+		
+		// Beheading Damage replaces all the Drops with one Head, if Heads available for Mob.
+		if (aDamage instanceof DamageSourceCombat && ((DamageSourceCombat)aDamage).mBeheadingDamage) {
+			if (aDead instanceof EntityCreeper) {
+				aDrops.clear();
+				aDrops.add(ST.entity(aDead, ST.make(Items.skull, 1, 4)));
+			} else if (aDead instanceof EntityPlayer) {
+				// No Drop deletion for Players though.
+				aDrops.add(ST.entity(aDead, ST.skull(aDead)));
+			} else if (aDead.getClass() == EntityZombie.class) {
+				if (!((EntityZombie)aDead).isVillager()) {
+					aDrops.clear();
+					aDrops.add(ST.entity(aDead, ST.make(Items.skull, 1, 2)));
+				}
+			} else if (aDead.getClass() == EntitySkeleton.class) {
+				if (((EntitySkeleton)aDead).getSkeletonType() == 1) {
+					aDrops.clear();
+					aDrops.add(ST.entity(aDead, ST.make(Items.skull, 1, 1)));
+				} else {
+					aDrops.clear();
+					aDrops.add(ST.entity(aDead, ST.make(Items.skull, 1, 0)));
+				}
+			}
+		}
 		
 		if (MOBS_DROP_NAME && aDead instanceof EntityLiving && ((EntityLiving)aDead).isNoDespawnRequired() && ((EntityLiving)aDead).hasCustomNameTag()) {
 			aDrops.add(ST.entity(aDead, ST.make(Items.name_tag, 1, 0, ((EntityLiving)aDead).getCustomNameTag())));

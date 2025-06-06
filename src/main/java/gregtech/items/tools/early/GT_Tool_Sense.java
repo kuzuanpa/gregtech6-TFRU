@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2023 GregTech-6 Team
+ * Copyright (c) 2025 GregTech-6 Team
  *
  * This file is part of GregTech.
  *
@@ -46,13 +46,20 @@ import static gregapi.data.CS.*;
 public class GT_Tool_Sense extends ToolStats {
 	private final ThreadLocal<Object> sIsHarvestingRightNow = new ThreadLocal<>();
 	
-	@Override public float getBaseDamage() {
-		return 3.5F;
+	@Override
+	public float getBaseDamage() {
+		return 3.0F;
 	}
-	@Override public float getMaxDurabilityMultiplier() {
+	@Override
+	public float getMaxDurabilityMultiplier() {
 		return 4.0F;
 	}
-	@Override public boolean isWeapon() {
+	@Override
+	public boolean isWeapon() {
+		return T;
+	}
+	@Override
+	public boolean canBehead() {
 		return T;
 	}
 	

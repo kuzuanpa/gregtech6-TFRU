@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022 GregTech-6 Team
+ * Copyright (c) 2025 GregTech-6 Team
  *
  * This file is part of GregTech.
  *
@@ -66,6 +66,7 @@ public class WorldgenStoneLayers extends WorldgenObject {
 		final byte tScanMinusOne = (byte)(tScan.length-1);
 		
 		MultiTileEntityRegistry tRegistry = MultiTileEntityRegistry.getRegistry("gt.multitileentity");
+		Block tLastReplaced = Blocks.stone;
 		
 		for (int i = 0; i < 16; i++) for (int j = 0; j < 16; j++) {
 			final int tX = aMinX+i, tZ = aMinZ+j;
@@ -140,8 +141,12 @@ public class WorldgenStoneLayers extends WorldgenObject {
 							aStorage.setExtBlockMetadata(i, tY & 15, j, tScan[3].mMetaMossy);
 						}
 					}
+				// Check for the GT6 Stone being natural. Unlikely case due to GT6 Stone being the thing that is supposed to generate this very moment and not before. But Villages would otherwise see their House Materials replaed.
+				} else if (aBlock instanceof BlockStones) {
+					tCanPlaceRocks = (aStorage.getExtBlockMetadata(i, tY & 15, j) < 3);
 				// Stone and Ore Generation in replaceable Blocks.
-				} else if (StoneLayer.REPLACEABLE_BLOCKS.contains(aBlock)) {
+				} else if (aBlock == tLastReplaced || StoneLayer.REPLACEABLE_BLOCKS.contains(aBlock)) {
+					tLastReplaced = aBlock;
 					tCanPlaceRocks = T;
 					boolean temp = T;
 					if (tScan[5] == tScan[1]) {
@@ -169,9 +174,6 @@ public class WorldgenStoneLayers extends WorldgenObject {
 							aStorage.setExtBlockMetadata(i, tY & 15, j, tScan[3].mMetaStone);
 						}
 					}
-				// Check for the GT6 Stone being natural. Unlikely case due to GT6 Stone being the thing that is supposed to generate this very moment and not before.
-				} else if (aBlock instanceof BlockStones) {
-					tCanPlaceRocks = (aStorage.getExtBlockMetadata(i, tY & 15, j) < 3);
 				// Place Rock if on Opaque Surface.
 				} else if (WD.easyRep(aWorld, tX, tY, tZ, aBlock)) {
 					if (tCanPlaceRocks && !aBlock.getMaterial().isLiquid() && aRandom.nextInt(128) == 0) tRegistry.mBlock.placeBlock(aWorld, tX, tY, tZ, SIDE_UNKNOWN, (short)32757, ST.save(NBT_VALUE, OP.rockGt.mat(aRandom.nextBoolean()&&tLastOre!=null?tLastOre.mTargetCrushing.mMaterial:tLastRock, 1)), F, T);

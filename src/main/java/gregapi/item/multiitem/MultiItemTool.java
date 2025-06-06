@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2024 GregTech-6 Team
+ * Copyright (c) 2025 GregTech-6 Team
  *
  * This file is part of GregTech.
  *
@@ -325,7 +325,7 @@ public class MultiItemTool extends MultiItem implements IItemGTHandTool, IItemGT
 				aList.add(LH.Chat.WHITE + "Durability: x" + LH.Chat.GREEN + tStats.getMaxDurabilityMultiplier());
 				aList.add(LH.Chat.WHITE + "Level: +" + LH.Chat.YELLOW + tStats.getBaseQuality());
 				float tCombat = getToolCombatDamage(aStack);
-				aList.add(LH.Chat.WHITE + "Attack Damage: +" + LH.Chat.BLUE + (tCombat * TFC_DAMAGE_MULTIPLIER) + LH.Chat.RED + " (= " + (TFC_DAMAGE_MULTIPLIER > 1 ? ((tCombat+1)*(TFC_DAMAGE_MULTIPLIER/2.0)) + ")" : ((tCombat+1)/2) + " Hearts)"));
+				aList.add(LH.Chat.WHITE + "Melee Damage: +" + LH.Chat.BLUE + (tCombat * TFC_DAMAGE_MULTIPLIER) + LH.Chat.RED + " (= " + (TFC_DAMAGE_MULTIPLIER > 1 ? ((tCombat+1)*(TFC_DAMAGE_MULTIPLIER/2.0)) + ")" : ((tCombat+1)/2) + " Hearts)"));
 				aList.add(LH.Chat.WHITE + "Mining Speed: x" + LH.Chat.PINK + tStats.getSpeedMultiplier());
 				if (tStats.canCollect()) aList.add(LH.Chat.DGRAY + LH.get(LH.TOOLTIP_AUTOCOLLECT));
 				if (tStats.canPenetrate()) aList.add(LH.Chat.DGRAY + LH.get(LH.TOOLTIP_ARMOR_PENETRATING));
@@ -333,7 +333,7 @@ public class MultiItemTool extends MultiItem implements IItemGTHandTool, IItemGT
 				aList.add(LH.Chat.WHITE + "Durability: " + LH.Chat.GREEN + UT.Code.makeString(tMaxDamage - tDamage) + " / " + UT.Code.makeString(tMaxDamage));
 				aList.add(LH.Chat.WHITE + tMat1.getLocal() + LH.Chat.YELLOW + " Level: " + (tStats.getBaseQuality() + tMat1.mToolQuality));
 				float tCombat = getToolCombatDamage(aStack);
-				aList.add(LH.Chat.WHITE + "Attack Damage: " + LH.Chat.BLUE + "+" + (tCombat * TFC_DAMAGE_MULTIPLIER) + LH.Chat.RED + " (= " + (TFC_DAMAGE_MULTIPLIER > 1 ? ((tCombat+1)*(TFC_DAMAGE_MULTIPLIER/2.0)) + ")" : ((tCombat+1)/2) + " Hearts)"));
+				aList.add(LH.Chat.WHITE + "Melee Damage: " + LH.Chat.BLUE + "+" + (tCombat * TFC_DAMAGE_MULTIPLIER) + LH.Chat.RED + " (= " + (TFC_DAMAGE_MULTIPLIER > 1 ? ((tCombat+1)*(TFC_DAMAGE_MULTIPLIER/2.0)) + ")" : ((tCombat+1)/2) + " Hearts)"));
 				aList.add(LH.Chat.WHITE + "Mining Speed: " + LH.Chat.PINK + Math.max(Float.MIN_NORMAL, tStats.getSpeedMultiplier() * tMat1.mToolSpeed));
 				aList.add(LH.Chat.WHITE + "Crafting Uses: " + LH.Chat.GREEN + UT.Code.divup(getEnergyStats(aStack) == null ? tMaxDamage - tDamage : Math.min(getEnergyStored(TD.Energy.EU, aStack), getEnergyCapacity(TD.Energy.EU, aStack)), tStats.getToolDamagePerContainerCraft()));
 				if (MD.BTL.mLoaded && tMat1.contains(TD.Properties.BETWEENLANDS)) aList.add(LH.Chat.GREEN + LH.get(LH.TOOLTIP_BETWEENLANDS_RESISTANCE));
@@ -456,7 +456,7 @@ public class MultiItemTool extends MultiItem implements IItemGTHandTool, IItemGT
 						ST.use(aPlayer, T, aStack);
 					} else if (aPlayer instanceof EntityPlayer) {
 						if (tBroken.stackSize > 64) tBroken.stackSize = 64;
-						if (!aPlayer.worldObj.isRemote) UT.Inventories.addStackToPlayerInventoryOrDrop((EntityPlayer)aPlayer, tBroken, F);
+						if (!aPlayer.worldObj.isRemote) ST.give(aPlayer, tBroken, F);
 						ST.use(aPlayer, T, aStack);
 					} else {
 						if (tBroken.stackSize > 64) tBroken.stackSize = 64;
@@ -518,7 +518,7 @@ public class MultiItemTool extends MultiItem implements IItemGTHandTool, IItemGT
 				if (aMat1.contains(TD.Properties.MAZEBREAKER)) tDamage /= 40; else tDamage *= 16;
 				if (!aWorld.isRemote && UT.NBT.getEnchantmentLevel(Enchantment.silkTouch, aStack) <= 0) {
 					if (aPlayer instanceof EntityPlayer && canCollectDropsDirectly(aStack, aBlock, aMeta)) {
-						UT.Inventories.addStackToPlayerInventoryOrDrop((EntityPlayer)aPlayer, IL.TF_Mazehedge.get(1), aWorld, aX, aY, aZ);
+						ST.give(aPlayer, IL.TF_Mazehedge.get(1), aWorld, aX, aY, aZ);
 					} else {
 						ST.drop(aWorld, aX, aY, aZ, IL.TF_Mazehedge.get(1));
 					}
@@ -568,27 +568,42 @@ public class MultiItemTool extends MultiItem implements IItemGTHandTool, IItemGT
 		if (aStack.stackSize <= 0) return F;
 		
 		NBTTagCompound aNBT = aStack.getTagCompound();
+		// The Tool has no Data? Treat it like a single use Creative Tool.
 		if (aNBT == null) return T;
 		
+		// Invalid Tool Index?
 		if (!isUsableMeta(aStack)) {
 			aNBT.removeTag("ench");
 			return F;
 		}
 		
 		IToolStats tStats = getToolStatsInternal(aStack);
-		if (tStats == null || !super.isItemStackUsable(aStack)) {
+		// No Tool Data?
+		if (tStats == null) {
 			aNBT.removeTag("ench");
 			return F;
 		}
 		
+		OreDictMaterial aMaterial = getPrimaryMaterial(aStack);
+		// "Empty" Toolheads should not be able to do things.
+		if (aMaterial == MT.Empty) {
+			aNBT.removeTag("ench");
+			return F;
+		}
+		
+		// Some Behavior declaring this unusable?
+		if (!super.isItemStackUsable(aStack)) {
+			aNBT.removeTag("ench");
+			return F;
+		}
+		
+		// If no Enchantments, checks ends successfully early.
 		if (aNBT.hasKey("ench")) return T;
 		
 		// Abuse a potentially empty List as a boolean to see if a Tool already has enchants or not.
 		aNBT.setTag("ench", new NBTTagList());
 		
-		OreDictMaterial aMaterial = getPrimaryMaterial(aStack);
 		List<ObjectStack<Enchantment>> tEnchantments = new ArrayListNoNulls<>();
-		
 		// Get Material Specific Enchantments for applicable Tool Classes.
 		if (tStats.isMiningTool  ()) for (ObjectStack<Enchantment> tEnchantment : aMaterial.mEnchantmentTools  ) tEnchantments.add(new ObjectStack<>(tEnchantment.mObject, tEnchantment.mAmount));
 		if (tStats.isWeapon      ()) for (ObjectStack<Enchantment> tEnchantment : aMaterial.mEnchantmentWeapons) tEnchantments.add(new ObjectStack<>(tEnchantment.mObject, tEnchantment.mAmount));

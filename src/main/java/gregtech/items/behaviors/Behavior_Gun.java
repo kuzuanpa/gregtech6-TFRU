@@ -298,7 +298,7 @@ public class Behavior_Gun extends AbstractBehaviorDefault {
 		}
 		
 		// To make Looting work at all...
-		DamageSource tDamageSource = DamageSources.getCombatDamage("player", tPlayer, DamageSources.getDeathMessage(aPlayer, aTarget, (tData!=null&&tData.validMaterial() ? "[VICTIM] got killed by [KILLER] shooting a Bullet made of " + tData.mMaterial.mMaterial.getLocal() : "[VICTIM] got shot by [KILLER]"))).setProjectile();
+		DamageSource tDamageSource = DamageSources.getCombatDamage("player", tPlayer, DamageSources.getDeathMessage(aPlayer, aTarget, (tData!=null&&tData.validMaterial() ? "[VICTIM] got killed by [KILLER] shooting a Bullet made of " + tData.mMaterial.mMaterial.getLocal() : "[VICTIM] got shot by [KILLER]")), F).setProjectile();
 		// Extremely Fast Bullets will penetrate Armor. You need a Rifle with the Power Enchantment for this. A Power 5 Carbine at point-blank could do too though.
 		if (aPower > 25000) tDamageSource.setDamageBypassesArmor();
 		// Smite Bullets will break one Lich Shield each, in order to make this somewhat beatable in Multiplayer.
@@ -339,7 +339,7 @@ public class Behavior_Gun extends AbstractBehaviorDefault {
 				reloadGun(aGun, aPlayer, F);
 				return aGun;
 			}
-			UT.Inventories.addStackToPlayerInventoryOrDrop(aPlayer, aBullet);
+			ST.give(aPlayer, aBullet);
 			UT.Sounds.send(SFX.MC_CLICK, 16, aPlayer);
 			ST.save(aNBT, NBT_AMMO, NI);
 			return aGun;
@@ -355,7 +355,7 @@ public class Behavior_Gun extends AbstractBehaviorDefault {
 			OreDictItemData tData = OM.anydata(aBullet);
 			aBullet.stackSize--;
 			ST.save(aNBT, NBT_AMMO, aBullet.stackSize > 0 ? aBullet : NI);
-			for (OreDictMaterialStack tMat : tData.mByProducts) if (tMat.mAmount >= OP.scrapGt.mAmount && !tMat.mMaterial.containsAny(TD.Properties.EXPLOSIVE, TD.Properties.FLAMMABLE)) UT.Inventories.addStackToPlayerInventoryOrDrop(aPlayer, OP.scrapGt.mat(tMat.mMaterial, tMat.mAmount/OP.scrapGt.mAmount));
+			for (OreDictMaterialStack tMat : tData.mByProducts) if (tMat.mAmount >= OP.scrapGt.mAmount && !tMat.mMaterial.containsAny(TD.Properties.EXPLOSIVE, TD.Properties.FLAMMABLE)) ST.give(aPlayer, OP.scrapGt.mat(tMat.mMaterial, tMat.mAmount/OP.scrapGt.mAmount));
 		}
 		((MultiItemTool)aItem).doDamage(aGun, 100, aPlayer, F);
 		return aGun;

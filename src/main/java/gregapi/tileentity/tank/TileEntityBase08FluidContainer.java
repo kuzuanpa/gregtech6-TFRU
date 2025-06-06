@@ -146,12 +146,12 @@ public abstract class TileEntityBase08FluidContainer extends TileEntityBase07Pai
 		FluidStack tFluid = FL.getFluid(ST.amount(1, aStack), T);
 		if (aStack != null && isFluidAllowed(tFluid) && mTank.fillAll(tFluid)) {
 			aStack.stackSize--;
-			UT.Inventories.addStackToPlayerInventoryOrDrop(aPlayer, tStack, T);
+			ST.give(aPlayer, tStack, T);
 			return T;
 		}
 		if (aStack != null) if ((tStack = FL.fill(mTank, ST.amount(1, aStack), T, T, T, T)) != null) {
 			aStack.stackSize--;
-			UT.Inventories.addStackToPlayerInventoryOrDrop(aPlayer, tStack, T);
+			ST.give(aPlayer, tStack, T);
 			return T;
 		}
 		
@@ -355,7 +355,7 @@ public abstract class TileEntityBase08FluidContainer extends TileEntityBase07Pai
 		int tFoodLevel = FoodStatFluid.INSTANCE.getFoodLevel(aStack.getItem(), aStack, aPlayer);
 		
 		if (tFoodLevel > 0) {
-			if (FoodStatFluid.INSTANCE.useAppleCoreFunctionality(aStack.getItem(), aStack, aPlayer) && MD.APC.mLoaded) {
+			if (FoodStatFluid.INSTANCE.useAppleCoreFunctionality(aStack.getItem(), aStack, aPlayer)) {
 				aPlayer.getFoodStats().func_151686_a((ItemFood)UT.Reflection.callConstructor("squeek.applecore.api.food.ItemFoodProxy", 0, null, T, aStack.getItem()), aStack);
 			} else {
 				aPlayer.getFoodStats().addStats(tFoodLevel, FoodStatFluid.INSTANCE.getSaturation(aStack.getItem(), aStack, aPlayer));

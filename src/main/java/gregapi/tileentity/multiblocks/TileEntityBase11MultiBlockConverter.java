@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2023 GregTech-6 Team
+ * Copyright (c) 2025 GregTech-6 Team
  *
  * This file is part of GregTech.
  *
@@ -30,6 +30,7 @@ import gregapi.tileentity.behavior.TE_Behavior_Energy_Stats;
 import gregapi.tileentity.energy.ITileEntityEnergy;
 import gregapi.tileentity.machines.ITileEntityRunningActively;
 import gregapi.util.UT;
+import gregapi.util.WD;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -105,9 +106,13 @@ public abstract class TileEntityBase11MultiBlockConverter extends TileEntityBase
 	@Override
 	public void onTick2(long aTimer, boolean aIsServerSide) {
 		super.onTick2(aTimer, aIsServerSide);
-		if (aIsServerSide && checkStructure(F)) {
-			doConversion(aTimer);
-			if (mTimer % 600 == 5 && !mActivity.mActive && mExplosionPrevention > 0) mExplosionPrevention--;
+		if (aIsServerSide) {
+			if (checkStructure(F)) {
+				doConversion(aTimer);
+				if (mTimer % 600 == 5 && !mActivity.mActive && mExplosionPrevention > 0) mExplosionPrevention--;
+			}
+		} else {
+			if (mActivity.mState != 0 && (mEnergyIN.mType == TD.Energy.RU || mEnergyOUT.mType == TD.Energy.RU) && WD.random(this, 20, CLIENT_TIME)) UT.Sounds.play(SFX.MC_MINECART, 1, 1.0F, getCoords());
 		}
 	}
 	

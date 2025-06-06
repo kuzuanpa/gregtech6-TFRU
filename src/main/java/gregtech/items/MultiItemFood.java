@@ -47,7 +47,7 @@ public class MultiItemFood extends MultiItemRandomWithCompat implements IItemRot
 		super(aModID, aUnlocalized);
 		setCreativeTab(new CreativeTab(getUnlocalizedName(), "GregTech: Nature & Foods", this, (short)12000));
 	}
-
+	
 	@Override
 	public void addItems() {
 		IL.Grass       .set(addItem(12000, "Grass"       , "Make 9 of this into a Bale in order to dry it", Behavior_FeedGrass.INSTANCE, OD.itemGrass         , TICKS_PER_SMELT / 4, TC.stack(TC.MESSIS, 1), TC.stack(TC.HERBA, 1)));
@@ -198,24 +198,24 @@ public class MultiItemFood extends MultiItemRandomWithCompat implements IItemRot
 		RM.Bath       .addRecipe1(T,  0, 16, OM.dust(MT.Kaolinite    ),        tWater    , NF, IL.Clay_Ball_White.get(1));
 		}
 		
-		IL.Tusk         .set(addItem(12400, "Tusk"         , ""                 , OD.itemTusk              , TC.stack(TC.BESTIA, 2), TC.stack(TC.FAMES, 2)));
-		IL.Tusk_Hoglin  .set(addItem(12401, "Hoglin Tusk"  , "not golden"       , OD.itemTusk              , TC.stack(TC.BESTIA, 2), TC.stack(TC.FAMES, 2)));
-		IL.Tusk_Boar    .set(addItem(12402, "Boar Tusk"    , ""                 , OD.itemTusk              , TC.stack(TC.BESTIA, 2), TC.stack(TC.FAMES, 2)));
-		IL.Tusk_Elephant.set(addItem(12403, "Elephant Tusk", "Ivory"            , OD.itemTusk, OD.itemIvory, TC.stack(TC.BESTIA, 3), TC.stack(TC.FAMES, 3), TC.stack(TC.LUCRUM, 3)));
+		IL.Tusk         .set(addItem(12400, "Tusk"         , ""                 , OD.itemTusk              , TC.stack(TC.BESTIA, 2), TC.stack(TC.FAMES, 2))); if (COMPAT_FR != null) COMPAT_FR.addToBackpacks("hunter", last());
+		IL.Tusk_Hoglin  .set(addItem(12401, "Hoglin Tusk"  , "not golden"       , OD.itemTusk              , TC.stack(TC.BESTIA, 2), TC.stack(TC.FAMES, 2))); if (COMPAT_FR != null) COMPAT_FR.addToBackpacks("hunter", last());
+		IL.Tusk_Boar    .set(addItem(12402, "Boar Tusk"    , ""                 , OD.itemTusk              , TC.stack(TC.BESTIA, 2), TC.stack(TC.FAMES, 2))); if (COMPAT_FR != null) COMPAT_FR.addToBackpacks("hunter", last());
+		IL.Tusk_Elephant.set(addItem(12403, "Elephant Tusk", "Ivory"            , OD.itemTusk, OD.itemIvory, TC.stack(TC.BESTIA, 3), TC.stack(TC.FAMES, 3), TC.stack(TC.LUCRUM, 3))); if (COMPAT_FR != null) COMPAT_FR.addToBackpacks("hunter", last());
 		
-		IL.Hoof         .set(addItem(12500, "Hoof"         , ""                 , OD.itemHoof              , TC.stack(TC.BESTIA, 2), TC.stack(TC.ITER, 2)));
-		IL.Hoof_Cow     .set(addItem(12501, "Cow Hoof"     , ""                 , OD.itemHoof              , TC.stack(TC.BESTIA, 2), TC.stack(TC.ITER, 2)));
-		IL.Hoof_Horse   .set(addItem(12502, "Horse Hoof"   , "not race-worthy"  , OD.itemHoof              , TC.stack(TC.BESTIA, 2), TC.stack(TC.ITER, 2)));
-		IL.Hoof_Mule    .set(addItem(12503, "Mule Hoof"    , ""                 , OD.itemHoof              , TC.stack(TC.BESTIA, 2), TC.stack(TC.ITER, 2)));
-		IL.Hoof_Donkey  .set(addItem(12504, "Donkey Hoof"  , ""                 , OD.itemHoof              , TC.stack(TC.BESTIA, 2), TC.stack(TC.ITER, 2)));
-		IL.Hoof_Deer    .set(addItem(12505, "Deer Hoof"    , ""                 , OD.itemHoof              , TC.stack(TC.BESTIA, 2), TC.stack(TC.ITER, 2)));
+		IL.Hoof         .set(addItem(12500, "Hoof"         , ""                 , OD.itemHoof              , TC.stack(TC.BESTIA, 2), TC.stack(TC.ITER, 2))); if (COMPAT_FR != null) COMPAT_FR.addToBackpacks("hunter", last());
+		IL.Hoof_Cow     .set(addItem(12501, "Cow Hoof"     , ""                 , OD.itemHoof              , TC.stack(TC.BESTIA, 2), TC.stack(TC.ITER, 2))); if (COMPAT_FR != null) COMPAT_FR.addToBackpacks("hunter", last());
+		IL.Hoof_Horse   .set(addItem(12502, "Horse Hoof"   , "not race-worthy"  , OD.itemHoof              , TC.stack(TC.BESTIA, 2), TC.stack(TC.ITER, 2))); if (COMPAT_FR != null) COMPAT_FR.addToBackpacks("hunter", last());
+		IL.Hoof_Mule    .set(addItem(12503, "Mule Hoof"    , ""                 , OD.itemHoof              , TC.stack(TC.BESTIA, 2), TC.stack(TC.ITER, 2))); if (COMPAT_FR != null) COMPAT_FR.addToBackpacks("hunter", last());
+		IL.Hoof_Donkey  .set(addItem(12504, "Donkey Hoof"  , ""                 , OD.itemHoof              , TC.stack(TC.BESTIA, 2), TC.stack(TC.ITER, 2))); if (COMPAT_FR != null) COMPAT_FR.addToBackpacks("hunter", last());
+		IL.Hoof_Deer    .set(addItem(12505, "Deer Hoof"    , ""                 , OD.itemHoof              , TC.stack(TC.BESTIA, 2), TC.stack(TC.ITER, 2))); if (COMPAT_FR != null) COMPAT_FR.addToBackpacks("hunter", last());
 		
-		IL.Horn         .set(addItem(12600, "Horn"         , ""                 , OD.itemHorn              , TC.stack(TC.BESTIA, 2), TC.stack(TC.TELUM, 2)));
-		IL.Horn_Cow     .set(addItem(12601, "Cow Horn"     , ""                 , OD.itemHorn              , TC.stack(TC.BESTIA, 2), TC.stack(TC.TELUM, 2)));
-		IL.Horn_Sheep   .set(addItem(12602, "Sheep Horn"   , "from horned Sheep", OD.itemHorn              , TC.stack(TC.BESTIA, 2), TC.stack(TC.TELUM, 2)));
+		IL.Horn         .set(addItem(12600, "Horn"         , ""                 , OD.itemHorn              , TC.stack(TC.BESTIA, 2), TC.stack(TC.TELUM, 2))); if (COMPAT_FR != null) COMPAT_FR.addToBackpacks("hunter", last());
+		IL.Horn_Cow     .set(addItem(12601, "Cow Horn"     , ""                 , OD.itemHorn              , TC.stack(TC.BESTIA, 2), TC.stack(TC.TELUM, 2))); if (COMPAT_FR != null) COMPAT_FR.addToBackpacks("hunter", last());
+		IL.Horn_Sheep   .set(addItem(12602, "Sheep Horn"   , "from horned Sheep", OD.itemHorn              , TC.stack(TC.BESTIA, 2), TC.stack(TC.TELUM, 2))); if (COMPAT_FR != null) COMPAT_FR.addToBackpacks("hunter", last());
 		
-		IL.Antler       .set(addItem(12700, "Antler"       , ""                 , OD.itemAntler            , TC.stack(TC.BESTIA, 2), TC.stack(TC.INSTRUMENTUM, 2)));
-		IL.Antler_Deer  .set(addItem(12701, "Deer Antler"  , "oh dear..."       , OD.itemAntler            , TC.stack(TC.BESTIA, 2), TC.stack(TC.INSTRUMENTUM, 2)));
+		IL.Antler       .set(addItem(12700, "Antler"       , ""                 , OD.itemAntler            , TC.stack(TC.BESTIA, 2), TC.stack(TC.INSTRUMENTUM, 2))); if (COMPAT_FR != null) COMPAT_FR.addToBackpacks("hunter", last());
+		IL.Antler_Deer  .set(addItem(12701, "Deer Antler"  , "oh dear..."       , OD.itemAntler            , TC.stack(TC.BESTIA, 2), TC.stack(TC.INSTRUMENTUM, 2))); if (COMPAT_FR != null) COMPAT_FR.addToBackpacks("hunter", last());
 		
 		
 		
@@ -597,7 +597,7 @@ public class MultiItemFood extends MultiItemRandomWithCompat implements IItemRot
 		
 		IL.Food_Cookie_Raw                     .set(addItem( 2000, "Cookie shaped Dough"                      , "For baking Cookies"                                          , new FoodStat( 1, 0.200F,   0, C+37,  0.10F,   0,   0,   0,   5,   0, EnumAction.eat, null                                 , F, T, F, T), TC.stack(TC.HERBA, 1), TC.stack(TC.FAMES, 1)));
 		RM.add_smelting(IL.Food_Cookie_Raw.get(1), ST.make(Items.cookie, 1, 0), F, T, F); FoodsGT.put(ST.make(Items.cookie, 1, W), 0, 0, 0,10, 0);
-		RM.food_can(ST.make(Items.cookie, 6, W), 12, "Canned Cookies", IL.CANS_BREAD);
+		RM.food_can(ST.make(Items.cookie, 6, W), 12, "Cookie Tin", IL.CANS_COOKIES);
 		CR.shaped(IL.Food_Cookie_Raw.get(4), CR.DEF_NCC, "kX", 'X', "foodChocolateDough");
 		RM.Slicer.addRecipe2(T, 16, 16, IL.Food_Dough_Chocolate.get(1), IL.Shape_Slicer_Flat.get(0), IL.Food_Cookie_Raw.get(4));
 		
@@ -605,7 +605,7 @@ public class MultiItemFood extends MultiItemRandomWithCompat implements IItemRot
 		IL.Food_Cookie_Raisins_Raw             .set(addItem( 2002, "Cookie shaped Raisin Dough"               , "For baking Raisin Cookies"                                   , new FoodStat( 1, 0.200F,   0, C+37,  0.10F,   0,   0,   0,  10,   0, EnumAction.eat, null                                 , F, T, F, T), TC.stack(TC.HERBA, 1), TC.stack(TC.FAMES, 1)));
 		IL.Food_Cookie_Raisins                 .set(addItem( 2003, "Raisin Cookie"                   , "You don't like it? I don't care! It's delicious!", "foodRaisincookies", new FoodStat( 2, 0.200F,   0, C+37,  0.10F,   0,   0,   0,  15,   0, EnumAction.eat, null                                 , F, T, F, T), TC.stack(TC.HERBA, 1), TC.stack(TC.FAMES, 1)));
 		RM.add_smelting(IL.Food_Cookie_Raisins_Raw.get(1), IL.Food_Cookie_Raisins.get(1), F, T, F);
-		RM.food_can(IL.Food_Cookie_Raisins.get(6), 12, "Canned Raisin Cookies", IL.CANS_BREAD);
+		RM.food_can(IL.Food_Cookie_Raisins.get(6), 12, "Raisin Cookie Tin", IL.CANS_COOKIES);
 		CR.shaped(IL.Food_Cookie_Raisins_Raw.get(4), CR.DEF_NCC, "kX", 'X', IL.Food_Dough_Sugar_Raisins);
 		RM.Slicer.addRecipe2(T, 16, 16, IL.Food_Dough_Sugar_Raisins.get(1), IL.Shape_Slicer_Flat.get(0), IL.Food_Cookie_Raisins_Raw.get(4));
 		
@@ -613,7 +613,7 @@ public class MultiItemFood extends MultiItemRandomWithCompat implements IItemRot
 		IL.Food_Cookie_Chocolate_Raisins_Raw   .set(addItem( 2004, "Cookie shaped Chocolate Raisin Dough"     , "Almost looks like a regular Chocolate Chip Cookie >:D"       , new FoodStat( 1, 0.200F,   0, C+37,  0.10F,   0,   0,   0,  20,   0, EnumAction.eat, null                                 , F, T, F, T), TC.stack(TC.HERBA, 1), TC.stack(TC.FAMES, 1)));
 		IL.Food_Cookie_Chocolate_Raisins       .set(addItem( 2005, "Cookie"                                   , ""                                       , "foodRaisincookies", new FoodStat( 2, 0.200F,   0, C+37,  0.10F,   0,   0,   0,  25,   0, EnumAction.eat, null                                 , F, T, F, T), TC.stack(TC.HERBA, 1), TC.stack(TC.FAMES, 1)));
 		RM.add_smelting(IL.Food_Cookie_Chocolate_Raisins_Raw.get(1), IL.Food_Cookie_Chocolate_Raisins.get(1), F, T, F);
-		RM.food_can(IL.Food_Cookie_Chocolate_Raisins.get(6), 12, "Canned Chocolate Raisin Cookies", IL.CANS_BREAD);
+		RM.food_can(IL.Food_Cookie_Chocolate_Raisins.get(6), 12, "Chocolate Raisin Cookie Tin", IL.CANS_COOKIES);
 		CR.shaped(IL.Food_Cookie_Chocolate_Raisins_Raw.get(4), CR.DEF_NCC, "kX", 'X', IL.Food_Dough_Sugar_Chocolate_Raisins);
 		RM.Slicer.addRecipe2(T, 16, 16, IL.Food_Dough_Sugar_Chocolate_Raisins.get(1), IL.Shape_Slicer_Flat.get(0), IL.Food_Cookie_Chocolate_Raisins_Raw.get(4));
 		
@@ -621,7 +621,7 @@ public class MultiItemFood extends MultiItemRandomWithCompat implements IItemRot
 		IL.Food_Cookie_Abyssal_Raw             .set(addItem( 2006, "Cookie shaped Abyssal Dough"              , "For baking netherlicious Cookies"                            , new FoodStat( 1, 0.200F,   0, C+37,  0.10F,   0,   0,   0,   5,   0, EnumAction.eat, null                                 , F, T, F, T), TC.stack(TC.HERBA, 1), TC.stack(TC.FAMES, 1)));
 		if (IL.NeLi_Cookie.exists()) {
 		RM.add_smelting(IL.Food_Cookie_Abyssal_Raw.get(1), IL.NeLi_Cookie.get(1), F, T, F); FoodsGT.put(IL.NeLi_Cookie.get(1), 0, 0, 0,10, 0);
-		RM.food_can(IL.NeLi_Cookie.get(6), 12, "Canned Abyssal Cookies", IL.CANS_BREAD);
+		RM.food_can(IL.NeLi_Cookie.get(6), 12, "Abyssal Cookie Tin", IL.CANS_COOKIES);
 		} else {
 		RM.add_smelting(IL.Food_Cookie_Abyssal_Raw.get(1), ST.make(Items.cookie, 1, 0), F, T, F);
 		}

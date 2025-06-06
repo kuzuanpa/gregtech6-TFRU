@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2023 GregTech-6 Team
+ * Copyright (c) 2025 GregTech-6 Team
  *
  * This file is part of GregTech.
  *
@@ -19,10 +19,7 @@
 
 package gregtech.tileentity.plants;
 
-import gregapi.block.multitileentity.IMultiTileEntity.IMTE_CanPlace;
-import gregapi.block.multitileentity.IMultiTileEntity.IMTE_GetSelectedBoundingBoxFromPool;
-import gregapi.block.multitileentity.IMultiTileEntity.IMTE_OnOxygenRemoved;
-import gregapi.block.multitileentity.IMultiTileEntity.IMTE_SetBlockBoundsBasedOnState;
+import gregapi.block.multitileentity.IMultiTileEntity.*;
 import gregapi.block.multitileentity.MultiTileEntityContainer;
 import gregapi.data.IL;
 import gregapi.data.LH;
@@ -31,7 +28,10 @@ import gregapi.network.INetworkHandler;
 import gregapi.network.IPacket;
 import gregapi.old.Textures;
 import gregapi.oredict.OreDictItemData;
-import gregapi.render.*;
+import gregapi.render.BlockTextureDefault;
+import gregapi.render.BlockTextureMulti;
+import gregapi.render.IIconContainer;
+import gregapi.render.ITexture;
 import gregapi.tileentity.ITileEntityQuickObstructionCheck;
 import gregapi.tileentity.base.TileEntityBase09FacingSingle;
 import gregapi.util.OM;
@@ -56,7 +56,7 @@ import static gregapi.data.CS.*;
 /**
  * @author Gregorius Techneticies
  */
-public class MultiTileEntityBush extends TileEntityBase09FacingSingle implements ITileEntityQuickObstructionCheck, IMTE_OnOxygenRemoved, IMTE_CanPlace, IMTE_GetSelectedBoundingBoxFromPool, IMTE_SetBlockBoundsBasedOnState {
+public class MultiTileEntityBush extends TileEntityBase09FacingSingle implements IMTE_CanPlaceSnowLayerOnRemoval, ITileEntityQuickObstructionCheck, IMTE_OnOxygenRemoved, IMTE_CanPlace, IMTE_GetSelectedBoundingBoxFromPool, IMTE_SetBlockBoundsBasedOnState {
 	public ItemStack mBerry;
 	public byte oStage = 0, mStage = 0, mGrowth = 0, mSpeed = 0;
 	
@@ -103,10 +103,7 @@ public class MultiTileEntityBush extends TileEntityBase09FacingSingle implements
 		super.onTick2(aTimer, aIsServerSide);
 		if (aIsServerSide) {
 			if (mBlockUpdated || SERVER_TIME % 128 == 64) {
-				if (!WD.oxygen(worldObj, xCoord, yCoord, zCoord)) {
-					setToAir();
-					return;
-				}
+				if (!WD.oxygen(worldObj, xCoord, yCoord, zCoord)) {setToAir(); return;}
 				
 				if (getBlockAtSide(SIDE_UP) == Blocks.snow_layer) worldObj.setBlockToAir(xCoord, yCoord+1, zCoord);
 				
@@ -169,7 +166,7 @@ public class MultiTileEntityBush extends TileEntityBase09FacingSingle implements
 		if (isClientSide()) return T;
 		if (ST.valid(mBerry)) {
 			if (mStage < 3) return F;
-			UT.Inventories.addStackToPlayerInventoryOrDrop(aPlayer, ST.amount(1+rng(2), mBerry), T, worldObj, getOffsetX(aSide), getOffsetY(aSide), getOffsetZ(aSide));
+			ST.give(aPlayer, ST.amount(1+rng(2), mBerry), T, worldObj, getOffsetX(aSide), getOffsetY(aSide), getOffsetZ(aSide));
 			mStage = 0;
 			return T;
 		}
@@ -213,8 +210,6 @@ public class MultiTileEntityBush extends TileEntityBase09FacingSingle implements
 	sOverlayBerry       = new Textures.BlockIcons.CustomIcon("machines/plants/bush/overlay/berries"),
 	sOverlayImmature    = new Textures.BlockIcons.CustomIcon("machines/plants/bush/overlay/berries_immature");
 	
-	public static final ITexture sSnowTexture = BlockTextureCopied.get(Blocks.snow_layer);
-	
 	private ITexture mTexture;
 	
 	@Override
@@ -250,8 +245,7 @@ public class MultiTileEntityBush extends TileEntityBase09FacingSingle implements
 			mTexture = BlockTextureMulti.get(BlockTextureDefault.get(sTextureBush, 0xff00ff), BlockTextureDefault.get(sOverlayBush));
 		}
 		
-		for (byte tSide : ALL_SIDES_HORIZONTAL) if (getBlockAtSide(tSide) == Blocks.snow_layer) return 2;
-		return 1;
+		return hasSnow()?2:1;
 	}
 	
 	@Override
@@ -270,7 +264,7 @@ public class MultiTileEntityBush extends TileEntityBase09FacingSingle implements
 	
 	@Override
 	public ITexture getTexture2(Block aBlock, int aRenderPass, byte aSide, boolean[] aShouldSideBeRendered) {
-		return aRenderPass == 0 ? aShouldSideBeRendered[aSide] || SIDES_VALID[mFacing] ? mTexture : null : aShouldSideBeRendered[aSide] ? sSnowTexture : null;
+		return aRenderPass == 0 ? aShouldSideBeRendered[aSide] || SIDES_VALID[mFacing] ? mTexture : null : aShouldSideBeRendered[aSide] ? SNOW_TEXTURE : null;
 	}
 	
 	@Override

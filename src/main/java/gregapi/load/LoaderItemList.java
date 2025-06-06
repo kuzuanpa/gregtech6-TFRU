@@ -591,7 +591,7 @@ public class LoaderItemList implements Runnable {
 		StoneLayer.REPLACEABLE_BLOCKS.add(ST.block(MD.AE, "tile.oreQuartzCharged"            , null));
 		StoneLayer.REPLACEABLE_BLOCKS.add(ST.block(MD.TG, "oreTitanIron"                     , null));
 		StoneLayer.REPLACEABLE_BLOCKS.add(ST.block(MD.BR, "YelloriteOre"                     , null));
-	//  StoneLayer.REPLACEABLE_BLOCKS.add(ST.block(MD.BoP, "gemOre"                          , null));
+		StoneLayer.REPLACEABLE_BLOCKS.add(ST.block(MD.BoP, "gemOre"                          , null));
 		StoneLayer.REPLACEABLE_BLOCKS.add(ST.block(MD.BoP, "rocks"                           , null));
 		StoneLayer.REPLACEABLE_BLOCKS.add(ST.block(MD.HBM, "tile.stone_gneiss"               , null));
 		StoneLayer.REPLACEABLE_BLOCKS.add(ST.block(MD.HBM, "tile.basalt_smooth"              , null));
@@ -1158,8 +1158,23 @@ public class LoaderItemList implements Runnable {
 		IL.BTL_Rubber                           .set(ST.make(MD.BTL, "unknownGeneric"                       , 1,26), new OreDictItemData(MT.Rubber, U));
 		IL.BTL_Compost                          .set(ST.make(MD.BTL, "unknownGeneric"                       , 1, 5), null, OD.itemCompost);
 		IL.BTL_Skin                             .set(ST.make(MD.BTL, "unknownGeneric"                       , 1, 7), null, OD.itemSkin);
-		IL.BTL_Tar                              .set(ST.make(MD.BTL, "unknownGeneric"                       , 1,29), null, OD.itemTar, DYE_OREDICTS_MIXABLE[DYE_INDEX_Black]);
 		IL.BTL_Dry_Bark                         .set(ST.make(MD.BTL, "unknownGeneric"                       , 1,16), null, OD.itemBarkDry);
+		IL.BTL_Tar                              .set(ST.make(MD.BTL, "unknownGeneric"                       , 1,29), null, OD.itemTar, DYE_OREDICTS_MIXABLE[DYE_INDEX_Black]);
+		IL.BTL_Tar_Block                        .set(ST.make(MD.BTL, "solidTar"                             , 1, 0), null, OD.itemTar, DYE_OREDICTS_MIXABLE[DYE_INDEX_Black]);
+		IL.BTL_Bucket_Empty                     .set(ST.make(MD.BTL, "weedwoodBucket"                       , 1, 0), new OreDictItemData(MT.Weedwood, 3*U));
+		IL.BTL_Bucket_Tar                       .set(ST.make(MD.BTL, "weedwoodBucketTar"                    , 1, 0), new OreDictItemData(MT.Weedwood, 3*U), OD.container1000tar);
+		IL.BTL_Bucket_Swamp                     .set(ST.make(MD.BTL, "weedwoodBucketWater"                  , 1, 0), new OreDictItemData(MT.Weedwood, 3*U));
+		IL.BTL_Bucket_Stagnant                  .set(ST.make(MD.BTL, "weedwoodBucketStagnantWater"          , 1, 0), new OreDictItemData(MT.Weedwood, 3*U));
+		IL.BTL_Bucket_Latex                     .set(ST.make(MD.BTL, "bucketOfRubber"                       , 1, 0), new OreDictItemData(MT.Weedwood, 3*U), OD.container1000latex);
+		IL.BTL_Bucket_Infusion                  .set(ST.make(MD.BTL, "weedwoodBucketInfusion"               , 1, 0), new OreDictItemData(MT.Weedwood, 3*U));
+		
+		if (IL.BTL_Bucket_Tar     .exists()) IL.BTL_Bucket_Tar     .item().setContainerItem(IL.BTL_Bucket_Empty.getItem());
+		if (IL.BTL_Bucket_Swamp   .exists()) IL.BTL_Bucket_Swamp   .item().setContainerItem(IL.BTL_Bucket_Empty.getItem());
+		if (IL.BTL_Bucket_Stagnant.exists()) IL.BTL_Bucket_Stagnant.item().setContainerItem(IL.BTL_Bucket_Empty.getItem());
+		if (IL.BTL_Bucket_Latex   .exists()) IL.BTL_Bucket_Latex   .item().setContainerItem(IL.BTL_Bucket_Empty.getItem());
+		if (IL.BTL_Bucket_Infusion.exists()) IL.BTL_Bucket_Infusion.item().setContainerItem(IL.BTL_Bucket_Empty.getItem());
+		
+		
 		
 		
 		if (!MD.AETHEL.mLoaded) {
@@ -1556,6 +1571,7 @@ public class LoaderItemList implements Runnable {
 		IL.BOTA_Prismarine_Dark                 .set(ST.make(MD.BOTA, "prismarine"                          , 1, 2), new OreDictItemData(MT.PrismarineDark , U), OP.stone.dat(MT.PrismarineDark ));
 		
 		
+		IL.EBXL_Vines                           .set(ST.make(MD.EBXL, "vines"                               , 1, 0));
 		IL.EBXL_Cactus_Paste                    .set(ST.make(MD.EBXL, "extrabiomes.paste"                   , 1, 0));
 		IL.EBXL_Dye_Black                       .set(ST.make(MD.EBXL, "extrabiomes.dye"                     , 1, 0), null, DYE_OREDICTS_MIXABLE[DYE_INDEX_Black]);
 		IL.EBXL_Dye_Blue                        .set(ST.make(MD.EBXL, "extrabiomes.dye"                     , 1, 1), null, DYE_OREDICTS_MIXABLE[DYE_INDEX_Blue]);
@@ -1614,6 +1630,7 @@ public class LoaderItemList implements Runnable {
 		IL.BoP_GhastlySoul                      .set(ST.make(MD.BoP, "misc"                                 , 1,10));
 		IL.BoP_PixieDust                        .set(ST.make(MD.BoP, "misc"                                 , 1,11));
 		IL.BoP_Ichor                            .set(ST.make(MD.BoP, "misc"                                 , 1,12));
+		IL.BoP_Vines                            .set(ST.make(MD.BoP, "flowerVine"                           , 1, 0));
 		IL.BoP_Pinecone                         .set(ST.make(MD.BoP, "misc"                                 , 1,13));
 		IL.BoP_Bamboo                           .set(ST.make(MD.BoP, "bamboo"                               , 1, 0), OP.stick.dat(MT.Bamboo), OD.bamboo);
 		IL.BoP_Hard_Ice                         .set(ST.make(MD.BoP, "hardIce"                              , 1, 0), new OreDictItemData(MT.Ice, U*2));
@@ -1656,7 +1673,7 @@ public class LoaderItemList implements Runnable {
 		
 		IL.BoP_Jar_Empty                        .set(ST.make(MD.BoP, "jarEmpty"                             , 1, 0), new OreDictItemData(MT.Glass, 21*U));
 		IL.BoP_Jar_Honey                        .set(ST.make(MD.BoP, "jarFilled"                            , 1, 0), new OreDictItemData(MT.Glass, 21*U), "foodHoneydrop");
-		IL.BoP_Jar_Poison                       .set(ST.make(MD.BoP, "jarFilled"                            , 1, 1), new OreDictItemData(MT.Glass, 21*U), OD.itemPoison);
+		IL.BoP_Jar_Poison                       .set(ST.make(MD.BoP, "jarFilled"                            , 1, 1), new OreDictItemData(MT.Glass, 21*U), OD.container500poison);
 		IL.BoP_Jar_Pixie                        .set(ST.make(MD.BoP, "jarFilled"                            , 1, 2), new OreDictItemData(MT.Glass, 21*U));
 		
 		if (IL.BoP_Jar_Honey.item() != null && IL.BoP_Jar_Empty.item() != null) IL.BoP_Jar_Honey.item().setContainerItem(IL.BoP_Jar_Empty.item());
