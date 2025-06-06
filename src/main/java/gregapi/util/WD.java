@@ -553,7 +553,7 @@ public class WD {
 		return T;
 	}
 	
-	public static Random random(World aWorld, long aChunkX, long aChunkZ) {return random(aChunkX >> 4, aChunkZ >> 4, aWorld.getSeed() ^ aWorld.provider.dimensionId);}
+	public static Random random(World aWorld, long aChunkX, long aChunkZ) {return random(aWorld.getSeed() ^ aWorld.provider.dimensionId, aChunkX >> 4, aChunkZ >> 4);}
 	public static Random random(long aSeed, long aChunkX, long aChunkZ) {
 		// Seed is XOR-ed with the Dimension ID to prevent multiple Dimensions from being identical in Ore Generation.
 		// Yes that actually happened with Aromas Mining World, and resulted in a prospecting exploit.
@@ -577,6 +577,10 @@ public class WD {
 		for (int i = 0; i < 10; i++) rRandom.nextInt(0x00ffffff);
 		return rRandom.nextInt(aBound);
 	}
+	
+	public static Random random(TileEntity aTileEntity) {return new Random(aTileEntity.xCoord ^ aTileEntity.yCoord ^ aTileEntity.zCoord);}
+	public static int random(TileEntity aTileEntity, int aBound) {return random(aTileEntity).nextInt(aBound);}
+	public static boolean random(TileEntity aTileEntity, int aBound, long aTime) {return random(aTileEntity, aBound) == aTime % aBound;}
 	
 	public static boolean border(int aFromX, int aFromZ, int aToX, int aToZ) {return aFromX >> 4 != aToX >> 4 || aFromZ >> 4 != aToZ >> 4;}
 	

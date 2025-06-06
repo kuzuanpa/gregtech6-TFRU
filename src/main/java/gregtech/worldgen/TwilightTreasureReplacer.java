@@ -24,8 +24,6 @@ import gregapi.data.*;
 import gregapi.util.ST;
 import gregapi.util.UT;
 import gregapi.util.WD;
-import gregapi.wooddict.SaplingEntry;
-import gregapi.wooddict.WoodDictionary;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -113,18 +111,14 @@ public class TwilightTreasureReplacer extends TFTreasure {
 			}
 			// Seeds for Stuff.
 			uncommon .add(IL.Dye_Cocoa.get(4));
-			if (IL.EtFu_Beet_Seeds.exists())
-			uncommon .add(IL.EtFu_Beet_Seeds.get(4));
-			if (IL.GaSu_Beet_Seeds.exists())
-			uncommon .add(IL.GaSu_Beet_Seeds.get(4));
-			if (IL.BoP_Turnip_Seeds.exists())
-			uncommon .add(IL.BoP_Turnip_Seeds.get(4));
 			// Some other things.
 			uncommon .add(IL.Resin.get(24));
 			uncommon .add(IL.Food_Cinnamon.get(12));
+			uncommon .add(IL.Bag_Loot_Seeds.get(1));
 			// Nametags and Leashes.
 			rare     .add(Items.name_tag, 4);
 			rare     .add(Items.lead, 2);
+			rare     .add(IL.Bag_Loot_Seeds.get(4));
 			// A way to obtain Breeze Rods, even if not many.
 			rare     .add(OP.stick.mat(MT.Breeze, 4));
 		}
@@ -180,12 +174,15 @@ public class TwilightTreasureReplacer extends TFTreasure {
 			mVanillaRNG =  3;
 			// A Guide to the Twilight Forest.
 			rare     .add(ST.book("Manual_Portal_TF"));
+			rare     .add(IL.Bag_Loot_Misc.get(4));
 		}
 		
 		// Labyrinth Vault
 		if (aIndex == 10) {
 			mLootBag    =  2;
 			mRares      =  4;
+			// Just a bunch of Gems.
+			rare     .add(IL.Bag_Loot_Gems.get(8));
 		}
 		
 		// Basic Chests of the Dark Tower need to contain some otherwise insanely hard to obtain Items.
@@ -233,14 +230,8 @@ public class TwilightTreasureReplacer extends TFTreasure {
 			if (IL.TC_Silverwood_Sapling.exists())
 			ultrarare.add(IL.TC_Silverwood_Sapling.get(1));
 			// All the Variety Saplings.
-			for (SaplingEntry tEntry : WoodDictionary.LIST_SAPLINGS) {
-			if (MD.EBXL.owns(tEntry.mSapling)) {useless .add(ST.validMeta(16, tEntry.mSapling)); continue;}
-			if (MD.EB  .owns(tEntry.mSapling)) {useless .add(ST.validMeta(16, tEntry.mSapling)); continue;}
-			if (MD.BoP .owns(tEntry.mSapling)) {useless .add(ST.validMeta(16, tEntry.mSapling)); continue;}
-			if (MD.HiL .owns(tEntry.mSapling)) {uncommon.add(ST.validMeta( 4, tEntry.mSapling)); continue;}
-			if (MD.HaC .owns(tEntry.mSapling)) {uncommon.add(ST.validMeta( 4, tEntry.mSapling)); continue;}
-			if (MD.MF2 .owns(tEntry.mSapling)) {uncommon.add(ST.validMeta( 4, tEntry.mSapling)); continue;}
-			}
+			useless  .add(IL.Bag_Loot_Sapling.get(4));
+			uncommon .add(IL.Bag_Loot_Sapling.get(8));
 		}
 		
 		// Stronghold Cache
@@ -368,7 +359,7 @@ public class TwilightTreasureReplacer extends TFTreasure {
 	public boolean addToInventory(IInventory aInventory, ItemStack aStack) {
 		int tSlot = findEmptySlot(aInventory);
 		if (tSlot == -1) return F;
-		aInventory.setInventorySlotContents(tSlot, IL.TF_Uncrafting.equal(aStack, T, T) ? IL.TF_Transformation_Powder.get(12+RNGSUS.nextInt(13)) : aStack);
+		aInventory.setInventorySlotContents(tSlot, IL.TF_Uncrafting.equal(aStack, T, T) ? IL.TF_Transformation_Powder.get(12+RNGSUS.nextInt(13)) : ST.item(aStack) == Items.potionitem ? IL.Bottle_Loot.get(1+RNGSUS.nextInt(2)) : aStack);
 		return T;
 	}
 	

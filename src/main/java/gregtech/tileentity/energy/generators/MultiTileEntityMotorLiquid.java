@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2021 GregTech-6 Team
+ * Copyright (c) 2025 GregTech-6 Team
  *
  * This file is part of GregTech.
  *
@@ -55,7 +55,6 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidHandler;
 import net.minecraftforge.fluids.IFluidTank;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -152,6 +151,8 @@ public class MultiTileEntityMotorLiquid extends TileEntityBase09FacingSingle imp
 					tank.setEmpty();
                 }
             }
+        } else {
+            if (mActivity.mState != 0 && WD.random(this, 20, CLIENT_TIME)) UT.Sounds.play(SFX.MC_MINECART, 1, 0.5F, getCoords());
         }
 	}
 
@@ -163,7 +164,7 @@ public class MultiTileEntityMotorLiquid extends TileEntityBase09FacingSingle imp
 	public void fillOutput(FluidStack[] outputs, FluidTankGT[] tanks){
 		Arrays.stream(outputs).forEach(output -> Arrays.stream(tanks).anyMatch(tank -> tank.canFillAll(output) && tank.fill(output) > 0));
     }
-	
+
 	@Override
 	public long onToolClick2(String aTool, long aRemainingDurability, long aQuality, Entity aPlayer, List<String> aChatReturn, IInventory aPlayerInventory, boolean aSneaking, ItemStack aStack, byte aSide, float aHitX, float aHitY, float aHitZ) {
 		long rReturn = super.onToolClick2(aTool, aRemainingDurability, aQuality, aPlayer, aChatReturn, aPlayerInventory, aSneaking, aStack, aSide, aHitX, aHitY, aHitZ);

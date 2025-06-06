@@ -92,6 +92,7 @@ public enum OD {
 	, container1000glue
 	, container250glue
 	, container1000poison
+	, container500poison
 	, container250poison
 	, container1000blood
 	, container250blood
@@ -205,7 +206,7 @@ public enum OD {
 	, itemQuicksilver
 	, itemCompressedCarbon
 	, itemClay
-	, itemEgg
+	, itemEgg, itemEggBig
 	, itemFeather, chocobofeather
 	, itemLeather
 	, itemLeatherTreated
@@ -248,6 +249,8 @@ public enum OD {
 	, blockShadowTorch
 	, blockFoxfireTorch
 	, listAllmeatsubstitute
+	, listAllmeatcooked
+	, listAllmeatraw
 	;
 	
 	public final List<ItemStack> mItems;

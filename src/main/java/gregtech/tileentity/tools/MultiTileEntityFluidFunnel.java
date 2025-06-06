@@ -19,8 +19,6 @@
 
 package gregtech.tileentity.tools;
 
-import gregapi.block.multitileentity.IMultiTileEntity.IMTE_IgnorePlayerCollisionWhenPlacing;
-import gregapi.data.CS.*;
 import gregapi.data.FL;
 import gregapi.data.LH;
 import gregapi.data.LH.Chat;
@@ -30,7 +28,7 @@ import gregapi.render.BlockTextureMulti;
 import gregapi.render.IIconContainer;
 import gregapi.render.ITexture;
 import gregapi.tileentity.ITileEntityFunnelAccessible;
-import gregapi.tileentity.base.TileEntityBase10Attachment;
+import gregapi.tileentity.base.TileEntityBase11AttachmentSmall;
 import gregapi.tileentity.delegate.DelegatorTileEntity;
 import gregapi.util.ST;
 import gregapi.util.UT;
@@ -50,7 +48,7 @@ import static gregapi.data.CS.*;
 /**
  * @author Gregorius Techneticies
  */
-public class MultiTileEntityFluidFunnel extends TileEntityBase10Attachment implements IMTE_IgnorePlayerCollisionWhenPlacing {
+public class MultiTileEntityFluidFunnel extends TileEntityBase11AttachmentSmall {
 	public boolean mAcidProof = F;
 	
 	@Override
@@ -79,7 +77,7 @@ public class MultiTileEntityFluidFunnel extends TileEntityBase10Attachment imple
 						if (tAmount >= tFluid.amount && ((ITileEntityFunnelAccessible)tDelegator.mTileEntity).funnelFill(tDelegator.mSideOfTileEntity, tFluid, T) > 0) {
 							UT.Sounds.send(SFX.MC_LIQUID_WATER, this, F);
 							aStack.stackSize--;
-							UT.Inventories.addStackToPlayerInventoryOrDrop(aPlayer, ST.container(ST.amount(1, aStack), T), T);
+							ST.give(aPlayer, ST.container(ST.amount(1, aStack), T), T);
 							return T;
 						}
 						if (aStack.getItem() instanceof IFluidContainerItem && aStack.stackSize == 1) {
@@ -169,7 +167,6 @@ public class MultiTileEntityFluidFunnel extends TileEntityBase10Attachment imple
 	@Override public byte getDefaultSide() {return SIDE_BOTTOM;}
 	@Override public boolean[] getValidSides() {return SIDES_BOTTOM_HORIZONTAL;}
 	@Override public boolean canDrop(int aInventorySlot) {return T;}
-	@Override public boolean ignorePlayerCollisionWhenPlacing() {return T;}
 	
 	@Override public String getTileEntityName() {return "gt.multitileentity.funnel";}
 }

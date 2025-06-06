@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2023 GregTech-6 Team
+ * Copyright (c) 2025 GregTech-6 Team
  *
  * This file is part of GregTech.
  *
@@ -224,7 +224,7 @@ public enum FL {
 	, Juice_Starfruit           ("starfruitjuice"                                           , SIMPLE, LIQUID, FOOD, JUICE, FRUIT_JUICE)
 	, Juice_Papaya              ("papayajuice"                                              , SIMPLE, LIQUID, FOOD, JUICE, FRUIT_JUICE)
 	, Juice_Fig                 ("figjuice"                                                 , SIMPLE, LIQUID, FOOD, JUICE, FRUIT_JUICE)
-	, Juice_Coconut             ("coconutmilk"                                              , SIMPLE, LIQUID, FOOD, JUICE, FRUIT_JUICE)
+	, Juice_Coconut             ("coconutmilk"                                              , SIMPLE, LIQUID, FOOD, JUICE, FRUIT_JUICE, COOKING_OIL)
 	, Juice_Date                ("datejuice"                                                , SIMPLE, LIQUID, FOOD, JUICE, FRUIT_JUICE)
 	
 	, Juice_Carrot              ("binnie.juicecarrot"       , "carrotjuice"                 , SIMPLE, LIQUID, FOOD, JUICE)
@@ -316,13 +316,13 @@ public enum FL {
 	, Wine_Grape_Red            ("binnie.winered"           , "potion.wine"                 , SIMPLE, LIQUID, FOOD, ALCOHOLIC, WINE)
 	, Wine_Grape_White          ("binnie.winewhite"                                         , SIMPLE, LIQUID, FOOD, ALCOHOLIC, WINE)
 	, Wine_Fortified            ("binnie.winefortified"                                     , SIMPLE, LIQUID, FOOD, ALCOHOLIC, WINE)
-
+	
 	, Whiskey                   ("binnie.whiskey"           , "whiskey"                     , SIMPLE, LIQUID, FOOD, ALCOHOLIC, WHISKEY)
 	, Whiskey_Rye               ("binnie.whiskeyrye"                                        , SIMPLE, LIQUID, FOOD, ALCOHOLIC, WHISKEY)
 	, Whiskey_Corn              ("binnie.whiskeycorn"                                       , SIMPLE, LIQUID, FOOD, ALCOHOLIC, WHISKEY)
 	, Whiskey_Scotch            ("binnie.whiskeywheat"      , "potion.scotch"               , SIMPLE, LIQUID, FOOD, ALCOHOLIC, WHISKEY)
 	, Whiskey_GlenMcKenner      ("glenmckenner"             , "potion.glenmckenner"         , SIMPLE, LIQUID, FOOD, ALCOHOLIC, WHISKEY)
-
+	
 	, Liqueur_Chocolate         ("binnie.liqueurchocolate"  , "liqueur"                     , SIMPLE, LIQUID, FOOD, ALCOHOLIC, LIQUEUR)
 	, Liqueur_Almond            ("binnie.liqueuralmond"                                     , SIMPLE, LIQUID, FOOD, ALCOHOLIC, LIQUEUR)
 	, Liqueur_Anise             ("binnie.liqueuranise"                                      , SIMPLE, LIQUID, FOOD, ALCOHOLIC, LIQUEUR)
@@ -340,18 +340,18 @@ public enum FL {
 	, Liqueur_Orange            ("binnie.liqueurorange"                                     , SIMPLE, LIQUID, FOOD, ALCOHOLIC, LIQUEUR)
 	, Liqueur_Peach             ("binnie.liqueurpeach"                                      , SIMPLE, LIQUID, FOOD, ALCOHOLIC, LIQUEUR)
 	, Liqueur_Raspberry         ("binnie.liqueurraspberry"                                  , SIMPLE, LIQUID, FOOD, ALCOHOLIC, LIQUEUR)
-
+	
 	, Liquor                    ("binnie.liquorfruit"       , "liquor"                      , SIMPLE, LIQUID, FOOD, ALCOHOLIC, LIQUOR)
 	, Liquor_Apple              ("binnie.liquorapple"                                       , SIMPLE, LIQUID, FOOD, ALCOHOLIC, LIQUOR)
 	, Liquor_Apricot            ("binnie.liquorapricot"                                     , SIMPLE, LIQUID, FOOD, ALCOHOLIC, LIQUOR)
 	, Liquor_Cherry             ("binnie.liquorcherry"                                      , SIMPLE, LIQUID, FOOD, ALCOHOLIC, LIQUOR)
 	, Liquor_Elderberry         ("binnie.liquorelderberry"                                  , SIMPLE, LIQUID, FOOD, ALCOHOLIC, LIQUOR)
 	, Liquor_Pear               ("binnie.liquorpear"                                        , SIMPLE, LIQUID, FOOD, ALCOHOLIC, LIQUOR)
-
+	
 	, Spirit_Gin                ("binnie.spiritgin"         , "gin"                         , SIMPLE, LIQUID, FOOD, ALCOHOLIC, SPIRIT)
 	, Spirit_Cane               ("binnie.spiritneutral"                                     , SIMPLE, LIQUID, FOOD, ALCOHOLIC, SPIRIT)
 	, Spirit_Neutral            ("binnie.spiritsugarcane"                                   , SIMPLE, LIQUID, FOOD, ALCOHOLIC, SPIRIT)
-
+	
 	, Brandy                    ("binnie.brandyfruit"       , "brandy"                      , SIMPLE, LIQUID, FOOD, ALCOHOLIC, BRANDY)
 	, Brandy_Apple              ("binnie.brandyapple"                                       , SIMPLE, LIQUID, FOOD, ALCOHOLIC, BRANDY)
 	, Brandy_Apricot            ("binnie.brandyapricot"                                     , SIMPLE, LIQUID, FOOD, ALCOHOLIC, BRANDY)
@@ -361,7 +361,7 @@ public enum FL {
 	, Brandy_Grape              ("binnie.brandygrape"                                       , SIMPLE, LIQUID, FOOD, ALCOHOLIC, BRANDY)
 	, Brandy_Pear               ("binnie.brandypear"                                        , SIMPLE, LIQUID, FOOD, ALCOHOLIC, BRANDY)
 	, Brandy_Plum               ("binnie.brandyplum"                                        , SIMPLE, LIQUID, FOOD, ALCOHOLIC, BRANDY)
-
+	
 	, Cider_Apple               ("binnie.ciderapple"        , "potion.cider", "cider"       , SIMPLE, LIQUID, FOOD, ALCOHOLIC, CIDER)
 	, Cider_Pear                ("binnie.ciderpear"                                         , SIMPLE, LIQUID, FOOD, ALCOHOLIC, CIDER)
 	, Cider_Peach               ("binnie.ciderpeach"                                        , SIMPLE, LIQUID, FOOD, ALCOHOLIC, CIDER)
@@ -436,7 +436,7 @@ public enum FL {
 	, CFoam                     ("ic2constructionfoam"                                      , LIQUID) // 100 per Unit
 	, Sewage                    ("sewage"                                                   , SIMPLE, LIQUID)
 	, Sludge                    ("sludge"                                                   , SIMPLE, LIQUID)
-	, Tar                       ("tar"                                                      , SIMPLE, LIQUID)
+	, Tar                       ("tar"                      , "tarfluid"                    , SIMPLE, LIQUID)
 	, Glass                     ("glass"                    , "molten.glass"                , SIMPLE, LIQUID)
 	, Sluice                    ("sluicejuice"                                              , SIMPLE, LIQUID)
 	
@@ -466,6 +466,8 @@ public enum FL {
 	
 	, Med_Heal                  ("medicine.heal"                                            , SIMPLE, LIQUID, BATH)
 	, Med_Laxative              ("medicine.laxative"                                        , SIMPLE, LIQUID, BATH)
+	
+	, Poison                    ("poison"                                                   , SIMPLE, LIQUID, BATH)
 	
 	, Rotten_Drink              ("rottendrink"                                              , SIMPLE, LIQUID, FOOD)
 	
@@ -569,18 +571,18 @@ public enum FL {
 	
 	public final String mName;
 	
-	private FL(String aName, Collection<String>... aFluidSets) {
+	FL(String aName, Collection<String>... aFluidSets) {
 		mName = aName;
 		for (Collection<String> aFluidSet : aFluidSets) {aFluidSet.add(mName);}
 	}
-	private FL(String aName, String aOldName, Collection<String>... aFluidSets) {
+	FL(String aName, String aOldName, Collection<String>... aFluidSets) {
 		mName = aName;
 		FluidsGT.HIDDEN.add(aOldName);
 		FluidsGT.NONSTANDARD.add(aOldName);
 		FluidsGT.FLUID_RENAMINGS.put(aOldName, mName);
 		for (Collection<String> aFluidSet : aFluidSets) {aFluidSet.add(mName); aFluidSet.add(aOldName);}
 	}
-	private FL(String aName, String aOldName1, String aOldName2, Collection<String>... aFluidSets) {
+	FL(String aName, String aOldName1, String aOldName2, Collection<String>... aFluidSets) {
 		mName = aName;
 		FluidsGT.HIDDEN.add(aOldName1);
 		FluidsGT.HIDDEN.add(aOldName2);

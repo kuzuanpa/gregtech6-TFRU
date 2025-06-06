@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020 GregTech-6 Team
+ * Copyright (c) 2025 GregTech-6 Team
  *
  * This file is part of GregTech.
  *
@@ -22,7 +22,10 @@ package gregapi.wooddict;
 import gregapi.data.MT;
 import gregapi.oredict.OreDictMaterial;
 import gregapi.util.ST;
+import gregapi.util.UT;
 import net.minecraft.item.ItemStack;
+
+import static gregapi.data.CS.F;
 
 /**
  * @author Gregorius Techneticies
@@ -32,10 +35,13 @@ public class SaplingEntry {
 	public WoodEntry mWoodEntry;
 	public LeafEntry mLeafEntry;
 	public OreDictMaterial mMaterialSapling = MT.Wood;
+	public boolean mBaggedSaplingLoot = F;
+	public int mCount = 1;
 	
 	public SaplingEntry(ItemStack aSapling, WoodEntry aWood) {
 		if (ST.invalid(aSapling)) return;
 		mSapling = ST.amount(1, aSapling);
+		mCount = UT.Code.bindStack(ST.size(aSapling));
 		
 		mWoodEntry = aWood;
 		if (mWoodEntry != null) {
@@ -49,6 +55,7 @@ public class SaplingEntry {
 	public SaplingEntry(ItemStack aSapling, WoodEntry aWood, ItemStack aLeaf) {
 		if (ST.invalid(aSapling) || ST.invalid(aLeaf)) return;
 		mSapling = ST.amount(1, aSapling);
+		mCount = UT.Code.bindStack(ST.size(aSapling));
 		
 		mLeafEntry = new LeafEntry(aLeaf);
 		mLeafEntry.mSaplingEntries.add(this);
@@ -64,6 +71,7 @@ public class SaplingEntry {
 	public SaplingEntry(ItemStack aSapling, WoodEntry aWood, LeafEntry aLeaf) {
 		if (ST.invalid(aSapling)) return;
 		mSapling = ST.amount(1, aSapling);
+		mCount = UT.Code.bindStack(ST.size(aSapling));
 		
 		mLeafEntry = aLeaf;
 		mLeafEntry.mSaplingEntries.add(this);

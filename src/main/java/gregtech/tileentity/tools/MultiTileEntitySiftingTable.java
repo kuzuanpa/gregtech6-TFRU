@@ -43,10 +43,8 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.ChunkCoordinates;
 
 import java.util.List;
-import java.util.Map.Entry;
 
 import static gregapi.data.CS.*;
 
@@ -237,30 +235,28 @@ public class MultiTileEntitySiftingTable extends TileEntityBase07Paintable imple
 			
 			if (aTimer % 5 == 0 && (mState & B[2]) != 0) {
 				mState &= ~B[2];
-				for (Entry<EntityPlayer, ChunkCoordinates> tEntry : PLAYER_LAST_CLICKED.entrySet()) {
-					if (getCoords().equals(tEntry.getValue()) && tEntry.getKey().getDistanceSq(xCoord+0.5, yCoord+0.5, zCoord+0.5) <= 64) {
-						mState |= B[2];
-						
-						boolean temp = T;
-						for (int i = 1; i < 13; i++) if (slotHas(i)) {temp = F; break;}
-						ItemStack aStack = slot(0);
-						
-						if (temp && (++mClickCount >= 8 || UT.Entities.hasInfiniteItems(tEntry.getKey()))) {
-							mClickCount = 0;
-							Recipe tRecipe = mRecipes.findRecipe(this, mLastRecipe, F, V[1], null, ZL_FS, aStack);
-							if (tRecipe == null) {
-								for (int i = 1; i < 13; i++) if (addStackToSlot(i, aStack)) {slotKill(0); break;}
-							} else {
-								if (tRecipe.mCanBeBuffered) mLastRecipe = tRecipe;
-								if (tRecipe.isRecipeInputEqual(T, F, ZL_FS, ST.array(aStack))) {
-									if (aStack.stackSize <= 0) slotKill(0);
-									ItemStack[] tOutputs = tRecipe.getOutputs();
-									for (int i = 0, j = Math.min(tOutputs.length, 12); i < j; i++) addStackToSlot(i+1, tOutputs[i]);
-									tEntry.getKey().addExhaustion(tRecipe.getAbsoluteTotalPower() / 5000.0F);
-									tEntry.getKey().swingItem();
-									updateInventory();
-									updateAdjacentInventories();
-								}
+				for (EntityPlayer tPlayer : UT.Entities.getPlayersWithLastTarget(this)) {
+					mState |= B[2];
+					
+					boolean temp = T;
+					for (int i = 1; i < 13; i++) if (slotHas(i)) {temp = F; break;}
+					ItemStack aStack = slot(0);
+					
+					if (temp && ((mClickCount = UT.Code.bind7(mClickCount + UT.Entities.pot1Haste(tPlayer))) >= 4*UT.Entities.pot2Fatique(tPlayer) || UT.Entities.hasInfiniteItems(tPlayer))) {
+						mClickCount = 0;
+						Recipe tRecipe = mRecipes.findRecipe(this, mLastRecipe, F, V[1], null, ZL_FS, aStack);
+						if (tRecipe == null) {
+							for (int i = 1; i < 13; i++) if (addStackToSlot(i, aStack)) {slotKill(0); break;}
+						} else {
+							if (tRecipe.mCanBeBuffered) mLastRecipe = tRecipe;
+							if (tRecipe.isRecipeInputEqual(T, F, ZL_FS, ST.array(aStack))) {
+								if (aStack.stackSize <= 0) slotKill(0);
+								ItemStack[] tOutputs = tRecipe.getOutputs();
+								for (int i = 0, j = Math.min(tOutputs.length, 12); i < j; i++) addStackToSlot(i+1, tOutputs[i]);
+								UT.Entities.exhaust(tPlayer, tRecipe.getAbsoluteTotalPower() / 1000.0);
+								tPlayer.swingItem();
+								updateInventory();
+								updateAdjacentInventories();
 							}
 						}
 					}
@@ -288,7 +284,7 @@ public class MultiTileEntitySiftingTable extends TileEntityBase07Paintable imple
 					if (canInsertItem2(0, aPlayer.inventory.getCurrentItem(), aSide)) ST.move(aPlayer.inventory, this, aPlayer.inventory.currentItem, 0);
 				}
 			} else {
-				for (int i = 1; i < 13; i++) UT.Inventories.addStackToPlayerInventoryOrDrop(aPlayer, slotTake(i), F, worldObj, xCoord+0.5, yCoord+1, zCoord+0.5);
+				for (int i = 1; i < 13; i++) ST.give(aPlayer, slotTake(i), F, worldObj, xCoord+0.5, yCoord+1, zCoord+0.5);
 			}
 		} else {
 			if (SIDES_TOP[aSide]) {

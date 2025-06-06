@@ -635,7 +635,11 @@ public class Loader_Recipes_Vanilla implements Runnable {
 		CR.shapeless(IL.Plank.get(8), CR.DEF_NCC, new Object[] {OreDictToolNames.saw, Blocks.noteblock            });
 		CR.shapeless(IL.Plank.get(8), CR.DEF_NCC, new Object[] {OreDictToolNames.saw, Blocks.jukebox              });
 		
-		RM.Slicer       .addRecipe2(T, 16,   16, ST.make(Blocks.melon_block, 1, W), IL.Shape_Slicer_Eigths.get(0), ST.make(Items.melon, 8, 0), ST.make(Items.melon_seeds, 1, 0));
+		RM.Slicer       .addRecipe2(T, 16,   16, ST.make(Items.leather_helmet    , 1, W), IL.Shape_Slicer_Split .get(0), ST.make(Items.leather, 1, 0));
+		RM.Slicer       .addRecipe2(T, 16,   16, ST.make(Items.leather_chestplate, 1, W), IL.Shape_Slicer_Split .get(0), ST.make(Items.leather, 2, 0));
+		RM.Slicer       .addRecipe2(T, 16,   16, ST.make(Items.leather_leggings  , 1, W), IL.Shape_Slicer_Split .get(0), ST.make(Items.leather, 2, 0));
+		RM.Slicer       .addRecipe2(T, 16,   16, ST.make(Items.leather_boots     , 1, W), IL.Shape_Slicer_Split .get(0), ST.make(Items.leather, 1, 0));
+		RM.Slicer       .addRecipe2(T, 16,   16, ST.make(Blocks.melon_block      , 1, W), IL.Shape_Slicer_Eigths.get(0), ST.make(Items.melon, 8, 0), ST.make(Items.melon_seeds, 1, 0));
 		
 		RM.Compressor   .addRecipe1(T, 64,   32, ST.make(Blocks.ice, 2, W), ST.make(Blocks.packed_ice, 1, 0));
 		RM.Compressor   .addRecipe1(T, 16,   32, OM.dust(MT.Ice), ST.make(Blocks.ice, 1, 0));
@@ -898,6 +902,7 @@ public class Loader_Recipes_Vanilla implements Runnable {
 		RM.Centrifuge   .addRecipe1(T, 16,   16, OM.dust(MT.SlimyBone), NF, FL.Slime_Green.make(250), OM.dust(MT.Bone));
 		RM.Centrifuge   .addRecipe1(T, 16,   16, ST.make(Items.magma_cream, 1, W), NF, FL.Slime_Green.make(125), ST.make(Items.blaze_powder, 1, 0));
 		for (String tFluid : FluidsGT.SLIME) if (FL.exists(tFluid)) {
+		RM.Injector     .addRecipe0(T, 16,   16, FL.array(FL.make(tFluid, 250), MT.CO2.gas(U4, T)), FL.BAWLS.make(250), ZL_IS);
 		RM.Centrifuge   .addRecipe0(T, 16,   64, FL.make(tFluid, 250), FL.Latex.make(L/2), FL.Glue.make(250));
 		RM.Mixer        .addRecipe1(T, 16,   16, OM.dust(MT.Blaze, U9), FL.make(tFluid, 250), NF, ST.make(Items.magma_cream, 1, 0));
 		RM.Mixer        .addRecipe1(T, 16,  144, OM.dust(MT.Blaze    ), FL.make(tFluid,2250), NF, ST.make(Items.magma_cream, 9, 0));

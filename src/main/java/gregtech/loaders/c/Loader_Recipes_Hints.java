@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2023 GregTech-6 Team
+ * Copyright (c) 2025 GregTech-6 Team
  *
  * This file is part of GregTech.
  *
@@ -23,6 +23,8 @@ import gregapi.block.multitileentity.MultiTileEntityRegistry;
 import gregapi.data.*;
 import gregapi.util.OM;
 import gregapi.util.ST;
+import gregapi.wooddict.SaplingEntry;
+import gregapi.wooddict.WoodDictionary;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 
@@ -37,7 +39,7 @@ public class Loader_Recipes_Hints implements Runnable {
 	@Override public void run() {
 		MultiTileEntityRegistry aRegistry = MultiTileEntityRegistry.getRegistry("gt.multitileentity");
 		
-		RM.Trees     .mRecipeMachineList.add(ST.make(BlocksGT.Saplings_AB, 1, 0));
+		RM.Trees     .mRecipeMachineList.add(IL.Bag_Loot_Sapling.get(1));
 		RM.Hammer    .mRecipeMachineList.add(ToolsGT.sMetaTool.make(ToolsGT.HARDHAMMER));
 		RM.Chisel    .mRecipeMachineList.add(ToolsGT.sMetaTool.make(ToolsGT.CHISEL));
 		RM.Chisel    .mRecipeMachineList.add(ToolsGT.sMetaTool.make(ToolsGT.POCKET_CHISEL));
@@ -52,6 +54,15 @@ public class Loader_Recipes_Hints implements Runnable {
 		, ST.make(aRegistry.getItem(1199), "Heat up the Crucible using a Burning Box")
 		, ST.make(Blocks.redstone_ore, 1, 0, "Use a Club to mine Vanilla or Deepslate Redstone Ore for Cinnabar")
 		), ST.array(IL.Bottle_Mercury.get(1), ST.make(OP.ingot.mat(MT.Hg, 1), "Pouring this into Molds only works with additional Cooling!"), ST.make(OP.nugget.mat(MT.Hg, 1), "Pouring this into Molds only works with additional Cooling!")), null, ZL_LONG, FL.array(MT.Hg.liquid(1, T)), FL.array(MT.Hg.liquid(1, T)), 0, 0, 0);
+		
+		RM.DidYouKnow.addFakeRecipe(F, ST.array(
+		  ST.make(ToolsGT.sMetaTool, 1, ToolsGT.SENSE, "Kill corresponding Mobs with this")
+		, NI
+		, NI
+		, NI
+		, NI
+		, NI
+		), ST.array(ST.make(Items.skull, 1, 0), ST.make(Items.skull, 1, 1), ST.make(Items.skull, 1, 2), ST.make(Items.skull, 1, 3), ST.make(Items.skull, 1, 4)), null, ZL_LONG, ZL_FS, ZL_FS, 0, 0, 0);
 		
 		RM.DidYouKnow.addFakeRecipe(F, ST.array(
 		  IL.Ceramic_Mold.getWithName(1, "Don't forget to shape the Mold to pour it")
@@ -228,5 +239,22 @@ public class Loader_Recipes_Hints implements Runnable {
 		, NI
 		, NI
 		), ZL_IS, null, ZL_LONG, ZL_FS, ZL_FS, 0, 0, 0);
+		
+		for (SaplingEntry tTree : WoodDictionary.LIST_SAPLINGS) {
+		RM.Trees.addFakeRecipe(F, ST.array(ST.amount(tTree.mCount, tTree.mSapling), tTree.mLeafEntry == null ? NI : tTree.mLeafEntry.mLeaf, tTree.mBaggedSaplingLoot ? IL.Bag_Loot_Sapling.getWithName(1, "Is in its Drop Table") : NI), tTree.mWoodEntry == null ? tTree.mLeafEntry == null ? ZL_IS : ST.array(tTree.mLeafEntry.mLeaf) : ST.array(
+		  tTree.mLeafEntry == null ? NI : tTree.mLeafEntry.mLeaf
+		, tTree.mWoodEntry.mLog
+		, tTree.mWoodEntry.mBeamEntry  == null ? NI : tTree.mWoodEntry.mBeamEntry .mBeam
+		, tTree.mWoodEntry.mPlankEntry == null ? NI : tTree.mWoodEntry.mPlankEntry.mSlab
+		, tTree.mWoodEntry.mPlankEntry == null ? NI : tTree.mWoodEntry.mPlankEntry.mStair
+		, tTree.mWoodEntry.mPlankEntry == null ? NI : tTree.mWoodEntry.mPlankEntry.mPlank
+		, tTree.mWoodEntry.mPlankEntry == null ? NI : ST.validMeta_(tTree.mWoodEntry.mPlankEntry.mStickCountLathe, tTree.mWoodEntry.mPlankEntry.mStick)
+		, tTree.mWoodEntry.mBeamEntry  == null ? NI : ST.validMeta_(tTree.mWoodEntry.mBeamEntry .mStickCountLathe, tTree.mWoodEntry.mBeamEntry .mStick)
+		, tTree.mWoodEntry.mPlankEntry == null ? NI : OP.crateGt64Plate.mat(tTree.mWoodEntry.mPlankEntry.mMaterialPlank, 1)
+		, OM.dust(tTree.mWoodEntry.mMaterialWood.mTargetPulver, tTree.mWoodEntry.mPlankCountBuzz+2, 1)
+		, tTree.mWoodEntry.mBark
+		, tTree.mWoodEntry.mCharcoalCount <= 0 ? NI : OP.gem.mat(MT.Charcoal, tTree.mWoodEntry.mCharcoalCount)
+		), null, null, null, null, 0, 0, 0);
+		}
 	}
 }

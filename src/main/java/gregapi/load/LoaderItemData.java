@@ -428,7 +428,7 @@ public class LoaderItemData implements Runnable {
 		OM.reg("seedCanola"                         , ST.make(MD.RoC, "rotarycraft_item_canola", 1, 0));
 		OM.reg("seedThistle"                        , ST.make(MD.GrC_Milk, "grcmilk.SeedThistle", 1, 0));
 		OM.reg("seedCabbage"                        , ST.make(MD.ERE, "cabbageSeeds", 1, 0));
-		OM.reg("seedDarkFruit"                      , ST.make(MD.ERE, "materials", 1, 33));
+		OM.reg("seedDarkFruit"                      , ST.make(MD.ERE, "materials", 1,33));
 		OM.reg("seedWheat"                          , ST.make(Items.wheat_seeds, 1, 0));
 		OM.reg("seedMelon"                          , ST.make(Items.melon_seeds, 1, 0));
 		OM.reg("seedPumpkin"                        , ST.make(Items.pumpkin_seeds, 1, 0));
@@ -438,17 +438,17 @@ public class LoaderItemData implements Runnable {
 		OM.reg("seedQuartzBerry"                    , ST.make(MD.GaNe, "quarzBerrySeeds", 1, 0));
 		OM.reg("seedHellBush"                       , ST.make(MD.GaNe, "hellBushSeeds", 1, 0));
 		OM.reg(OD.itemEgg                           , ST.make(Items.egg, 1, 0));
+		OM.reg(OD.itemEgg                           , ST.make(MD.Birb, "phoenix_egg"          , 1, 0));
+		OM.reg(OD.itemEgg                           , ST.make(MD.Birb, "mystery_egg"          , 1, 0));
 		OM.reg(OD.itemEgg                           , ST.make(MD.Birb, "pelican_egg"          , 1, 0));
 		OM.reg(OD.itemEgg                           , ST.make(MD.Birb, "parrot_egg"           , 1, 0));
 		OM.reg(OD.itemEgg                           , ST.make(MD.Birb, "hummingbird_egg"      , 1, 0));
 		OM.reg(OD.itemEgg                           , ST.make(MD.Birb, "kiwi_egg"             , 1, 0));
 		OM.reg(OD.itemEgg                           , ST.make(MD.Birb, "kingfisher_egg"       , 1, 0));
 		OM.reg(OD.itemEgg                           , ST.make(MD.Birb, "crane_egg"            , 1, 0));
-		OM.reg(OD.itemEgg                           , ST.make(MD.Birb, "toucan_egg"           , 1, 0));
 		OM.reg(OD.itemEgg                           , ST.make(MD.Birb, "peafowl_egg"          , 1, 0));
 		OM.reg(OD.itemEgg                           , ST.make(MD.Birb, "magpie_egg"           , 1, 0));
 		OM.reg(OD.itemEgg                           , ST.make(MD.Birb, "owl_egg"              , 1, 0));
-		OM.reg(OD.itemEgg                           , ST.make(MD.Birb, "ostrich_egg"          , 1, 0));
 		OM.reg(OD.itemEgg                           , ST.make(MD.Birb, "cardinal_egg"         , 1, 0));
 		OM.reg(OD.itemEgg                           , ST.make(MD.Birb, "duck_egg"             , 1, 0));
 		OM.reg(OD.itemEgg                           , ST.make(MD.Birb, "gouldianfinch_egg"    , 1, 0));
@@ -459,10 +459,15 @@ public class LoaderItemData implements Runnable {
 		OM.reg(OD.itemEgg                           , ST.make(MD.Birb, "pigeon_egg"           , 1, 0));
 		OM.reg(OD.itemEgg                           , ST.make(MD.Birb, "flamingo_egg"         , 1, 0));
 		OM.reg(OD.itemEgg                           , ST.make(MD.Birb, "seagull_egg"          , 1, 0));
-		OM.reg(OD.itemEgg                           , ST.make(MD.Birb, "swan_egg"             , 1, 0));
-		OM.reg(OD.itemEgg                           , ST.make(MD.Birb, "cassowary_egg"        , 1, 0));
 		OM.reg(OD.itemEgg                           , ST.make(MD.Birb, "heron_egg"            , 1, 0));
-		OM.reg(OD.itemEgg                           , ST.make(MD.Birb, "penguin_egg"          , 1, 0));
+		OM.reg(OD.itemEgg                           , ST.make(MD.Birb, "robin_egg"            , 1, 0));
+		OM.reg(OD.itemEgg                           , ST.make(MD.Birb, "roadrunner_egg"       , 1, 0));
+		OM.reg(OD.itemEggBig                        , ST.make(MD.Birb, "toucan_egg"           , 1, 0));
+		OM.reg(OD.itemEggBig                        , ST.make(MD.Birb, "ostrich_egg"          , 1, 0));
+		OM.reg(OD.itemEggBig                        , ST.make(MD.Birb, "swan_egg"             , 1, 0));
+		OM.reg(OD.itemEggBig                        , ST.make(MD.Birb, "cassowary_egg"        , 1, 0));
+		OM.reg(OD.itemEggBig                        , ST.make(MD.Birb, "vulture_egg"          , 1, 0));
+		OM.reg(OD.itemEggBig                        , ST.make(MD.Birb, "penguin_egg"          , 1, 0));
 		OM.reg("listAllmeatraw"                     , ST.make(MD.Birb, "birdmeat_small"       , 1, 0));
 		OM.reg("listAllmeatcooked"                  , ST.make(MD.Birb, "cooked_birdmeat_small", 1, 0));
 		OM.reg("listAllmeatraw"                     , ST.make(MD.Birb, "birdmeat_large"       , 1, 0));
@@ -644,15 +649,15 @@ public class LoaderItemData implements Runnable {
 		OM.reg(OD.sandstone                         , ST.make(MD.EtFu, "red_sandstone", 1, W));
 		OM.reg("cropBerry"                          , ST.make(MD.EtFu, "sweet_berries", 1, 0));
 		OM.reg("cropTorchberry"                     , ST.make(MD.TF, "item.torchberries", 1, 0));
-		OM.reg(OD.container250poison                , ST.make(Items.potionitem, 1,  8196));
-		OM.reg(OD.container250poison                , ST.make(Items.potionitem, 1,  8228));
-		OM.reg(OD.container250poison                , ST.make(Items.potionitem, 1,  8260));
-		OM.reg(OD.container250poison                , ST.make(Items.potionitem, 1, 16388));
-		OM.reg(OD.container250poison                , ST.make(Items.potionitem, 1, 16420));
-		OM.reg(OD.container250poison                , ST.make(Items.potionitem, 1, 16452));
-		OM.reg(OD.container250poison                , ST.make(MD.EtFu, "lingering_potion", 1,  8196));
-		OM.reg(OD.container250poison                , ST.make(MD.EtFu, "lingering_potion", 1,  8228));
-		OM.reg(OD.container250poison                , ST.make(MD.EtFu, "lingering_potion", 1,  8260));
+		OM.reg("bottlePoison"                       , ST.make(Items.potionitem, 1,  8196));
+		OM.reg("bottlePoison"                       , ST.make(Items.potionitem, 1,  8228));
+		OM.reg("bottlePoison"                       , ST.make(Items.potionitem, 1,  8260));
+		OM.reg("bottlePoison"                       , ST.make(Items.potionitem, 1, 16388));
+		OM.reg("bottlePoison"                       , ST.make(Items.potionitem, 1, 16420));
+		OM.reg("bottlePoison"                       , ST.make(Items.potionitem, 1, 16452));
+		OM.reg("bottlePoison"                       , ST.make(MD.EtFu, "lingering_potion", 1,  8196));
+		OM.reg("bottlePoison"                       , ST.make(MD.EtFu, "lingering_potion", 1,  8228));
+		OM.reg("bottlePoison"                       , ST.make(MD.EtFu, "lingering_potion", 1,  8260));
 		OM.reg(OD.container1000rubbertreesap        , ST.make(MD.IHL, "bucket_fluidRubberTreeSap", 1, 0));
 		OM.reg(OD.container1000spruceresin          , ST.make(MD.IHL, "bucket_SpruceResin", 1, 0));
 		OM.reg("foodDough"                          , ST.make(MD.MF2, "MF_UFooddough", 1, 0));
@@ -1302,7 +1307,23 @@ public class LoaderItemData implements Runnable {
 		OM.reg(OP.stone, MT.SoulSand                            , ST.make(MD.NeLi, "SoulSandstone"      , 1, W));
 		
 		
-		OM.data(MD.LycM_Demon, "demoncrystal"               , 1,   W, MT.Glowstone          , U*4);
+		OM.data(MD.LycM_Demon   , "demoncrystal"            , 1,   W, MT.Glowstone          , U*4);
+		OM.data(MD.LycM_Arctic  , "blizzardcharge"          , 1,   W, MT.Blizz              , U*4);
+		OM.data(MD.LycM_Arctic  , "frostwebcharge"          , 1,   W, MT.Blizz              , U*4);
+		OM.data(MD.LycM_Arctic  , "frostboltcharge"         , 1,   W, MT.Blizz              , U*4);
+		OM.data(MD.LycM_Arctic  , "tundracharge"            , 1,   W, MT.Blizz              , U*4);
+		OM.data(MD.LycM_Inferno , "embercharge"             , 1,   W, MT.Blaze              , U*4);
+		OM.data(MD.LycM_Inferno , "magmacharge"             , 1,   W, MT.Blaze              , U*4);
+		OM.data(MD.LycM_Inferno , "scorchfirecharge"        , 1,   W, MT.Blaze              , U*4);
+		OM.data(MD.LycM_Demon   , "doomfirecharge"          , 1,   W, MT.Blaze              , U*4);
+		OM.data(MD.LycM_Demon   , "hellfirecharge"          , 1,   W, MT.Blaze              , U*4);
+		OM.data(MD.LycM_Demon   , "devilstarcharge"         , 1,   W, MT.Blaze              , U*4);
+		OM.data(MD.LycM_Demon   , "demoniclightningcharge"  , 1,   W, MT.Blitz              , U*4);
+		OM.data(MD.LycM_Shadow  , "spectralboltcharge"      , 1,   W, MT.Blitz              , U*4);
+		OM.data(MD.LycM_Mountain, "arcanelaserstormcharge"  , 1,   W, MT.Blitz              , U*4);
+		OM.data(MD.LycM_Mountain, "boulderblastcharge"      , 1,   W, MT.Basalz             , U*4);
+		OM.data(MD.LycM_Desert  , "mudshotcharge"           , 1,   W, MT.Basalz             , U*4);
+		
 		
 		OM.data(MD.ElC, "electricraft_item_wire"            , 1,   0, MT.HSLA               , 3*U16);
 		OM.data(MD.ElC, "electricraft_item_wire"            , 1,   1, MT.Sn                 , 3*U16);

@@ -40,9 +40,9 @@ import gregapi.tileentity.machines.ITileEntitySwitchableOnOff;
 import gregapi.util.OM;
 import gregapi.util.ST;
 import gregapi.util.UT;
+import gregapi.util.WD;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -109,7 +109,7 @@ public class MultiTileEntityGearBox extends TileEntityBase07Paintable implements
 			if (FACE_CONNECTED[tSide][mAxleGear & 63]) {
 				mAxleGear &= ~B[tSide];
 				ItemStack tGear = OP.gearGt.mat(mMaterial, 1);
-				if (!(aPlayer instanceof EntityPlayer) || !UT.Inventories.addStackToPlayerInventory((EntityPlayer)aPlayer, tGear)) ST.place(getWorld(), getOffset(tSide, 1), tGear);
+				if (!ST.add(aPlayer, tGear)) ST.place(getWorld(), getOffset(tSide, 1), tGear);
 				mJammed = F;
 				mGearsWork = checkGears();
 				updateClientData();
@@ -219,6 +219,8 @@ public class MultiTileEntityGearBox extends TileEntityBase07Paintable implements
 			oInputtedSides = mInputtedSides;
 			mInputtedSides = 0;
 			mUsedGear = F;
+		} else {
+			if ((mRotationData & B[6]) != 0 && WD.random(this, 20, CLIENT_TIME)) UT.Sounds.play(SFX.MC_MINECART, 1, 0.1F, getCoords());
 		}
 	}
 	

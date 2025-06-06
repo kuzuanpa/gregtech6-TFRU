@@ -146,9 +146,10 @@ public class GT_API_Post extends Abstract_Mod {
 			MT.Efrine                     .addOreByProducts(MT.ShadowIron     );
 		}
 		if (MD.TiC.mLoaded) {
-			MT.Ge.addOreByProducts(MT.Ardite);
-			MT.Co.addOreByProducts(MT.Ardite);
-			MT.OREMATS.Cobaltite.addOreByProducts(MT.Ardite);
+			MT.Pb.addOreByProducts(MT.Ardite);
+			MT.Sb.addOreByProducts(MT.Ardite);
+			MT.OREMATS.Galena.addOreByProducts(MT.Ardite); // I found Ardaite on Wikipedia, which is a Galena Type of Material.
+			MT.OREMATS.Stibnite.addOreByProducts(MT.Ardite);
 			MT.Aredrite.addOreByProducts(MT.Ardite);
 		}
 		if (MD.RP.mLoaded || MD.PR.mLoaded || MD.BP.mLoaded || !MT.Nikolite.mHidden) {
@@ -570,6 +571,7 @@ public class GT_API_Post extends Abstract_Mod {
 		FL.reg(FL.Water          .make(1000), IL.AETHER_Bucket_Water .get(1), IL.AETHER_Bucket_Empty.get(1));
 		FL.reg(FL.Milk           .make(1000), IL.AETHER_Bucket_Milk  .get(1), IL.AETHER_Bucket_Empty.get(1));
 		FL.reg(FL.Potion_Poison_2.make(1000), IL.AETHER_Bucket_Poison.get(1), IL.AETHER_Bucket_Empty.get(1));
+		FL.reg(FL.Poison         .make(1000), IL.AETHER_Bucket_Poison.get(1), IL.AETHER_Bucket_Empty.get(1));
 		
 		// Those "On-Demand" Materials of VoltzEngine are registered late...
 		if (MD.VOLTZ.mLoaded) {
@@ -803,23 +805,6 @@ public class GT_API_Post extends Abstract_Mod {
 				MT.Amethyst             .addEnchantmentForWeapons(tEnchant, 3).addEnchantmentForAmmo(tEnchant, 5);
 				MT.EnderAmethyst        .addEnchantmentForWeapons(tEnchant, 5).addEnchantmentForAmmo(tEnchant, 7);
 			}
-		}
-		
-		for (SaplingEntry tTree : WoodDictionary.LIST_SAPLINGS) {
-		RM.Trees.addFakeRecipe(F, ST.array(tTree.mSapling, tTree.mLeafEntry == null ? NI : tTree.mLeafEntry.mLeaf), tTree.mWoodEntry == null ? tTree.mLeafEntry == null ? ZL_IS : ST.array(tTree.mLeafEntry.mLeaf) : ST.array(
-		  tTree.mLeafEntry == null ? NI : tTree.mLeafEntry.mLeaf
-		, tTree.mWoodEntry.mLog
-		, tTree.mWoodEntry.mBeamEntry  == null ? NI : tTree.mWoodEntry.mBeamEntry .mBeam
-		, tTree.mWoodEntry.mPlankEntry == null ? NI : tTree.mWoodEntry.mPlankEntry.mSlab
-		, tTree.mWoodEntry.mPlankEntry == null ? NI : tTree.mWoodEntry.mPlankEntry.mStair
-		, tTree.mWoodEntry.mPlankEntry == null ? NI : tTree.mWoodEntry.mPlankEntry.mPlank
-		, tTree.mWoodEntry.mPlankEntry == null ? NI : ST.validMeta_(tTree.mWoodEntry.mPlankEntry.mStickCountLathe, tTree.mWoodEntry.mPlankEntry.mStick)
-		, tTree.mWoodEntry.mBeamEntry  == null ? NI : ST.validMeta_(tTree.mWoodEntry.mBeamEntry .mStickCountLathe, tTree.mWoodEntry.mBeamEntry .mStick)
-		, tTree.mWoodEntry.mPlankEntry == null ? NI : OP.crateGt64Plate.mat(tTree.mWoodEntry.mPlankEntry.mMaterialPlank, 1)
-		, OM.dust(tTree.mWoodEntry.mMaterialWood.mTargetPulver, tTree.mWoodEntry.mPlankCountBuzz+2, 1)
-		, tTree.mWoodEntry.mBark
-		, tTree.mWoodEntry.mCharcoalCount <= 0 ? NI : OP.gem.mat(MT.Charcoal, tTree.mWoodEntry.mCharcoalCount)
-		), null, null, null, null, 0, 0, 0);
 		}
 		
 		new LoaderBookList().run();

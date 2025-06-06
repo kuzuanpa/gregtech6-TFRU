@@ -19,8 +19,6 @@
 
 package gregtech.tileentity.tools;
 
-import gregapi.block.multitileentity.IMultiTileEntity.IMTE_IgnorePlayerCollisionWhenPlacing;
-import gregapi.data.CS.*;
 import gregapi.data.FL;
 import gregapi.data.LH;
 import gregapi.data.LH.Chat;
@@ -31,7 +29,7 @@ import gregapi.render.BlockTextureMulti;
 import gregapi.render.IIconContainer;
 import gregapi.render.ITexture;
 import gregapi.tileentity.ITileEntityTapAccessible;
-import gregapi.tileentity.base.TileEntityBase10Attachment;
+import gregapi.tileentity.base.TileEntityBase11AttachmentSmall;
 import gregapi.tileentity.delegate.DelegatorTileEntity;
 import gregapi.util.ST;
 import gregapi.util.UT;
@@ -53,7 +51,7 @@ import static gregapi.data.CS.*;
 /**
  * @author Gregorius Techneticies
  */
-public class MultiTileEntityFluidNozzle extends TileEntityBase10Attachment implements IMTE_IgnorePlayerCollisionWhenPlacing {
+public class MultiTileEntityFluidNozzle extends TileEntityBase11AttachmentSmall {
 	public boolean mAcidProof = F;
 	
 	@Override
@@ -116,7 +114,7 @@ public class MultiTileEntityFluidNozzle extends TileEntityBase10Attachment imple
 					if (aFluid.amount > tNewFluid.amount && ((ITileEntityTapAccessible)tDelegator.mTileEntity).nozzleDrain(tDelegator.mSideOfTileEntity, aFluid.amount - tNewFluid.amount, T) != null) {
 						UT.Sounds.send(SFX.MC_FIZZ, 1.0F, 2.0F, this, F);
 						aStack.stackSize--;
-						UT.Inventories.addStackToPlayerInventoryOrDrop(aPlayer, tStack, T);
+						ST.give(aPlayer, tStack, T);
 						return T;
 					}
 				}
@@ -186,7 +184,6 @@ public class MultiTileEntityFluidNozzle extends TileEntityBase10Attachment imple
 	}
 	
 	@Override public boolean canDrop(int aInventorySlot) {return T;}
-	@Override public boolean ignorePlayerCollisionWhenPlacing() {return T;}
 	
 	@Override public String getTileEntityName() {return "gt.multitileentity.nozzle";}
 }

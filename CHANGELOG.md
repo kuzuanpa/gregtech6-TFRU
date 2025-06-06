@@ -1,32 +1,64 @@
 This is the most recent Changelog. It also contains some of the changes inside the >>>UPCOMING<<< Versions (most of the time). This is for 1.7.10 btw.
 
 
-6.17.04: (Not released yet)
+6.17.07: (Not released yet)
 Nothing (I tend to only add finished Stuff to the Changelog).
 
 
-6.17.03: (Not released yet)
+6.17.06: (Not released yet)
+Nothing (I tend to only add finished Stuff to the Changelog).
+
+
+6.17.05:
+[FIXED] A rather critical stupidity in the way my Worldgen Random works... I mixed up the Seed and the coordinate parameters...
+[ADDED] Using any of the Cooking Oils in a GT6 Oven will duplicate Meat and Fish Output at the cost of 50L of Cooking Oil.
+[ADDED] Canned Air. As in putting 16000L of Naturally Sparkling, Salt-Free Air into a Food Can. It can be used to replenish Air Underwater and will overfill your Air Bar. Also has Enviromine Heat Stats depending on which type of Air you drink.
+[ADDED] Brass Set of Kinetic Axles and Gearboxes. Also things that handle Rotational Units now make a Minecart noise. This includes Gearboxes, but does not include Basic Machines and Axles (would make too much noise).
+[ADDED]
+Hand Crank to deliver 16 RU/t to a Machine at the cost of your Hunger Bar (may be influenced by Potion/Beacon Effects).
+This might let you make Steel in a Crucible without Machines, if you set it up right.
+Can emit strong Redstone into the Block they are attached to, so they work as Redstone component too (replacing the Buttons in Vault Rooms of GT6 Dungeons).
+They dont use Hunger if they are not emitting Rotational Energy into the Block they are attached to. (such as when only used for its Redstone Output)
+Also Villagers can operate Cranks at Head Height.
+
+
+6.17.04:
+[FIXED] An Issue with "transmuting" Battery Components that happened while I refactored Code.
+[FIXED] Some of the Bird Eggs of the Exotic Birds Mod were missed in my Compat. Also Big Eggs give more White/Yolk now, and if no Egg Shell Item exists, my Recipes will give you a piece of Bonemeal. Also fixed Harvestcraft Eggnog Recipe in my Mixing Bowl.
+[CHANGED] Bushes, Sticks and Rocks now leave behind a Snow Layer when harvested next to Snow.
+[CHANGED] Reactor Cores can now store 160 times more output Steam specifically, fixing an Issue in high capacity Naquadria Steam Reactors.
+[ADDED] Killing Creepers, Zombies, Skeletons, Wither Skeletons or Players with a Scythe/Sense will make them drop a Head. Yes that also makes it a lot less grindy to get Skulls for the Wither.
+[ADDED] Aspectonomicon, a Book that when rightclicked, will count as having scanned most Vanilla-ish Items and Blocks with a Thaumometer. Does not contain Aspects for Thaumcraft Items. It is crafted using the 9 different Magic Research Papers.
+
+
+6.17.03:
 [COMPAT] Aether Legacy should now have a similar level of Compat as Aether 2. (dear whoever is responsible for this: Items and Blocks have to be registered during the preInit Phase in 1.7.10. Someone on the Aether Legacy Team must have decided to move the loading of Items from preInit to Init, which breaks quite a lot of shit in 1.7.10)
-Zanite now electrolyzes into the same Stuff that Tazanite does.
+Zanite now electrolyzes into the same Stuff that Tanzanite does.
 Gravitite is now considered a Type of Diamond in most of my Recipes.
 Golden Amber can now be used like regular Amber, and is also available through debarking Golden Oak.
+Holystone or Ambrosium can now be used to make Holy Water.
 Skyroot Poison Buckets now contain 1000L of Poison 2 Potion, to give it another way of obtaining.
 Mossy Holystone got Moss Crafting Support now, and various Holystone shapes can now be crafted.
 There now is an Aether Portal Room in some GT6 Dungeons.
 [COMPAT] Removed the annoying Vanilla NEI Usage Handlers for Furnace Fuel and Furnace Smelting, as there is better NEI Handlers and Tooltips. (Does not target NEI-NH)
 [COMPAT] Et Futurum Ore Data for many Deepslate Ores.
-[COMPAT] Ars Magica Witchwood is now in the Wood Dictionary.
-[ADDED] The Melter, which is just an earlier Version of the Smelter. Works on most Furnace-able Materials.
+[COMPAT] Ars Magica Witchwood is now in the Wood Dictionary. Also Ars Magicka had a broken Fluid Block.
+[FIXED] Unboxinating Bullets did not work if Rounds did not exist for that Material (there is an alternate Recipe with Bolts). Now it will return tiny piles of Dust instead, which makes the funny Recipe chain to turn Bolts into Rounds using the Press output Dust instead of Rounds.
+[CHANGED] I messed with the way GT6 handles Sounds, lets hope this fixes one of those esoteric Vanilla Sound Crashes and does not cause any additional ones.
+[CHANGED] Gem tipped Pickaxe Heads can be made with Iron now too, also you can use pre-sharpened Pickaxe Heads too. Also they break into empty Toolheads now, which means I need to halve their Durability again, so they dont outclass Full-Gem Pickaxes. Also there is Press and Unboxinator Recipes for their Tool Heads now.
+[ADDED] The Melter, which is just an earlier Version of the Smelter. Works on most Furnace-able Materials and Calcite.
 [ADDED] Wax Cracking, what is Wax Cracking? It is the "final" Ore Processing Step that involves Steam and Molten Wax, and exists purely because of needing some productive way to get rid of Wax.
 [ADDED] Glowstone, Redstone, Cinnabar, Nikolite, Carminite and Ambers can now be crystallized using Cryotheum in a Bath, either by using crushed Ores or by sacrificing about half of a Block of Dust.
-[ADDED] Signs to the Center Street Worldgen to indicate where which Biomes are. Bottommost Biomes are closest (read it like Highway Street Signs), it looks at the Biomes roughly 100 blocks to the left and right sides of the Road.
+[ADDED] The Slicer can now recycle Leather Armor and turn Fur into Leather, like the Knife based Crafting Recipe can.
+[ADDED] Spiders now have a 25 percent chance of dropping Spider Eye, when killed by a Non-Player.
+[ADDED] Various Grabbag Items for Books, Saplings, Seeds and Gems. Maybe more. They will clutter the Inventory less than the current Loots. Certain Mobs will drop these too. Most notably the Books of the Villager Zombie, to reduce clutter.
+[ADDED] Signs to the Center Street Worldgen to indicate where which Biomes are. Bottom-most Biomes are closest (read it like Highway Street Signs), it looks at the Biomes roughly 100 blocks to the left and right sides of the Road.
 [ADDED] The GT6 Builder Wand can now place GT6 Multiblock Parts from your Inventory in a 3x3x3 around the clicked Multiblock Part (range limit so you dont build behind walls).
-[FIXED] Ars Magicka had a broken Fluid Block.
 
 
 6.17.02:
 [COMPAT] Et Futurum Wood Data for Cherry and Bamboo.
-[COMPAT] Unboxinator can now unbox Thaumcraft Loot Bags. I am glad Azanor arbitrarily decided to have a maximum of 12 Items outputted by those, otherwise I would've had trouble fitting it into the Unboxinators output slots.
+[COMPAT] Unboxinator can now unbox Thaumcraft Loot Bags. I am glad Azanor arbitrarily decided to have exactly 12 Items outputted by those, otherwise I would've had trouble fitting it into the Unboxinators Output Slots.
 [FIXED] Thaumcraft Loot Bags are now actually randomizing the Enchantments on the Books they drop instead of repeating the exact same Enchantment over and over until you relaunch the Game.
 [FIXED] A bunch of Bugs related to saving and loading Worlds, in regards to GT6 Specific Data.
 [FIXED] Some Bug with Bukkit/Cauldron/etc. where things like Mini Portals and Ender Garbage Bins did not work correctly because of certain Events being thrown with weird Paths, triggering "loaded a different Save File" detection, which for Servers should flat out not be possible in the first place.

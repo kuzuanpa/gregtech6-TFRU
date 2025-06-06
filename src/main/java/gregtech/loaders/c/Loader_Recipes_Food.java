@@ -302,19 +302,21 @@ public class Loader_Recipes_Food implements Runnable {
 		}});
 		addListener(OD.itemEgg, new IOreDictListenerEvent() {@Override public void onOreRegistration(OreDictRegistrationContainer aEvent) {
 			if (OD.listAllmeatsubstitute.is_(aEvent.mStack)) return;
+			int tAmount = OD.itemEggBig.is_(aEvent.mStack) ? 4 : 1;
 			if (FL.Water_Hot.exists())
-			RM.Bath             .addRecipe1(T,  0,  128, aEvent.mStack, FL.Water_Hot       .make(100), FL.Water.make(100), (ST.equal(aEvent.mStack, Items.egg)?IL.Food_Brown_Egg_Boiled:IL.Food_White_Egg_Boiled).get(1), IL.Birb_Egg_Shell.get(1));
+			RM.Bath             .addRecipe1(T,  0,  128*tAmount, aEvent.mStack, FL.Water_Hot       .make(100*tAmount), FL.Water.make(100*tAmount), (ST.equal(aEvent.mStack, Items.egg)?IL.Food_Brown_Egg_Boiled:IL.Food_White_Egg_Boiled).get(tAmount), IL.Birb_Egg_Shell.get(tAmount, IL.Dye_Bonemeal.get(tAmount)));
 			if (FL.Hot_Water.exists())
-			RM.Bath             .addRecipe1(T,  0,  128, aEvent.mStack, FL.Hot_Water       .make(100), FL.Water.make(100), (ST.equal(aEvent.mStack, Items.egg)?IL.Food_Brown_Egg_Boiled:IL.Food_White_Egg_Boiled).get(1), IL.Birb_Egg_Shell.get(1));
+			RM.Bath             .addRecipe1(T,  0,  128*tAmount, aEvent.mStack, FL.Hot_Water       .make(100*tAmount), FL.Water.make(100*tAmount), (ST.equal(aEvent.mStack, Items.egg)?IL.Food_Brown_Egg_Boiled:IL.Food_White_Egg_Boiled).get(tAmount), IL.Birb_Egg_Shell.get(tAmount, IL.Dye_Bonemeal.get(tAmount)));
 			if (FL.Water_Boiling.exists())
-			RM.Bath             .addRecipe1(T,  0,  128, aEvent.mStack, FL.Water_Boiling   .make(100), FL.Water.make(100), (ST.equal(aEvent.mStack, Items.egg)?IL.Food_Brown_Egg_Boiled:IL.Food_White_Egg_Boiled).get(1), IL.Birb_Egg_Shell.get(1));
-			RM.Bath             .addRecipe1(T,  0,  128, aEvent.mStack, FL.Water_Geothermal.make(100), FL.Water.make(100), (ST.equal(aEvent.mStack, Items.egg)?IL.Food_Brown_Egg_Boiled:IL.Food_White_Egg_Boiled).get(1), IL.Birb_Egg_Shell.get(1));
-			RM.Autoclave        .addRecipe2(T,  0,  128, aEvent.mStack, ST.tag(0), FL.Steam.make(800), FL.DistW.make(5)  , (ST.equal(aEvent.mStack, Items.egg)?IL.Food_Brown_Egg_Boiled:IL.Food_White_Egg_Boiled).get(1), IL.Birb_Egg_Shell.get(1));
-			RM.Juicer           .addRecipe1(T, 16,   16, aEvent.mStack, IL.Food_Egg_White.get(1), IL.Food_Egg_Yolk.get(1), IL.Birb_Egg_Shell.get(1)); // There is not gonna be a Squeezer Recipe!
-			RM.Centrifuge       .addRecipe1(T, 16,   64, aEvent.mStack, IL.Food_Egg_White.get(1), IL.Food_Egg_Yolk.get(1), IL.Birb_Egg_Shell.get(1));
-			RM.add_smelting(aEvent.mStack, IL.Food_Egg_Fried.get(1));
+			RM.Bath             .addRecipe1(T,  0,  128*tAmount, aEvent.mStack, FL.Water_Boiling   .make(100*tAmount), FL.Water.make(100*tAmount), (ST.equal(aEvent.mStack, Items.egg)?IL.Food_Brown_Egg_Boiled:IL.Food_White_Egg_Boiled).get(tAmount), IL.Birb_Egg_Shell.get(tAmount, IL.Dye_Bonemeal.get(tAmount)));
+			RM.Bath             .addRecipe1(T,  0,  128*tAmount, aEvent.mStack, FL.Water_Geothermal.make(100*tAmount), FL.Water.make(100*tAmount), (ST.equal(aEvent.mStack, Items.egg)?IL.Food_Brown_Egg_Boiled:IL.Food_White_Egg_Boiled).get(tAmount), IL.Birb_Egg_Shell.get(tAmount, IL.Dye_Bonemeal.get(tAmount)));
+			RM.Autoclave        .addRecipe2(T,  0,  128*tAmount, aEvent.mStack, ST.tag(0), FL.Steam.make(800*tAmount), FL.DistW.make(  5*tAmount), (ST.equal(aEvent.mStack, Items.egg)?IL.Food_Brown_Egg_Boiled:IL.Food_White_Egg_Boiled).get(tAmount), IL.Birb_Egg_Shell.get(tAmount, IL.Dye_Bonemeal.get(tAmount)));
+			RM.Juicer           .addRecipe1(T, 16,   16*tAmount, aEvent.mStack, IL.Food_Egg_White.get(tAmount), IL.Food_Egg_Yolk.get(tAmount), IL.Birb_Egg_Shell.get(tAmount, IL.Dye_Bonemeal.get(tAmount))); // There is not gonna be a Squeezer Recipe!
+			RM.Centrifuge       .addRecipe1(T, 16,   64*tAmount, aEvent.mStack, IL.Food_Egg_White.get(tAmount), IL.Food_Egg_Yolk.get(tAmount), IL.Birb_Egg_Shell.get(tAmount, IL.Dye_Bonemeal.get(tAmount)));
+			if (MD.Birb.owns(aEvent.mRegName)) RM.generify(aEvent.mStack, IL.Food_White_Egg.get(tAmount));
+			RM.add_smelting(aEvent.mStack, IL.Food_Egg_Fried.get(tAmount));
 		}});
-		addListener(OD.itemEgg, "foodScrambledegg", new IOreDictListenerEvent() {@Override public void onOreRegistration(OreDictRegistrationContainer aEvent) {
+		addListener("foodScrambledegg", new IOreDictListenerEvent() {@Override public void onOreRegistration(OreDictRegistrationContainer aEvent) {
 			if (OD.listAllmeatsubstitute.is_(aEvent.mStack)) return;
 			for (OreDictMaterial tMat : ANY.Flour.mToThis)
 			RM.Mixer            .addRecipe2(T, 16,   16, aEvent.mStack, OM.dust(tMat), IL.Food_Dough_Egg.get(1));
@@ -577,31 +579,28 @@ public class Loader_Recipes_Food implements Runnable {
 		RM.Distillery   .addRecipe1(T        , 64, 128, OM.dust(MT.Gunpowder), FL.Lemonade     .make(250), FL.Grenade_Juice  .make(250), ZL_IS);
 		
 		for (FluidStack tWater : FL.waters(1000)) {
-		RM.Distillery   .addRecipe1(T, 16,   48, OM.dust(MT.Coffee      ), FL.mul(tWater, 3, 4, T), FL.make("potion.darkcoffee", 750), ZL_IS);
-		RM.Distillery   .addRecipe1(T, 16,   16, OM.dust(MT.Coffee  , U3), FL.mul(tWater, 1, 4, T), FL.make("potion.darkcoffee", 250), ZL_IS);
+		RM.Distillery   .addRecipe1(T, 16,   48, OM.dust(MT.Coffee          ), FL.mul(tWater, 3, 4, T), FL.make("potion.darkcoffee", 750), ZL_IS);
+		RM.Distillery   .addRecipe1(T, 16,   16, OM.dust(MT.Coffee      , U3), FL.mul(tWater, 1, 4, T), FL.make("potion.darkcoffee", 250), ZL_IS);
 		
 		for (OreDictMaterial tMat : ANY.Flour.mToThis)
-		RM.Mixer        .addRecipe1(T, 16,   16, OM.dust(tMat           ), FL.mul(tWater, 1, 4, T), NF, IL.Food_Dough.get(2));
+		RM.Mixer        .addRecipe1(T, 16,   16, OM.dust(tMat               ), FL.mul(tWater, 1, 4, T), NF, IL.Food_Dough.get(2));
 		
-		RM.Mixer        .addRecipe1(T, 16,   16, OM.dust(MT.Milk        ), FL.mul(tWater, 1, 2, T), FL.Milk.make(1000), ZL_IS);
-		RM.Mixer        .addRecipe1(T, 16,   16, OM.dust(MT.Honey       ), FL.mul(tWater, 1, 2, T), FL.Honey.make(1000), ZL_IS);
-		RM.Mixer        .addRecipe1(T, 16,   16, OM.dust(MT.Honeydew    ), FL.mul(tWater, 1, 2, T), FL.Honeydew.make(1000), ZL_IS);
+		RM.Mixer        .addRecipe1(T, 16,   16, OM.dust(MT.Milk            ), FL.mul(tWater, 1, 2, T), FL.Milk.make(1000), ZL_IS);
+		RM.Mixer        .addRecipe1(T, 16,   16, OM.dust(MT.Honey           ), FL.mul(tWater, 1, 2, T), FL.Honey.make(1000), ZL_IS);
+		RM.Mixer        .addRecipe1(T, 16,   16, OM.dust(MT.Honeydew        ), FL.mul(tWater, 1, 2, T), FL.Honeydew.make(1000), ZL_IS);
 		
-		RM.Mixer        .addRecipe1(T, 16,   16, OM.dust(MT.Tea     , U9), FL.mul(tWater,   750, 1000, T), FL.Tea.make( 750), ZL_IS);
-		RM.Mixer        .addRecipe1(T, 16,   36, OM.dust(MT.Tea     , U4), FL.mul(tWater,  1687, 1000, T), FL.Tea.make(1687), ZL_IS);
-		RM.Mixer        .addRecipe1(T, 16,  144, OM.dust(MT.Tea         ), FL.mul(tWater,  6750, 1000, T), FL.Tea.make(6750), ZL_IS);
+		RM.Mixer        .addRecipe1(T, 16,   16, OM.dust(MT.Tea         , U9), FL.mul(tWater,   750, 1000, T), FL.Tea.make( 750), ZL_IS);
+		RM.Mixer        .addRecipe1(T, 16,   36, OM.dust(MT.Tea         , U4), FL.mul(tWater,  1687, 1000, T), FL.Tea.make(1687), ZL_IS);
+		RM.Mixer        .addRecipe1(T, 16,  144, OM.dust(MT.Tea             ), FL.mul(tWater,  6750, 1000, T), FL.Tea.make(6750), ZL_IS);
 		
-		RM.Injector     .addRecipe1(T, 16,   16, OM.dust(MT.Mg          ), tWater, FL.MnWtr.make(1000), ZL_IS);
-		RM.Injector     .addRecipe1(T, 16,   16, OM.dust(MT.Ca          ), tWater, FL.MnWtr.make(1000), ZL_IS);
+		RM.Injector     .addRecipe1(T, 16,   16, OM.dust(MT.Mg              ), tWater, FL.MnWtr.make(1000), ZL_IS);
+		RM.Injector     .addRecipe1(T, 16,   16, OM.dust(MT.Ca              ), tWater, FL.MnWtr.make(1000), ZL_IS);
+		RM.Injector     .addRecipe1(T, 16,   16, OM.dust(MT.Ambrosium    ,U9), tWater, FL.Holywater.make(1000), ZL_IS);
+		RM.Injector     .addRecipe1(T, 16,   16, OM.dust(MT.STONES.Holystone), tWater, FL.Holywater.make(1000), ZL_IS);
 		
 		RM.Injector     .addRecipe0(T, 16,   16, FL.array(FL.mul(tWater, 1, 4, T), MT.CO2.gas(U4, T)), FL.Soda.make(250), ZL_IS);
 		}
 		RM.Injector     .addRecipe0(T, 16,   16, FL.array(FL.MnWtr.make(250), MT.CO2.gas(U4, T)), FL.Mineralsoda.make(250), ZL_IS);
-		if (FL.Slime_Blue.exists())
-		RM.Injector     .addRecipe0(T, 16,   16, FL.array(FL.Slime_Blue  .make(250), MT.CO2.gas(U4, T)), FL.BAWLS.make(250), ZL_IS);
-		if (FL.Slime_Pink.exists())
-		RM.Injector     .addRecipe0(T, 16,   16, FL.array(FL.Slime_Pink  .make(250), MT.CO2.gas(U4, T)), FL.BAWLS.make(250), ZL_IS);
-		RM.Injector     .addRecipe0(T, 16,   16, FL.array(FL.Slime_Green .make(250), MT.CO2.gas(U4, T)), FL.BAWLS.make(250), ZL_IS);
 		
 		RM.Fermenter    .addRecipe1(T, 16,   64, ST.tag(0), FL.Milk.make (                                    50), FL.Milk_Spoiled                          .make(50), ZL_IS);
 		RM.Fermenter    .addRecipe1(T, 16,   64, ST.tag(0), FL.MilkGrC.make (                                 50), FL.Milk_Spoiled                          .make(50), ZL_IS);
@@ -727,6 +726,10 @@ public class Loader_Recipes_Food implements Runnable {
 		
 		RM.Mixer            .addRecipe0(T, 16,   16, FL.array(FL.Mash_Wheat.make(50), FL.Mash_Hops.make(50)), FL.Mash_WheatHops.make(100), ZL_IS);
 		
+		RM.Mixer            .addRecipe2(T, 16,  144, dust     .mat(MT.NaCl, 1), IL.Food_Butter.get(9), NF, NF, IL.Food_Butter_Salted.get(9));
+		RM.Mixer            .addRecipe2(T, 16,   32, dustSmall.mat(MT.NaCl, 1), IL.Food_Butter.get(2), NF, NF, IL.Food_Butter_Salted.get(2));
+		RM.Mixer            .addRecipe2(T, 16,   16, dustTiny .mat(MT.NaCl, 1), IL.Food_Butter.get(1), NF, NF, IL.Food_Butter_Salted.get(1));
+		
 		RM.Mixer            .addRecipe2(T, 16,   16, OM.dust(MT.Sugar               ), OM.dust(MT.Cocoa    ), OM.dust(MT.Chocolate,  U*2));
 		RM.Mixer            .addRecipe2(T, 16,   16, gemChipped.mat(MT.Sugar    ,  4), OM.dust(MT.Cocoa    ), OM.dust(MT.Chocolate,  U*2));
 		RM.Mixer            .addRecipe2(T, 16,   16, OM.dust(MT.Sugar           , U4), OM.dust(MT.Cocoa, U4), OM.dust(MT.Chocolate,   U2));
@@ -740,9 +743,6 @@ public class Loader_Recipes_Food implements Runnable {
 		RM.Mixer            .addRecipe0(T, 16,   16, FL.array(FL.make("potion.darkcoffee", 125), FL.MilkGrC.make(125)), FL.make("potion.coffee", 250), ZL_IS);
 		RM.Mixer            .addRecipe0(T, 16,   16, FL.array(FL.make("potion.darkcoffee", 125), FL.MilkSoy.make(125)), FL.make("potion.coffee", 250), ZL_IS);
 		
-		for (ItemStack tStack : ST.array(dust.mat(MT.NaCl, 1), dustSmall.mat(MT.NaCl, 4), dustTiny.mat(MT.NaCl,  9))) {
-		RM.Mixer            .addRecipe2(T, 16,   16, tStack, IL.Food_Butter.get(1), NF, NF, IL.Food_Butter_Salted.get(1));
-		}
 		for (ItemStack tStack : ST.array(dust.mat(MT.Milk, 1), dustSmall.mat(MT.Milk, 4), dustTiny.mat(MT.Milk,  9))) {
 		RM.Mixer            .addRecipe1(T, 16,   48, tStack, FL.make("potion.darkcoffee"         , 750), FL.make("potion.coffee"              , 750), ZL_IS);
 		}

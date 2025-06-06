@@ -187,7 +187,9 @@ public class Loader_OreProcessing implements Runnable {
 		toolHeadRawUniversalSpade   .addListener(new OreProcessing_Shapeless( 1, null, new Object[] {toolHeadShovel     , OreDictToolNames.file, OreDictToolNames.saw       }, new And(ANTIMATTER.NOT, COATED.NOT)));
 		toolHeadRawUniversalSpade   .addListener(new OreProcessing_Shapeless( 1, null, new Object[] {toolHeadSpade      , OreDictToolNames.file, OreDictToolNames.saw       }, new And(ANTIMATTER.NOT, COATED.NOT)));
 		toolHeadConstructionPickaxe .addListener(new OreProcessing_Shapeless( 1, null, new Object[] {toolHeadRawPickaxe , OreDictToolNames.file, OreDictToolNames.hammer    }, new And(ANTIMATTER.NOT, COATED.NOT)));
-		toolHeadPickaxeGem          .addListener(new OreProcessing_Shapeless( 1, null, new Object[] {toolHeadRawPickaxe.dat(ANY.Steel), gemFlawed, gemFlawed, OreDictToolNames.file, OreDictToolNames.hammer, OreDictToolNames.saw}, ANTIMATTER.NOT));
+		toolHeadPickaxeGem          .addListener(new OreProcessing_Shapeless( 1, null, new Object[] {toolHeadRawPickaxe.dat(ANY.Iron), gemFlawed, gemFlawed, OreDictToolNames.file, OreDictToolNames.hammer, OreDictToolNames.saw}, ANTIMATTER.NOT));
+		toolHeadPickaxeGem          .addListener(new OreProcessing_Shapeless( 1, null, new Object[] {toolHeadPickaxe   .dat(ANY.Iron), gemFlawed, gemFlawed, OreDictToolNames.file, OreDictToolNames.hammer, OreDictToolNames.saw}, ANTIMATTER.NOT));
+		toolHeadPickaxeGem          .addListener(new OreProcessing_Shapeless( 1, null, new Object[] {toolHeadPickaxeGem.dat(MT.Empty), gemFlawed, gemFlawed, OreDictToolNames.file, OreDictToolNames.hammer, OreDictToolNames.saw}, ANTIMATTER.NOT));
 		
 		CR.shaped(OP.bolt.mat(MT.Wood, 2), RECIPE_BITS, "s " , " S", 'S', IL.Stick);
 		
@@ -284,7 +286,7 @@ public class Loader_OreProcessing implements Runnable {
 				}
 			}
 			if (tFluid != null && tFluid.amount > 0) {
-				if (tMaterial.mMaterial.contains(FURNACE))
+				if (tMaterial.mMaterial.contains(FURNACE) || tMaterial.mMaterial.mTargetSmelting.mMaterial == MT.CaCO3)
 				RM.Melter .addRecipe1(T, (long) Math.max(16,Math.pow((Math.max(tMaterial.mMaterial.mMeltingPoint, tFluid.getFluid().getTemperature())-DEF_ENV_TEMP)/240F,2)), (long)Math.max(FL.Lava.is(tFluid)?UT.Code.divup(tFluid.amount*(long)EU_PER_LAVA, 16):16, (OM.weight(aEvent.mItemData.getAllMaterialStacks())+500L)/20), aEvent.mStack, NF, tFluid, ZL_IS);
 				RM.Smelter.addRecipe1(T, (long) Math.max(16,Math.pow((Math.max(tMaterial.mMaterial.mMeltingPoint, tFluid.getFluid().getTemperature())-DEF_ENV_TEMP)/ 60F,2)), (long)Math.max(FL.Lava.is(tFluid)?UT.Code.divup(tFluid.amount*(long)EU_PER_LAVA, 16):16, (OM.weight(aEvent.mItemData.getAllMaterialStacks())+500L)/20), aEvent.mStack, NF, tFluid, ZL_IS);
 			}

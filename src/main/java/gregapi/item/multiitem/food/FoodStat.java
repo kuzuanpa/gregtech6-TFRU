@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2022 GregTech-6 Team
+ * Copyright (c) 2025 GregTech-6 Team
  *
  * This file is part of GregTech.
  *
@@ -43,7 +43,8 @@ public class FoodStat implements IFoodStat {
 	private final EnumAction mAction;
 	private final ItemStack mEmptyContainer;
 	private final boolean mAlwaysEdible, mInvisibleParticles, mIsRotten;
-	private boolean mExplosive = F, mMilk = F, mExtinguish = F, mUseAPC = T, mAutoDetectEmpty = F;
+	public boolean mExplosive = F, mMilk = F, mExtinguish = F, mUseAPC = T, mAutoDetectEmpty = F;
+	public int mRebreathe = 0;
 	
 	/**
 	 * @param aFoodLevel Amount of Food in Half Bacon [0 - 20]
@@ -98,6 +99,12 @@ public class FoodStat implements IFoodStat {
 		return this;
 	}
 	
+	/** 300 is a full Air Bar, it can be overfilled but only while underwater, as it will be set to 300 while not submerged. */
+	public FoodStat setRebreathe(int aRebreathe) {
+		mRebreathe = aRebreathe;
+		return this;
+	}
+	
 	public FoodStat setMilk() {
 		mMilk = T;
 		return this;
@@ -140,11 +147,12 @@ public class FoodStat implements IFoodStat {
 			aStack.stackSize--;
 			ItemStack tStack = OM.get(ST.copy(mEmptyContainer));
 			if (tStack == null && mAutoDetectEmpty) tStack = ST.container(aStack, F);
-			UT.Inventories.addStackToPlayerInventoryOrDrop(aPlayer, tStack, F);
+			ST.give(aPlayer, tStack, F);
 		}
 		if (aMakeSound) aPlayer.worldObj.playSoundAtEntity(aPlayer, "random.burp", 0.5F, RNGSUS.nextFloat() * 0.1F + 0.9F);
 		if (!aPlayer.worldObj.isRemote) {
 			if (mExtinguish) aPlayer.extinguish();
+			if (mRebreathe > 0) aPlayer.setAir(aPlayer.getAir()+mRebreathe);
 			if (mMilk) aPlayer.curePotionEffects(ST.make(Items.milk_bucket, 1, 0));
 			for (int i = 3; i < mPotionEffects.length; i+=4) if (RNGSUS.nextInt(100) < mPotionEffects[i]) {
 				UT.Entities.applyPotion(aPlayer, mPotionEffects[i-3], mPotionEffects[i-2], mPotionEffects[i-1], mInvisibleParticles);
@@ -182,12 +190,12 @@ public class FoodStat implements IFoodStat {
 	
 	@Override
 	public boolean useAppleCoreFunctionality(Item aItem, ItemStack aStack, EntityPlayer aPlayer) {
-		return mUseAPC;
+		return MD.APC.mLoaded && mUseAPC;
 	}
 	
 	@Override
 	public void addAdditionalToolTips(Item aItem, List<String> aList, ItemStack aStack, boolean aF3_H) {
-		if ((!useAppleCoreFunctionality(aItem, aStack, null) || !MD.APC.mLoaded) && (mFoodLevel > 0 || mSaturation > 0.0F)) aList.add(LH.Chat.RED + "Food: " + mFoodLevel + " - Saturation: " + mSaturation);
+		if ((!useAppleCoreFunctionality(aItem, aStack, null)) && (mFoodLevel > 0 || mSaturation > 0.0F)) aList.add(LH.Chat.RED + "Food: " + mFoodLevel + " - Saturation: " + mSaturation);
 		String tString = (mTemperature >= C+40.0F?"Hot"+(mHydration==0?"":" - "):mTemperature >= C+38.0F?"Warm"+(mHydration==0?"":" - "):mTemperature <= C+34.0F?"Very Cold"+(mHydration==0?"":" - "):mTemperature <= C+36.0F?"Cold"+(mHydration==0?"":" - "):"") + (mHydration>0?"Hydration: " + mHydration:mHydration<0?"Dehydration: " + (-mHydration):"");
 		if (UT.Code.stringValid(tString) && MD.ENVM.mLoaded) aList.add(LH.Chat.RED + tString);
 		if (mExplosive) aList.add(LH.Chat.DRED + "smells like explosives");

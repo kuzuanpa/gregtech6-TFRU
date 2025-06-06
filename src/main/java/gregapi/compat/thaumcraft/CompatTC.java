@@ -20,7 +20,9 @@
 package gregapi.compat.thaumcraft;
 
 import cpw.mods.fml.common.event.FMLModIdMappingEvent;
+import cpw.mods.fml.common.event.FMLServerStartedEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
+import cpw.mods.fml.common.event.FMLServerStoppingEvent;
 import gregapi.code.ArrayListNoNulls;
 import gregapi.code.ItemStackContainer;
 import gregapi.compat.CompatBase;
@@ -34,6 +36,7 @@ import gregapi.util.ST;
 import gregapi.util.UT;
 import gregapi.wooddict.WoodDictionary;
 import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -47,15 +50,15 @@ import thaumcraft.api.crafting.IArcaneRecipe;
 import thaumcraft.api.crafting.InfusionEnchantmentRecipe;
 import thaumcraft.api.crafting.InfusionRecipe;
 import thaumcraft.api.internal.WeightedRandomLoot;
-import thaumcraft.api.research.ResearchCategories;
-import thaumcraft.api.research.ResearchCategoryList;
-import thaumcraft.api.research.ResearchItem;
-import thaumcraft.api.research.ResearchPage;
+import thaumcraft.api.research.*;
+import thaumcraft.common.Thaumcraft;
 import thaumcraft.common.items.equipment.ItemElementalAxe;
+import thaumcraft.common.lib.research.ScanManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import static gregapi.data.CS.*;
 
@@ -202,13 +205,50 @@ public class CompatTC extends CompatBase implements ICompatTC {
 		ThaumcraftApi.registerEntityTag("TwilightForest.Yeti Boss"                   , new AspectList().add(Aspect.BEAST, 20).add(Aspect.MAN, 20).add(Aspect.COLD, 20));
 	}
 	
-	@Override public void onServerStarting(FMLServerStartingEvent aEvent) {
+	@Override
+	public void onServerStarting(FMLServerStartingEvent aEvent) {
 		// These ItemStacks are Enchanted BEFORE being copied in Thaumcraft, which leads to them always having the SAME Enchantment...
 		for (WeightedRandomLoot tLoot : WeightedRandomLoot.lootBagCommon) {
 			if (tLoot != null && (ST.equal(tLoot.item, Items.book) || ST.equal(tLoot.item, Items.enchanted_book))) {
 				ST.REVERT_TO_BOOK_TO_FIX_STUPID.add(tLoot.item);
 			}
 		}
+	}
+	
+	@Override
+	public void onServerStarted(FMLServerStartedEvent aEvent) {
+		validate();
+	}
+	
+	@Override
+	public void onServerStopping(FMLServerStoppingEvent aEvent) {
+		validate();
+	}
+	
+	@Override
+	public boolean scan(EntityPlayer aPlayer, ItemStack aStack) {
+		if (aPlayer == null || ST.invalid(aStack)) return F;
+		boolean rReturn = F;
+		ScanResult tScan;
+		if (ST.meta(aStack) == W) {
+			if (!ScanManager.hasBeenScanned(aPlayer, tScan = new ScanResult((byte)2, ST.id(aStack), 0, ST.entity(aPlayer, ST.make(ST.item(aStack), 1, 0)), ""))) rReturn |= ScanManager.completeScan(aPlayer, tScan, "@");
+			if (ST.item(aStack).getHasSubtypes()) for (int i = 1; i < 16; i++)
+			if (!ScanManager.hasBeenScanned(aPlayer, tScan = new ScanResult((byte)2, ST.id(aStack), i, ST.entity(aPlayer, ST.make(ST.item(aStack), 1, i)), ""))) rReturn |= ScanManager.completeScan(aPlayer, tScan, "@");
+		} else {
+			if (!ScanManager.hasBeenScanned(aPlayer, tScan = new ScanResult((byte)2, ST.id(aStack), ST.meta(aStack), ST.entity(aPlayer, ST.copy_(aStack)), ""))) rReturn |= ScanManager.completeScan(aPlayer, tScan, "@");
+		}
+		return rReturn;
+	}
+	
+	@Override
+	public boolean validate() {
+		// Prevent 16 Bit Integer Overflows because some Thaumcraft UIs use short instead of int...
+		for (AspectList tList : Thaumcraft.proxy.getPlayerKnowledge().aspectsDiscovered.values()) if (tList != null) {
+			for (Map.Entry<Aspect, Integer> tEntry : tList.aspects.entrySet()) {
+				if (tEntry.getValue() > 20000 || tEntry.getValue() < -100) tEntry.setValue(20000);
+			}
+		}
+		return T;
 	}
 	
 	@Override
