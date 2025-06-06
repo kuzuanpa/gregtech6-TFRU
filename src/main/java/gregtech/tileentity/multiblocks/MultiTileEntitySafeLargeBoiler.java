@@ -22,7 +22,6 @@ package gregtech.tileentity.multiblocks;
 import gregapi.block.multitileentity.IMultiTileEntity.IMTE_RemovedByPlayer;
 import gregapi.code.TagData;
 import gregapi.data.BI;
-import gregapi.data.CS.*;
 import gregapi.data.FL;
 import gregapi.data.LH;
 import gregapi.data.LH.Chat;
@@ -266,7 +265,7 @@ public class MultiTileEntitySafeLargeBoiler extends TileEntityBase10MultiBlockBa
 			if(mTanks[1].isFull()){
 				mTanks[1].setFluid(mTanks[1].getFluid(),mTanks[1].capacity());
 				inDanger =2;
-				UT.Sounds.send(SFX.MC_FIZZ, this);
+				UT.Sounds.send(SFX.MC_FIZZ,1.0F, (TileEntity) this);
 				updateClientData();
 			}else if(inDanger==2){
 				updateClientData();
