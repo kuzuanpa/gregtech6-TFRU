@@ -581,10 +581,10 @@ public class LoaderUnificationTargets implements Runnable {
 		OreDictManager.INSTANCE.setTarget(OP.blockGem       , MT.Zanite                 , MD.AETHER, "zaniteBlock"   ,  0);
 		OreDictManager.INSTANCE.setTarget(OP.blockGem       , MT.Continuum              , MD.AETHER, "continuumBomb" ,  0);
 		OreDictManager.INSTANCE.setTarget(OP.stick          , MT.Skyroot                , MD.AETHER, "skyrootStick"  ,  0);
-		OreDictManager.INSTANCE.setTarget(OP.ring           , MT.Skyroot                , MD.AETHER, "skyrootRing"   ,  0);
-		OreDictManager.INSTANCE.setTarget(OP.ring           , MT.Fe                     , MD.AETHER, "ironRing"      ,  0);
-		OreDictManager.INSTANCE.setTarget(OP.ring           , MT.Au                     , MD.AETHER, "goldenRing"    ,  0);
-		OreDictManager.INSTANCE.setTarget(OP.ring           , MT.Zanite                 , MD.AETHER, "zaniteRing"    ,  0);
+		//OreDictManager.INSTANCE.setTarget(OP.ring           , MT.Skyroot                , MD.AETHER, "skyrootRing"   ,  0);
+		//OreDictManager.INSTANCE.setTarget(OP.ring           , MT.Fe                     , MD.AETHER, "ironRing"      ,  0);
+		//OreDictManager.INSTANCE.setTarget(OP.ring           , MT.Au                     , MD.AETHER, "goldenRing"    ,  0);
+		//OreDictManager.INSTANCE.setTarget(OP.ring           , MT.Zanite                 , MD.AETHER, "zaniteRing"    ,  0);
 		OreDictManager.INSTANCE.setTarget(OP.oreVanillastone, MT.OREMATS.Cinnabar       , MD.TC, "blockCustomOre"    ,  0);
 		OreDictManager.INSTANCE.setTarget(OP.oreVanillastone, MT.InfusedAir             , MD.TC, "blockCustomOre"    ,  1);
 		OreDictManager.INSTANCE.setTarget(OP.oreVanillastone, MT.InfusedFire            , MD.TC, "blockCustomOre"    ,  2);
