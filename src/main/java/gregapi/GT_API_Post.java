@@ -467,9 +467,9 @@ public class GT_API_Post extends Abstract_Mod {
 			OreDictManager.INSTANCE.setTarget(OP.gem            , MT.AmberGolden            , MD.AETHEL, "golden_amber"   , 0);
 			OreDictManager.INSTANCE.setTarget(OP.blockGem       , MT.Zanite                 , MD.AETHEL, "zanite_block"   , 0);
 			OreDictManager.INSTANCE.setTarget(OP.stick          , MT.Skyroot                , MD.AETHEL, "skyroot_stick"  , 0);
-			OreDictManager.INSTANCE.setTarget(OP.ring           , MT.Fe                     , MD.AETHEL, "iron_ring"      , 0);
-			OreDictManager.INSTANCE.setTarget(OP.ring           , MT.Au                     , MD.AETHEL, "golden_ring"    , 0);
-			OreDictManager.INSTANCE.setTarget(OP.ring           , MT.Zanite                 , MD.AETHEL, "zanite_ring"    , 0);
+			//OreDictManager.INSTANCE.setTarget(OP.ring           , MT.Fe                     , MD.AETHEL, "iron_ring"      , 0);
+			//OreDictManager.INSTANCE.setTarget(OP.ring           , MT.Au                     , MD.AETHEL, "golden_ring"    , 0);
+			//OreDictManager.INSTANCE.setTarget(OP.ring           , MT.Zanite                 , MD.AETHEL, "zanite_ring"    , 0);
 			// Just to force the unification Target to be this Ring instead.
 			OreDictManager.INSTANCE.setTarget(OP.ring           , MT.Au                     , MD.TC, "ItemBaubleBlanks"  ,  1);
 			
