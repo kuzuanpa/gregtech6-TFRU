@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2024 GregTech-6 Team
+ * Copyright (c) 2025 GregTech-6 Team
  *
  * This file is part of GregTech.
  *
@@ -26,6 +26,7 @@ import gregapi.data.OP;
 import gregapi.oredict.OreDictMaterial;
 import gregapi.util.OM;
 import gregapi.util.UT;
+import net.minecraftforge.fluids.FluidStack;
 
 import static gregapi.data.CS.*;
 
@@ -41,6 +42,7 @@ public class Loader_Fuels implements Runnable {
 		FM.FluidBed     .addRecipe1(T, -1, (tMat.mFurnaceBurnTime * 3 * EU_PER_FURNACE_TICK) / 72, OP.dustDiv72.mat(tMat, 1), FL.Calcite.make(  1), NF, OM.dust(tMat.mTargetBurning.mMaterial, UT.Code.units(tMat.mTargetBurning.mAmount, U*2, U72, F)));
 		}
 		
+		FM.Burn         .addRecipe0(T, -  4,  1, FL.Glue.make(1)                             , FL.CarbonDioxide.make(1), ZL_IS);
 		FM.Burn         .addRecipe0(T, - 16, 48, FL.Oil_ExtraHeavy.make(1)                   , FL.CarbonDioxide.make(1), OP.dustDiv72.mat(MT.NaCl,2));
 		FM.Burn         .addRecipe0(T, - 16, 36, FL.Oil_Heavy.make(1)                        , FL.CarbonDioxide.make(1), OP.dustDiv72.mat(MT.NaCl,2));
 		FM.Burn         .addRecipe0(T, - 16, 24, FL.Oil_Medium.make(1)                       , FL.CarbonDioxide.make(1), OP.dustDiv72.mat(MT.NaCl,1));
@@ -50,57 +52,55 @@ public class Loader_Fuels implements Runnable {
 		FM.Burn         .addRecipe0(T, - 16,  2, FL.Oil_Creosote.make(1)                     , FL.CarbonDioxide.make(1), ZL_IS);
 		FM.Burn         .addRecipe0(T, - 16,  2, FL.Biomass.make(1)                          , FL.CarbonDioxide.make(1), ZL_IS);
 		FM.Burn         .addRecipe0(T, - 16,  2, FL.BiomassIC2.make(1)                       , FL.CarbonDioxide.make(1), ZL_IS);
-		FM.Burn         .addRecipe0(T, - 16,  8, FL.Oil_Whale.make(1)                        , FL.CarbonDioxide.make(1), ZL_IS);
-		FM.Burn         .addRecipe0(T, - 16,  4, FL.Oil_Fish.make(1)                         , FL.CarbonDioxide.make(1), ZL_IS);
-		FM.Burn         .addRecipe0(T, - 16,  4, FL.Oil_Olive.make(1)                        , FL.CarbonDioxide.make(1), ZL_IS);
+		FM.Burn         .addRecipe0(T, - 16,  4, FL.Juice_Coconut.make(1)                    , FL.CarbonDioxide.make(1), ZL_IS);
 		FM.Burn         .addRecipe0(T, - 16,  4, FL.Oil_Nut.make(1)                          , FL.CarbonDioxide.make(1), ZL_IS);
+		FM.Burn         .addRecipe0(T, - 16,  4, FL.Oil_Olive.make(1)                        , FL.CarbonDioxide.make(1), ZL_IS);
 		FM.Burn         .addRecipe0(T, - 16,  2, FL.Oil_Lin.make(1)                          , FL.CarbonDioxide.make(1), ZL_IS);
 		FM.Burn         .addRecipe0(T, - 16,  2, FL.Oil_Hemp.make(1)                         , FL.CarbonDioxide.make(1), ZL_IS);
 		FM.Burn         .addRecipe0(T, - 16,  2, FL.Oil_Sunflower.make(1)                    , FL.CarbonDioxide.make(1), ZL_IS);
 		FM.Burn         .addRecipe0(T, - 16,  2, FL.Oil_Seed.make(1)                         , FL.CarbonDioxide.make(1), ZL_IS);
-		if (FL.Oil_Canola.exists())
-		FM.Burn         .addRecipe0(T, - 16,  2, FL.Oil_Canola.make(1)                       , FL.CarbonDioxide.make(1), ZL_IS);
-		if (FL.Oil_Plant.exists())
-		FM.Burn         .addRecipe0(T, - 16,  1, FL.Oil_Plant.make(1)                        , FL.CarbonDioxide.make(1), ZL_IS);
-		if (FL.Oil_Heavy2.exists())
-		FM.Burn         .addRecipe0(T, - 16, 36, FL.Oil_Heavy2.make(1)                       , FL.CarbonDioxide.make(1), ZL_IS);
-		if (FL.Oil_HotCrude.exists())
-		FM.Burn         .addRecipe0(T, - 16, 24, FL.Oil_HotCrude.make(1)                     , FL.CarbonDioxide.make(1), ZL_IS);
-		if (FL.Oil_Light2.exists())
-		FM.Burn         .addRecipe0(T, - 16, 18, FL.Oil_Light2.make(1)                       , FL.CarbonDioxide.make(1), ZL_IS);
+		FM.Burn         .addRecipe0(T, - 16,  4, FL.Oil_Fish.make(1)                         , FL.CarbonDioxide.make(1), ZL_IS);
+		FM.Burn         .addRecipe0(T, - 16,  8, FL.Oil_Whale.make(1)                        , FL.CarbonDioxide.make(1), ZL_IS);
+		for (FluidStack tFuel : FL.Oil_Canola.list(1))
+		FM.Burn         .addRecipe0(T, - 16,  2, tFuel                                       , FL.CarbonDioxide.make(1), ZL_IS);
+		for (FluidStack tFuel : FL.Oil_Plant.list(1))
+		FM.Burn         .addRecipe0(T, - 16,  1, tFuel                                       , FL.CarbonDioxide.make(1), ZL_IS);
+		for (FluidStack tFuel : FL.Oil_Heavy2.list(1))
+		FM.Burn         .addRecipe0(T, - 16, 36, tFuel                                       , FL.CarbonDioxide.make(1), ZL_IS);
+		for (FluidStack tFuel : FL.Oil_HotCrude.list(1))
+		FM.Burn         .addRecipe0(T, - 16, 24, tFuel                                       , FL.CarbonDioxide.make(1), ZL_IS);
+		for (FluidStack tFuel : FL.Oil_Light2.list(1))
+		FM.Burn         .addRecipe0(T, - 16, 18, tFuel                                       , FL.CarbonDioxide.make(1), ZL_IS);
+		for (FluidStack tFuel : FL.Tar.list(1))
+		FM.Burn         .addRecipe0(T, - 16,  4, tFuel                                       , FL.CarbonDioxide.make(1), ZL_IS);
 		
-		FM.Burn         .addRecipe0(T, -  4,  1, FL.Glue.make(1)                             , FL.CarbonDioxide.make(1), ZL_IS);
-		
-		if (FL.JetFuel.exists()) {
-		FM.Burn         .addRecipe0(T, -128,  11, FL.JetFuel.make(1)                          , FL.CarbonDioxide.make(1), ZL_IS);
-		FM.Engine       .addRecipe0(T, -128, 18, FL.JetFuel.make(1)                          , FL.CarbonDioxide.make(1), ZL_IS);
+		for (FluidStack tFuel : FL.JetFuel.list(1)) {
+		FM.Burn         .addRecipe0(T, -128,  11, tFuel                                       , FL.CarbonDioxide.make(1), ZL_IS);
+		FM.Engine       .addRecipe0(T, -128, 18, tFuel                                       , FL.CarbonDioxide.make(1), ZL_IS);
 		}
-		if (FL.exists("kerosene")) {
-		FM.Burn         .addRecipe0(T, - 64,  7, FL.make("kerosene", 1)                      , FL.CarbonDioxide.make(1), ZL_IS);
-		FM.Engine       .addRecipe0(T, - 64,  12, FL.make("kerosene", 1)                      , FL.CarbonDioxide.make(1), ZL_IS);
+		for (FluidStack tFuel : FL.Kerosine.list(1)) {
+		FM.Burn         .addRecipe0(T, - 64,  7, tFuel                                       , FL.CarbonDioxide.make(1), ZL_IS);
+		FM.Engine       .addRecipe0(T, - 64,  12, tFuel                                       , FL.CarbonDioxide.make(1), ZL_IS);
 		}
-		FM.Burn         .addRecipe0(T, - 64,  7, FL.make("kerosine", 1)                      , FL.CarbonDioxide.make(1), ZL_IS);
-		FM.Engine       .addRecipe0(T, - 64,  12, FL.make("kerosine", 1)                      , FL.CarbonDioxide.make(1), ZL_IS);
-		
-		if (FL.exists("gasoline")) {
-		FM.Burn         .addRecipe0(T, - 64,  7, FL.make("gasoline", 1)                      , FL.CarbonDioxide.make(1), ZL_IS);
-		FM.Engine       .addRecipe0(T, - 64,  12, FL.make("gasoline", 1)                      , FL.CarbonDioxide.make(1), ZL_IS);
+		for (FluidStack tFuel : FL.Petrol.list(1)) {
+		FM.Burn         .addRecipe0(T, - 64,  7, tFuel                                       , FL.CarbonDioxide.make(1), ZL_IS);
+		FM.Engine       .addRecipe0(T, - 64,  12, tFuel                                       , FL.CarbonDioxide.make(1), ZL_IS);
 		}
-		FM.Burn         .addRecipe0(T, - 64,  7, FL.make("petrol", 1)                        , FL.CarbonDioxide.make(1), ZL_IS);
-		FM.Engine       .addRecipe0(T, - 64,  12, FL.make("petrol", 1)                        , FL.CarbonDioxide.make(1), ZL_IS);
-		
-		FM.Burn         .addRecipe0(T, - 64,  7, FL.make("diesel", 1)                        , FL.CarbonDioxide.make(1), ZL_IS);
-		FM.Engine       .addRecipe0(T, - 64,  12, FL.make("diesel", 1)                        , FL.CarbonDioxide.make(1), ZL_IS);
-		
-		FM.Burn         .addRecipe0(T, - 64,  8, FL.Fuel.make(1)                             , FL.CarbonDioxide.make(1), ZL_IS);
-		FM.Engine       .addRecipe0(T, - 64,  12, FL.Fuel.make(1)                             , FL.CarbonDioxide.make(1), ZL_IS);
-		
-		FM.Burn         .addRecipe0(T, - 96,  10, FL.make("nitrofuel", 1)                     , FL.CarbonDioxide.make(1), ZL_IS);
-		FM.Engine       .addRecipe0(T, - 96, 14, FL.make("nitrofuel", 1)                     , FL.CarbonDioxide.make(1), ZL_IS);
-		
-		for (String tAlcohol : FluidsGT.RUM) if (FL.exists(tAlcohol)) {
-		FM.Burn         .addRecipe0(T, - 16,  6, FL.make(tAlcohol, 1)                        , FL.CarbonDioxide.make(1), ZL_IS);
-		FM.Engine       .addRecipe0(T, - 16,  9, FL.make(tAlcohol, 1)                        , FL.CarbonDioxide.make(1), ZL_IS);
+		for (FluidStack tFuel : FL.Diesel.list(1)) {
+		FM.Burn         .addRecipe0(T, - 64,  7, tFuel                                       , FL.CarbonDioxide.make(1), ZL_IS);
+		FM.Engine       .addRecipe0(T, - 64,  12, tFuel                                       , FL.CarbonDioxide.make(1), ZL_IS);
+		}
+        for (FluidStack tFuel : FL.Fuel.list(1)) {
+            FM.Burn.addRecipe0(T, -64, 7, tFuel, FL.CarbonDioxide.make(1), ZL_IS);
+            FM.Engine.addRecipe0(T, -64, 12, tFuel, FL.CarbonDioxide.make(1), ZL_IS);
+        }
+        FM.Burn.addRecipe0(T, -96, 10, FL.make("nitrofuel", 1), FL.CarbonDioxide.make(1), ZL_IS);
+        FM.Engine.addRecipe0(T, -96, 14, FL.make("nitrofuel", 1), FL.CarbonDioxide.make(1), ZL_IS);
+
+        for (String tAlcohol : FluidsGT.RUM)
+            if (FL.exists(tAlcohol)) {
+                FM.Burn.addRecipe0(T, -16, 6, FL.make(tAlcohol, 1), FL.CarbonDioxide.make(1), ZL_IS);
+                FM.Engine.addRecipe0(T, -16, 9, FL.make(tAlcohol, 1)                        , FL.CarbonDioxide.make(1), ZL_IS);
 		}
 		for (String tAlcohol : FluidsGT.WHISKEY) if (FL.exists(tAlcohol)) {
 		FM.Burn         .addRecipe0(T, - 16,  6, FL.make(tAlcohol, 1)                        , FL.CarbonDioxide.make(1), ZL_IS);
@@ -110,33 +110,30 @@ public class Loader_Fuels implements Runnable {
 		FM.Burn         .addRecipe0(T, - 16,  6, FL.make(tAlcohol, 1)                        , FL.CarbonDioxide.make(1), ZL_IS);
 		FM.Engine       .addRecipe0(T, - 16,  9, FL.make(tAlcohol, 1)                        , FL.CarbonDioxide.make(1), ZL_IS);
 		}
-		for (String tAlcohol : new String[] {"vodka", "binnie.vodka"}) if (FL.exists(tAlcohol)) {
-		FM.Burn         .addRecipe0(T, - 16,  6, FL.make(tAlcohol, 1)                        , FL.CarbonDioxide.make(1), ZL_IS);
-		FM.Engine       .addRecipe0(T, - 16,  9, FL.make(tAlcohol, 1)                        , FL.CarbonDioxide.make(1), ZL_IS);
+
+		for (FluidStack tFuel : FL.Vodka.list(1)) {
+		FM.Burn         .addRecipe0(T, - 16,  6, tFuel                                       , FL.CarbonDioxide.make(1), ZL_IS);
+		FM.Engine       .addRecipe0(T, - 16,  9, tFuel                                       , FL.CarbonDioxide.make(1), ZL_IS);
 		}
 		for (String tAlcohol : new String[] {"potion.dragonblood", "potion.goldencider", "potion.notchesbrew"}) if (FL.exists(tAlcohol)) {
 		FM.Burn         .addRecipe0(T, - 16, 15, FL.make(tAlcohol, 1)                        , FL.CarbonDioxide.make(1), ZL_IS);
 		FM.Engine       .addRecipe0(T, - 16, 27, FL.make(tAlcohol, 1)                        , FL.CarbonDioxide.make(1), ZL_IS);
 		}
-		
-		FM.Burn         .addRecipe0(T, - 16,  9, FL.BioEthanol.make(1)                       , FL.CarbonDioxide.make(1), ZL_IS);
-		FM.Engine       .addRecipe0(T, - 16, 18, FL.BioEthanol.make(1)                       , FL.CarbonDioxide.make(1), ZL_IS);
-		
-		
-		FM.Burn         .addRecipe0(T, - 16,  9, FL.make("ethanol", 1)                       , FL.CarbonDioxide.make(1), ZL_IS);
-		FM.Engine       .addRecipe0(T, - 16, 18, FL.make("ethanol", 1)                       , FL.CarbonDioxide.make(1), ZL_IS);
-		
-		if (FL.Reikanol.exists()) {
-		FM.Burn         .addRecipe0(T, - 16,  9, FL.Reikanol.make(1)                         , FL.CarbonDioxide.make(1), ZL_IS);
-		FM.Engine       .addRecipe0(T, - 16, 18, FL.Reikanol.make(1)                         , FL.CarbonDioxide.make(1), ZL_IS);
+		for (FluidStack tFuel : FL.BioEthanol.list(1)) {
+		FM.Burn         .addRecipe0(T, - 16,  9, tFuel                                       , FL.CarbonDioxide.make(1), ZL_IS);
+		FM.Engine       .addRecipe0(T, - 16, 14, tFuel                                       , FL.CarbonDioxide.make(1), ZL_IS);
 		}
-		if (FL.BioDiesel.exists()) {
-		FM.Burn         .addRecipe0(T, - 16,  9, FL.BioDiesel.make(1)                        , FL.CarbonDioxide.make(1), ZL_IS);
-		FM.Engine       .addRecipe0(T, - 16, 18, FL.BioDiesel.make(1)                        , FL.CarbonDioxide.make(1), ZL_IS);
+		for (FluidStack tFuel : FL.Reikanol.list(1)) {
+		FM.Burn         .addRecipe0(T, - 16,  9, tFuel                                       , FL.CarbonDioxide.make(1), ZL_IS);
+		FM.Engine       .addRecipe0(T, - 16, 14, tFuel                                       , FL.CarbonDioxide.make(1), ZL_IS);
 		}
-		if (FL.BioFuel.exists()) {
-		FM.Burn         .addRecipe0(T, - 64,  9, FL.BioFuel.make(1)                          , FL.CarbonDioxide.make(1), ZL_IS);
-		FM.Engine       .addRecipe0(T, - 64, 18, FL.BioFuel.make(1)                          , FL.CarbonDioxide.make(1), ZL_IS);
+		for (FluidStack tFuel : FL.BioDiesel.list(1)) {
+		FM.Burn         .addRecipe0(T, - 16,  9, tFuel                                       , FL.CarbonDioxide.make(1), ZL_IS);
+		FM.Engine       .addRecipe0(T, - 16, 14, tFuel                                       , FL.CarbonDioxide.make(1), ZL_IS);
+		}
+		for (FluidStack tFuel : FL.BioFuel.list(1)) {
+		FM.Burn         .addRecipe0(T, - 64,  9, tFuel                                       , FL.CarbonDioxide.make(1), ZL_IS);
+		FM.Engine       .addRecipe0(T, - 64, 14, tFuel                                       , FL.CarbonDioxide.make(1), ZL_IS);
 		}
 		if (FL.exists("hootch")) {
 		FM.Burn         .addRecipe0(T, - 16,  5, FL.make("hootch", 1)                        , FL.CarbonDioxide.make(1), ZL_IS);
@@ -144,7 +141,7 @@ public class Loader_Fuels implements Runnable {
 		}
 		if (FL.exists("fire_water")) {
 		FM.Burn         .addRecipe0(T, - 32,  9, FL.make("fire_water", 1)                    , FL.CarbonDioxide.make(1), ZL_IS);
-		FM.Engine       .addRecipe0(T, - 32, 15, FL.make("fire_water", 1)                    , FL.CarbonDioxide.make(1), ZL_IS);
+		FM.Engine       .addRecipe0(T, - 32, 14, FL.make("fire_water", 1)                    , FL.CarbonDioxide.make(1), ZL_IS);
 		}
 		if (FL.exists("rocket_fuel")) {
 		FM.Burn         .addRecipe0(T, - 64,  4, FL.make("rocket_fuel", 1)                   , FL.CarbonDioxide.make(1), ZL_IS);
@@ -176,8 +173,8 @@ public class Loader_Fuels implements Runnable {
 		FM.Burn         .addRecipe0(T, - 64, 24, FL.make("ic2biogas", 20)                    , FL.Steam.make(120), FL.CarbonDioxide.make(3));
 		FM.Gas          .addRecipe0(T, - 64, 30, FL.make("ic2biogas", 20)                    , FL.Steam.make(120), FL.CarbonDioxide.make(3));
 		}
-		if (FL.LPG.exists()) {
-		FM.Burn         .addRecipe0(T, - 64, 42, FL.LPG.make(7)                              , FL.Steam.make(140), FL.CarbonDioxide.make(6));
+		for (FluidStack tFuel : FL.LPG.list(7)) {
+		FM.Burn         .addRecipe0(T, - 64, 42, tFuel                                       , FL.Steam.make(140), FL.CarbonDioxide.make(6));
 		}
 		
 		FM.Burn         .addRecipe0(T, - 64, 42, FL.make("butane", 7)                        , FL.Steam.make(140), FL.CarbonDioxide.make(6));

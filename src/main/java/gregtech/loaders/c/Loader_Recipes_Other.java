@@ -459,7 +459,9 @@ public class Loader_Recipes_Other implements Runnable {
 		for (FluidStack tDye : DYE_FLUIDS[DYE_INDEX_Lime     ]) RM.Bath.addRecipe1(T, 0, 16, ST.make(Blocks.grass, 1, W), FL.mul(tDye, 1, 24, T), NF, ST.make(BlocksGT.Grass, 1, 1));
 		for (FluidStack tDye : DYE_FLUIDS[DYE_INDEX_Black    ]) RM.Bath.addRecipe1(T, 0, 16, ST.make(Blocks.grass, 1, W), FL.mul(tDye, 1, 24, T), NF, ST.make(BlocksGT.Grass, 1, 2));
 		for (FluidStack tDye : DYE_FLUIDS[DYE_INDEX_LightGray]) RM.Bath.addRecipe1(T, 0, 16, ST.make(Blocks.grass, 1, W), FL.mul(tDye, 1, 24, T), NF, ST.make(BlocksGT.Grass, 1, 3));
-		
+		for (FluidStack tDye : DYE_FLUIDS[DYE_INDEX_Yellow   ]) RM.Bath.addRecipe1(T, 0, 16, ST.make(Blocks.grass, 1, W), FL.mul(tDye, 1, 24, T), NF, ST.make(BlocksGT.Grass, 1, 4));
+		for (FluidStack tDye : DYE_FLUIDS[DYE_INDEX_Brown    ]) RM.Bath.addRecipe1(T, 0, 16, ST.make(Blocks.grass, 1, W), FL.mul(tDye, 1, 24, T), NF, ST.make(BlocksGT.Grass, 1, 5));
+
 		
 		for (byte i = 0; i < 16; i++) {
 		for (FluidStack tDye : DYE_FLUIDS[i]) if (tDye.getFluid() != DYE_FLUIDS_CHEMICAL[i].getFluid()) {
@@ -756,9 +758,10 @@ public class Loader_Recipes_Other implements Runnable {
 		RM.Loom    .addRecipe2(T, 16,   16, ST.tag(10), ST.make(Items.string, 4, W), IL.Rope_Silk.get(1));
 		RM.Loom    .addRecipe2(T, 16,   16, ST.tag(10), wireFine.mat(MT.Plastic, 4), IL.Rope_Plastic.get(1));
 		RM.Loom    .addRecipe2(T, 16,   16, ST.tag(10), ST.make(Blocks.vine, 4, W), IL.Rope_Vine.get(1));
+        for (OreDictMaterial tMat : ANY.Steel.mToThis)
+            RM.Loom    .addRecipe2(T, 16,   64, ST.tag(10), wireFine.mat(tMat, 4), IL.Rope_Steel.get(1));
 
-
-		RM.CokeOven.addRecipe1(T,  0,  3600, gem                   .mat(MT.Coal    , 1), NF, flList.CoalTar.make(   500), gem       .mat(MT.CoalCoke, 1));
+        RM.CokeOven.addRecipe1(T,  0,  3600, gem                   .mat(MT.Coal    , 1), NF, flList.CoalTar.make(   500), gem       .mat(MT.CoalCoke, 1));
 		RM.CokeOven.addRecipe1(T,  0,  3600, nugget                .mat(MT.Coal    , 9), NF, flList.CoalTar.make(   500), ingot     .mat(MT.CoalCoke, 1));
 		RM.CokeOven.addRecipe1(T,  0,  3600, chunkGt               .mat(MT.Coal    , 4), NF, flList.CoalTar.make(   500), ingot     .mat(MT.CoalCoke, 1));
 		RM.CokeOven.addRecipe1(T,  0,  7200, billet                .mat(MT.Coal    , 3), NF, flList.CoalTar.make(   1000 ), ingot     .mat(MT.CoalCoke, 2));
