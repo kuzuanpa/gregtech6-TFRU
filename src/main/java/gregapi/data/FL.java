@@ -39,10 +39,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.*;
 import net.minecraftforge.fluids.FluidContainerRegistry.FluidContainerData;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static gregapi.data.CS.*;
 import static gregapi.data.CS.FluidsGT.*;
@@ -570,24 +567,25 @@ public enum FL {
 	;
 	
 	public final String mName;
+	public String[] mAllNames = ZL_STRING;
 	
 	FL(String aName, Collection<String>... aFluidSets) {
 		mName = aName;
+		mAllNames = new String[] {aName};
 		for (Collection<String> aFluidSet : aFluidSets) {aFluidSet.add(mName);}
 	}
 	FL(String aName, String aOldName, Collection<String>... aFluidSets) {
 		mName = aName;
+		mAllNames = new String[] {aName, aOldName};
 		FluidsGT.HIDDEN.add(aOldName);
-		FluidsGT.NONSTANDARD.add(aOldName);
 		FluidsGT.FLUID_RENAMINGS.put(aOldName, mName);
 		for (Collection<String> aFluidSet : aFluidSets) {aFluidSet.add(mName); aFluidSet.add(aOldName);}
 	}
 	FL(String aName, String aOldName1, String aOldName2, Collection<String>... aFluidSets) {
 		mName = aName;
+		mAllNames = new String[] {aName, aOldName1, aOldName2};
 		FluidsGT.HIDDEN.add(aOldName1);
 		FluidsGT.HIDDEN.add(aOldName2);
-		FluidsGT.NONSTANDARD.add(aOldName1);
-		FluidsGT.NONSTANDARD.add(aOldName2);
 		FluidsGT.FLUID_RENAMINGS.put(aOldName1, mName);
 		FluidsGT.FLUID_RENAMINGS.put(aOldName2, mName);
 		for (Collection<String> aFluidSet : aFluidSets) {aFluidSet.add(mName); aFluidSet.add(aOldName1); aFluidSet.add(aOldName2);}
@@ -625,7 +623,11 @@ public enum FL {
 	
 	public ItemStack fill(ItemStack aStack) {return fill(make(Integer.MAX_VALUE), aStack, F, T, T, F);}
 	
-	
+	public List<FluidStack> list(long aAmount) {
+		List<FluidStack> rList = new ArrayListNoNulls<>();
+		for (String tName : mAllNames) rList.add(make(tName, aAmount));
+		return rList;
+	}
 	
 	
 	
