@@ -85,14 +85,14 @@ public class ItemFluidDisplay extends Item implements IFluidContainerItem, IItem
 		NBTTagCompound aNBT = aStack.getTagCompound();
 		Fluid aFluid = FL.fluid(ST.meta_(aStack));
 		if (aFluid == null) {
-			aList.add(LH.Chat.BLINKING_RED + "CLIENTSIDE FLUID IS NULL!!!");
+			aList.add(LH.Chat.BLINKING_RED + LH.get(LH.FLUID_DISPLAY_NULL));
 		} else if (FL.Error.is(aFluid)) {
-			aList.add(LH.Chat.BLINKING_RED + "THIS IS AN ERROR AND SHOULD NEVER BE OBTAINABLE!!!");
+			aList.add(LH.Chat.BLINKING_RED + LH.get(LH.FLUID_DISPLAY_ERR));
 		} else {
 			String aName = aFluid.getName();
 			
-			if (SHOW_INTERNAL_NAMES || aF3_H) aList.add("Registry: " + aName);
-			if (FL.exists(FluidsGT.FLUID_RENAMINGS.get(aName)) || FluidsGT.NONSTANDARD.contains(aName)) aList.add(LH.Chat.BLINKING_RED + "NON-STANDARD FLUID!");
+			if (SHOW_INTERNAL_NAMES || aF3_H) aList.add(LH.get(LH.FLUID_DISPLAY_REG_NAME)+ ": " + aName);
+			if (FL.exists(FluidsGT.FLUID_RENAMINGS.get(aName)) || FluidsGT.NONSTANDARD.contains(aName)) aList.add(LH.Chat.BLINKING_RED + (LH.FLUID_DISPLAY_NOT_STANDARD));
 			
 			long tAmount = 0, tTemperature = DEF_ENV_TEMP;
 			FluidStack tFluid = NF;
@@ -111,7 +111,7 @@ public class ItemFluidDisplay extends Item implements IFluidContainerItem, IItem
 			}
 			
 			if (tAmount > 0) {
-				aList.add(LH.Chat.BLUE + "Amount: " + UT.Code.makeString(tAmount) + " L");
+				aList.add(LH.Chat.BLUE + LH.get(LH.FLUID_DISPLAY_AMOUNT) + ": " + LH.Chat.WHITE + UT.Code.makeString(tAmount) + LH.Chat.BLUE + " L");
 			}
 			OreDictMaterialStack tMaterial = OreDictMaterial.FLUID_MAP.get(aName);
 			if (tMaterial != null) {
@@ -119,57 +119,57 @@ public class ItemFluidDisplay extends Item implements IFluidContainerItem, IItem
 					long tMatAmount = UT.Code.units(tAmount, tMaterial.mAmount, U, F);
 					if (tMatAmount > 0) {
 						int tDigits = (int)(((tMatAmount % U) / UD) * 1000);
-						aList.add(LH.Chat.BLUE + "Worth: " + (tMatAmount / U) + "." + (tDigits<1?"000":tDigits<10?"00"+tDigits:tDigits<100?"0"+tDigits:tDigits) + " Units of " + tMaterial.mMaterial.getLocal());
+						aList.add(LH.Chat.BLUE +LH.get(LH.FLUID_DISPLAY_WORTH) + ": " + LH.Chat.WHITE + (tMatAmount / U) + "." + (tDigits<1?"000":tDigits<10?"00"+tDigits:tDigits<100?"0"+tDigits:tDigits) + " "+LH.get(LH.FLUID_DISPLAY_WORTH_UNIT)+" " + tMaterial.mMaterial.getLocal());
 					}
 				}
 				if (UT.Code.stringValid(tMaterial.mMaterial.mTooltipChemical)) aList.add(LH.Chat.YELLOW + tMaterial.mMaterial.mTooltipChemical);
 			}
 			
-			aList.add(LH.Chat.RED + "Temperature: " + tTemperature + " K (" + (tTemperature-C) + "°C)");
+			aList.add(LH.Chat.RED + LH.get(LH.FLUID_DISPLAY_TEMPERATURE) + ": " + LH.Chat.WHITE + tTemperature + LH.Chat.RED + " K");
 			
 			if (FL.plasma(tFluid)) {
-				aList.add(LH.Chat.GREEN + "State: " + LH.Chat.YELLOW + "Plasma" + (!aFluid.isGaseous(tFluid) ? LH.Chat.RED + " (Warning: Considered a Liquid by Mods other than GT!)" : LH.Chat.ORANGE + " (Note: Considered a Gas by Mods other than GT!)"));
+				aList.add(LH.Chat.GREEN + LH.get(LH.FLUID_DISPLAY_STATE) + ": " + LH.Chat.YELLOW + LH.get(LH.STATE_PLASMA) + (!aFluid.isGaseous(tFluid) ? LH.Chat.RED + " ("+LH.get(LH.FLUID_DISPLAY_STATE_DIFF_WARN_0)+")" : LH.Chat.ORANGE + " ("+LH.get(LH.FLUID_DISPLAY_STATE_DIFF_WARN_1)+")"));
 			} else if (tGas) {
-				aList.add(LH.Chat.GREEN + "State: " + LH.Chat.CYAN + "Gas" + (!aFluid.isGaseous(tFluid) ? LH.Chat.RED + " (Warning: Considered a Liquid by Mods other than GT!)" : ""));
+				aList.add(LH.Chat.GREEN + LH.get(LH.FLUID_DISPLAY_STATE) + ": " + LH.Chat.CYAN + LH.get(LH.STATE_GAS) + (!aFluid.isGaseous(tFluid) ? LH.Chat.RED + " ("+LH.get(LH.FLUID_DISPLAY_STATE_DIFF_WARN_0)+")" : ""));
 			} else {
-				aList.add(LH.Chat.GREEN + "State: " + LH.Chat.BLUE + "Liquid" + (tMaterial != null && ST.valid(OP.ingot.mat(tMaterial.mMaterial, 1)) ? LH.Chat.CYAN + " (Might able to cast into Molds)" : ""));
-				if (aFluid.isGaseous(tFluid)) aList.add(LH.Chat.BLINKING_RED + " (Warning: Considered a Gas by Mods other than GT!)");
+				aList.add(LH.Chat.GREEN + LH.get(LH.FLUID_DISPLAY_STATE) + ": " + LH.Chat.BLUE + LH.get(LH.STATE_LIQUID) + (tMaterial != null && ST.valid(OP.ingot.mat(tMaterial.mMaterial, 1)) ? LH.Chat.CYAN + " ("+LH.get(LH.FLUID_DISPLAY_MAY_CAST)+")" : ""));
+				if (aFluid.isGaseous(tFluid)) aList.add(LH.Chat.BLINKING_RED + " ("+LH.get(LH.FLUID_DISPLAY_STATE_DIFF_WARN_1)+")");
 			}
 			
 			int tDensity = aFluid.getDensity(tFluid);
 			if (tDensity > 0) {
-				aList.add(LH.Chat.GREEN + "Density: " + tDensity + " ; Heavier than Air (typically moves down)");
+				aList.add(LH.Chat.GREEN + LH.get(LH.FLUID_DISPLAY_DENSITY) + ": " + LH.Chat.WHITE + tDensity + LH.Chat.GREEN + " ; " + LH.get(LH.FLUID_DISPLAY_DENSITY_HEAVY));
 			} else if (tDensity < 0) {
-				aList.add(LH.Chat.GREEN + "Density: " + tDensity + " ; Lighter than Air (typically moves up)");
+				aList.add(LH.Chat.GREEN + LH.get(LH.FLUID_DISPLAY_DENSITY) + ": " + LH.Chat.WHITE + tDensity + LH.Chat.GREEN + " ; " + LH.get(LH.FLUID_DISPLAY_DENSITY_LIGHT));
 			} else {
-				aList.add(LH.Chat.GREEN + "Density: 0 ; As dense as Air (typically still moves down)");
+				aList.add(LH.Chat.GREEN + LH.get(LH.FLUID_DISPLAY_DENSITY) + ": " + LH.Chat.WHITE + tDensity + LH.Chat.GREEN + " ; " + LH.get(LH.FLUID_DISPLAY_DENSITY_0));
 			}
 			
 			int tLuminosity = aFluid.getLuminosity(tFluid);
-			if (tLuminosity != 0) aList.add(LH.Chat.YELLOW + "Luminosity: " + tLuminosity);
+			if (tLuminosity != 0) aList.add(LH.Chat.YELLOW + LH.get(LH.FLUID_DISPLAY_LUMINOSITY)+ ": " + LH.Chat.WHITE + tLuminosity);
 			
 			int tViscosity = aFluid.getViscosity(tFluid);
-			if (tViscosity != 0) aList.add(LH.Chat.BLUE + "Viscosity: " + tViscosity);
+			if (tViscosity != 0) aList.add(LH.Chat.BLUE + LH.get(LH.FLUID_DISPLAY_VISCOSITY)+ ": " + LH.Chat.WHITE + tViscosity);
 			
 			if (FluidsGT.COOKING_OIL.contains(aName)) {
-				aList.add(LH.Chat.DGREEN + "Usable as Cooking Oil in a GT Oven to duplicate Meat and Fish");
+				aList.add(LH.Chat.DGREEN + LH.get(LH.FLUID_DISPLAY_COOKING_OIL));
 			}
 			if (FL.simple(aFluid)) {
-				aList.add(LH.Chat.DGREEN + "This is a simple Fluid that is easy to handle");
+				aList.add(LH.Chat.DGREEN + LH.get(LH.FLUID_DISPLAY_SIMPLE));
 			}
 			if (FL.powerconducting(aFluid)) {
-				aList.add(LH.Chat.DGREEN + "This is a Power Conducting Fluid");
-				aList.add(LH.Chat.ORANGE + "Cannot be stored in any normal GT6 Storage Tanks!");
+				aList.add(LH.Chat.DGREEN + LH.get(LH.FLUID_DISPLAY_POWER_CONDUCT_0));
+				aList.add(LH.Chat.ORANGE + LH.get(LH.FLUID_DISPLAY_POWER_CONDUCT_1));
 			}
 			if (FL.acid(aFluid)) {
-				aList.add(LH.Chat.ORANGE + "Acidic! Handle with Care!");
+				aList.add(LH.Chat.BLINKING_ORANGE +  LH.get(LH.FLUID_DISPLAY_ACIDIC));
 			}
 			if (FL.magic(aFluid)) {
-				aList.add(LH.Chat.ORANGE + "Magical! Handle with Care!");
+				aList.add(LH.Chat.BLINKING_ORANGE +  LH.get(LH.FLUID_DISPLAY_MAGICAL));
 			}
 			if (FL.Lubricant.is(aFluid) || FL.LubRoCant.is(aFluid)) {
-				aList.add(LH.Chat.ORANGE + "Industrial Use ONLY!");
-				aList.add(LH.Chat.RED + "Not Flammable!");
+				aList.add(LH.Chat.ORANGE + LH.get(LH.FLUID_DISPLAY_LUBRICANT_0));
+				aList.add(LH.Chat.RED + LH.get(LH.FLUID_DISPLAY_LUBRICANT_1));
 			} else {
 				for (Recipe.RecipeMap tMap : Recipe.RecipeMap.FUEL_MAP_LIST) {
 					Collection<Recipe> tRecipes = tMap.mRecipeFluidMap.get(aName);
@@ -188,12 +188,12 @@ public class ItemFluidDisplay extends Item implements IFluidContainerItem, IItem
 			}
 			
 			if (aFluid instanceof FluidGT) {
-				aList.add(LH.Chat.DGRAY + "Fluid owned by GT6");
+				aList.add(LH.Chat.DGRAY + LH.get(LH.FLUID_DISPLAY_OWN_GT6));
 			} else {
 				if (FL.Water.is(aFluid) || FL.Lava.is(aFluid)) {
-					aList.add(LH.Chat.DGRAY + "Fluid owned by vanilla Minecraft");
+					aList.add(LH.Chat.DGRAY + LH.get(LH.FLUID_DISPLAY_OWN_VANILLA));
 				} else {
-					aList.add(LH.Chat.DGRAY + "Fluid NOT owned by GT6");
+					aList.add(LH.Chat.DGRAY + LH.get(LH.FLUID_DISPLAY_OWN_OTHER));
 				}
 			}
 		}

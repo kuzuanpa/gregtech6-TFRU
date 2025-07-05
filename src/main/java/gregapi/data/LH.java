@@ -235,6 +235,39 @@ public class LH {
 	, TOOLTIP_TWILIGHT_MAZE_HEDGE_BREAKING = "gt.lang.twilightforest.mazehedgebreaking"
 	, TOOLTIP_TWILIGHT_MAZE_STONE_BREAKING = "gt.lang.twilightforest.mazestonebreaking"
 	, TOOLTIP_TWILIGHT_TOWER_WOOD_BREAKING = "gt.lang.twilightforest.towerwoodbreaking"
+	, FLUID_DISPLAY_NULL             ="gt.lang.fluid.display.null"
+	, FLUID_DISPLAY_ERR              ="gt.lang.fluid.display.err"
+	, FLUID_DISPLAY_REG_NAME         ="gt.lang.fluid.display.reg.name"
+	, FLUID_DISPLAY_NOT_STANDARD     ="gt.lang.fluid.display.standard.not"
+	, FLUID_DISPLAY_AMOUNT           ="gt.lang.fluid.display.amount"
+	, FLUID_DISPLAY_WORTH            ="gt.lang.fluid.display.worth"
+	, FLUID_DISPLAY_WORTH_UNIT       ="gt.lang.fluid.display.worth.unit"
+	, FLUID_DISPLAY_TEMPERATURE      ="gt.lang.fluid.display.temperature"
+	, FLUID_DISPLAY_STATE            ="gt.lang.fluid.display.state"
+	, FLUID_DISPLAY_STATE_DIFF_WARN_0="gt.lang.fluid.display.state.diff.warn.0"
+	, FLUID_DISPLAY_STATE_DIFF_WARN_1="gt.lang.fluid.display.state.diff.warn.1"
+	, FLUID_DISPLAY_MAY_CAST         ="gt.lang.fluid.display.may.cast"
+	, FLUID_DISPLAY_DENSITY          ="gt.lang.fluid.display.density"
+	, FLUID_DISPLAY_DENSITY_HEAVY    ="gt.lang.fluid.display.density.heavy"
+	, FLUID_DISPLAY_DENSITY_LIGHT    ="gt.lang.fluid.display.density.light"
+	, FLUID_DISPLAY_DENSITY_0        ="gt.lang.fluid.display.density.0"
+	, FLUID_DISPLAY_LUMINOSITY       ="gt.lang.fluid.display.luminosity"
+	, FLUID_DISPLAY_VISCOSITY        ="gt.lang.fluid.display.viscosity"
+	, FLUID_DISPLAY_COOKING_OIL      ="gt.lang.fluid.display.cooking.oil"
+	, FLUID_DISPLAY_SIMPLE           ="gt.lang.fluid.display.simple"
+	, FLUID_DISPLAY_POWER_CONDUCT_0  ="gt.lang.fluid.display.power.conduct.0"
+	, FLUID_DISPLAY_POWER_CONDUCT_1  ="gt.lang.fluid.display.power.conduct.1"
+	, FLUID_DISPLAY_ACIDIC           ="gt.lang.fluid.display.acidic"
+	, FLUID_DISPLAY_MAGICAL          ="gt.lang.fluid.display.magical"
+	, FLUID_DISPLAY_LUBRICANT_0      ="gt.lang.fluid.display.lubricant.0"
+	, FLUID_DISPLAY_LUBRICANT_1      ="gt.lang.fluid.display.lubricant.1"
+	, FLUID_DISPLAY_OWN_GT6          ="gt.lang.fluid.display.own.gt6"
+	, FLUID_DISPLAY_OWN_VANILLA      ="gt.lang.fluid.display.own.vanilla"
+	, FLUID_DISPLAY_OWN_OTHER        ="gt.lang.fluid.display.own.other"
+	, STATE_SOLID                    ="gt.lang.state.soild"
+	, STATE_LIQUID                   ="gt.lang.state.liquid"
+	, STATE_GAS                      ="gt.lang.state.gas"
+	, STATE_PLASMA                   ="gt.lang.state.plasma"
 	, PROSPECTING_LAVA = "gt.lang.prospecting.lava"
 	, PROSPECTING_LIQUID = "gt.lang.prospecting.liquid"
 	, PROSPECTING_AIR = "gt.lang.prospecting.air"
@@ -644,6 +677,39 @@ public class LH {
 		add(TOOLTIP_TWILIGHT_MAZE_HEDGE_BREAKING        , "Can easily break Twilight Forest Maze Hedges");
 		add(TOOLTIP_TWILIGHT_MAZE_STONE_BREAKING        , "Can easily break Twilight Forest Mazestone");
 		add(TOOLTIP_TWILIGHT_TOWER_WOOD_BREAKING        , "Can easily break Twilight Forest Towerwood");
+		add(FLUID_DISPLAY_NULL                          , "CLIENTSIDE FLUID IS NULL!!!");
+		add(FLUID_DISPLAY_ERR                           , "THIS IS AN ERROR AND SHOULD NEVER BE OBTAINABLE!!!");
+		add(FLUID_DISPLAY_REG_NAME                      , "Registry");
+		add(FLUID_DISPLAY_NOT_STANDARD                  , "NON-STANDARD FLUID!");
+		add(FLUID_DISPLAY_AMOUNT                        , "Amount");
+		add(FLUID_DISPLAY_WORTH                         , "Worth");
+		add(FLUID_DISPLAY_WORTH_UNIT                    , "Units of");
+		add(FLUID_DISPLAY_TEMPERATURE                   , "Temperature");
+		add(FLUID_DISPLAY_STATE                         , "State");
+		add(FLUID_DISPLAY_STATE_DIFF_WARN_0             , "Warning: Considered a Liquid by Mods other than GT!");
+		add(FLUID_DISPLAY_STATE_DIFF_WARN_1             , "Warning: Considered a Gas by Mods other than GT!");
+		add(FLUID_DISPLAY_MAY_CAST                      , "Might able to cast into Molds");
+		add(FLUID_DISPLAY_DENSITY                       , "Density");
+		add(FLUID_DISPLAY_DENSITY_HEAVY                 , "Heavier than Air (typically moves down)");
+		add(FLUID_DISPLAY_DENSITY_LIGHT                 , "Lighter than Air (typically moves up)");
+		add(FLUID_DISPLAY_DENSITY_0                     , "As dense as Air (typically still moves down)");
+		add(FLUID_DISPLAY_LUMINOSITY                    , "Luminosity");
+		add(FLUID_DISPLAY_VISCOSITY                     , "Viscosity");
+		add(FLUID_DISPLAY_COOKING_OIL                   , "Usable as Cooking Oil in a GT Oven to duplicate Meat and Fish");
+		add(FLUID_DISPLAY_SIMPLE                        , "This is a simple Fluid that is easy to handle");
+		add(FLUID_DISPLAY_POWER_CONDUCT_0               , "This is a Power Conducting Fluid");
+		add(FLUID_DISPLAY_POWER_CONDUCT_1               , "Cannot be stored in any normal GT6 Storage Tanks");
+		add(FLUID_DISPLAY_ACIDIC                        , "Acidic! Handle with Care!");
+		add(FLUID_DISPLAY_MAGICAL                       , "Magical! Handle with Care!");
+		add(FLUID_DISPLAY_LUBRICANT_0                   , "Industrial Use ONLY!");
+		add(FLUID_DISPLAY_LUBRICANT_1                   , "Not Flammable!");
+		add(FLUID_DISPLAY_OWN_GT6                       , "Fluid owned by GT6");
+		add(FLUID_DISPLAY_OWN_VANILLA                   , "Fluid owned by vanilla Minecraft");
+		add(FLUID_DISPLAY_OWN_OTHER                     , "Fluid NOT owned by GT6");
+		add(STATE_SOLID                                 , "Solid");
+		add(STATE_LIQUID                                , "Liquid");
+		add(STATE_GAS                                   , "Gas");
+		add(STATE_PLASMA                                , "Plasma");
 		add(PROSPECTING_LAVA                            , "There is Lava behind this Rock");
 		add(PROSPECTING_LIQUID                          , "There is a Fluid behind this Rock");
 		add(PROSPECTING_AIR                             , "There is an Air Pocket behind this Rock");
