@@ -19,11 +19,8 @@
 
 package gregtech.tileentity.tools;
 
-import gregapi.data.FL;
-import gregapi.data.LH;
+import gregapi.data.*;
 import gregapi.data.LH.Chat;
-import gregapi.data.OP;
-import gregapi.data.TD;
 import gregapi.oredict.OreDictMaterialStack;
 import gregapi.render.BlockTextureDefault;
 import gregapi.render.ITexture;
@@ -33,6 +30,7 @@ import gregapi.tileentity.machines.ITileEntityCrucible;
 import gregapi.tileentity.machines.ITileEntityMold;
 import gregapi.util.UT;
 import gregapi.util.WD;
+import gregtech.tileentity.inventories.MultiTileEntityEnderGarbageBin;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -131,6 +129,11 @@ public class MultiTileEntityFaucet extends TileEntityBase11AttachmentSmall imple
 			}
 			return 0;
 		}
+		if (tDelegator.mTileEntity instanceof MultiTileEntityEnderGarbageBin) {
+			CS.GarbageGT.trash(aMaterial);
+			return aMaterial.mAmount;
+		}
+
 		return 0;
 	}
 	
