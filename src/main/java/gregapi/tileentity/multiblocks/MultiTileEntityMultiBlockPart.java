@@ -20,15 +20,17 @@
 package gregapi.tileentity.multiblocks;
 
 import gregapi.GT_API;
+import gregapi.block.multitileentity.IMultiTileEntity;
 import gregapi.block.multitileentity.IMultiTileEntity.IMTE_AddToolTips;
-import gregapi.block.multitileentity.IWailaTile;
 import gregapi.block.multitileentity.IMultiTileEntity.IMTE_BreakBlock;
 import gregapi.block.multitileentity.IMultiTileEntity.IMTE_OnBlockAdded;
 import gregapi.block.multitileentity.IMultiTileEntity.IMTE_OnWalkOver;
+import gregapi.block.multitileentity.IWailaTile;
 import gregapi.block.multitileentity.MultiTileEntityRegistry;
 import gregapi.code.TagData;
 import gregapi.data.FL;
 import gregapi.data.LH;
+import gregapi.network.INetworkHandler;
 import gregapi.old.Textures;
 import gregapi.render.BlockTextureDefault;
 import gregapi.render.BlockTextureMulti;
@@ -76,7 +78,7 @@ import static gregapi.data.CS.*;
 /**
  * @author Gregorius Techneticies
  */
-public class MultiTileEntityMultiBlockPart extends TileEntityBase05Paintable implements ITileEntityEnergy, ITileEntityCrucible, ITileEntityLogistics, IMTE_OnWalkOver, ITileEntityTemperature, ITileEntityGibbl, ITileEntityProgress, ITileEntityWeight, ITileEntityTapAccessible, ITileEntityFunnelAccessible, ITileEntityEnergyDataCapacitor, ITileEntityAdjacentInventoryUpdatable, IFluidHandler, IMTE_OnBlockAdded, IMTE_BreakBlock,IMTE_AddToolTips, ITileEntityRunningSuccessfully, ITileEntitySwitchableMode, ITileEntitySwitchableOnOff, IWailaTile {
+public class MultiTileEntityMultiBlockPart extends TileEntityBase05Paintable implements ITileEntityEnergy, ITileEntityCrucible, ITileEntityLogistics, IMTE_OnWalkOver, ITileEntityTemperature, ITileEntityGibbl, ITileEntityProgress, ITileEntityWeight, ITileEntityTapAccessible, ITileEntityFunnelAccessible, ITileEntityEnergyDataCapacitor, ITileEntityAdjacentInventoryUpdatable, IFluidHandler, IMTE_OnBlockAdded, IMTE_BreakBlock,IMTE_AddToolTips, ITileEntityRunningSuccessfully, ITileEntitySwitchableMode, ITileEntitySwitchableOnOff, IMultiTileEntity.IMTE_SyncDataByteArray, IWailaTile {
 	public ChunkCoordinates mTargetPos = null;
 	
 	public ITileEntityMultiBlockController mTarget = null;
@@ -247,7 +249,12 @@ public class MultiTileEntityMultiBlockPart extends TileEntityBase05Paintable imp
 	
 	@Override public byte getVisualData() {return (byte)mDesign;}
 	@Override public void setVisualData(byte aData) {mDesign = UT.Code.unsignB(aData); if (mDesign >= mTextures.length) mDesign = 0;}
-	
+	@Override
+	public boolean receiveDataByteArray(byte[] aData, INetworkHandler aNetworkHandler) {
+		mRGBa = UT.Code.getRGBInt(new short[] {UT.Code.unsignB(aData[0]), UT.Code.unsignB(aData[1]), UT.Code.unsignB(aData[2])});
+		setVisualData(aData[3]);
+		return T;
+	}
 	@Override public String getTileEntityName() {return "gt.multitileentity.multiblock.part";}
 	
 	// Relay Tool Uses
@@ -268,7 +275,14 @@ public class MultiTileEntityMultiBlockPart extends TileEntityBase05Paintable imp
 		}
 		return super.onToolClick2(aTool, aRemainingDurability, aQuality, aPlayer, aChatReturn, aPlayerInventory, aSneaking, aStack, aSide, aHitX, aHitY, aHitZ);
 	}
-	
+
+	@Override
+	public boolean onBlockActivated3(EntityPlayer aPlayer, byte aSide, float aHitX, float aHitY, float aHitZ) {
+		ITileEntityMultiBlockController tTileEntity = getTarget(F);
+		if (tTileEntity == null || !tTileEntity.isInsideStructure(xCoord, yCoord, zCoord)) return super.onBlockActivated3(aPlayer, aSide, aHitX, aHitY, aHitZ);
+
+		return tTileEntity.onBlockActivated3(aPlayer, aSide, aHitX, aHitY, aHitZ);
+	}
 	// Relay Inventories
 	
 	@Override
@@ -701,10 +715,10 @@ public class MultiTileEntityMultiBlockPart extends TileEntityBase05Paintable imp
 			ITileEntityMultiBlockController tTileEntity = getTarget(F);
 			if(!tTileEntity.checkStructure(F))return aNBT;
 
-			UT.NBT.setBoolean(aNBT, "part."+NBT_TARGET, T);
-			UT.NBT.setNumber (aNBT, "part."+NBT_TARGET_X, mTargetPos.posX);
-			UT.NBT.setNumber (aNBT, "part."+NBT_TARGET_Y, mTargetPos.posY);
-			UT.NBT.setNumber (aNBT, "part."+NBT_TARGET_Z, mTargetPos.posZ);
+			UT.NBT.setBoolean(aNBT, NBT_TARGET, T);
+			UT.NBT.setNumber (aNBT, NBT_TARGET_X, mTargetPos.posX);
+			UT.NBT.setNumber (aNBT, NBT_TARGET_Y, mTargetPos.posY);
+			UT.NBT.setNumber (aNBT, NBT_TARGET_Z, mTargetPos.posZ);
 
 			if(!(tTileEntity instanceof IWailaTile))return aNBT;
 			((IWailaTile)tTileEntity).getWailaNBT((TileEntity) tTileEntity, aNBT);
@@ -715,7 +729,7 @@ public class MultiTileEntityMultiBlockPart extends TileEntityBase05Paintable imp
 	@Override
 	public List<String> getWailaBody(List<String> currentTip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
 		NBTTagCompound aNBT = accessor.getNBTData();
-		if (aNBT.hasKey("part."+NBT_TARGET)) {mTargetPos = new ChunkCoordinates(UT.Code.bindInt(aNBT.getLong("part."+NBT_TARGET_X)), UT.Code.bindInt(aNBT.getLong("part."+NBT_TARGET_Y)), UT.Code.bindInt(aNBT.getLong("part."+NBT_TARGET_Z)));}
+		if (aNBT.hasKey(NBT_TARGET)) {mTargetPos = new ChunkCoordinates(UT.Code.bindInt(aNBT.getLong(NBT_TARGET_X)), UT.Code.bindInt(aNBT.getLong(NBT_TARGET_Y)), UT.Code.bindInt(aNBT.getLong(NBT_TARGET_Z)));}
 		else mTargetPos = null;
 		ITileEntityMultiBlockController tTileEntity = getTarget(F);
 		if(tTileEntity instanceof TileEntityBase01Root) currentTip.add(LH.get(LH.FORMED)+ " " + LH.Chat.WHITE + LH.get(((TileEntityBase01Root) tTileEntity).getTileEntityName()));

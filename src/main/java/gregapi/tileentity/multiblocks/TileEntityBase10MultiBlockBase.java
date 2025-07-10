@@ -88,7 +88,9 @@ public abstract class TileEntityBase10MultiBlockBase extends TileEntityBase09Fac
 			}
 		}
 	}
-	
+	//Remove distance check because click part to open GUI
+	@Override public boolean isUseableByPlayerGUI(EntityPlayer aPlayer) {return !isDead() && allowInteraction(aPlayer);}
+
 	@Override
 	public void writeToNBT2(NBTTagCompound aNBT) {
 		super.writeToNBT2(aNBT);
