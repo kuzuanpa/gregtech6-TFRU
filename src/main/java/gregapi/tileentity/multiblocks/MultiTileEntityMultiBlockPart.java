@@ -279,7 +279,7 @@ public class MultiTileEntityMultiBlockPart extends TileEntityBase05Paintable imp
 	@Override
 	public boolean onBlockActivated3(EntityPlayer aPlayer, byte aSide, float aHitX, float aHitY, float aHitZ) {
 		ITileEntityMultiBlockController tTileEntity = getTarget(F);
-		if (tTileEntity == null || !tTileEntity.isInsideStructure(xCoord, yCoord, zCoord)) return super.onBlockActivated3(aPlayer, aSide, aHitX, aHitY, aHitZ);
+		if (tTileEntity == null || !tTileEntity.isInsideStructure(xCoord, yCoord, zCoord) || !tTileEntity.checkStructure(F)) return super.onBlockActivated3(aPlayer, aSide, aHitX, aHitY, aHitZ);
 
 		return tTileEntity.onBlockActivated3(aPlayer, aSide, aHitX, aHitY, aHitZ);
 	}
