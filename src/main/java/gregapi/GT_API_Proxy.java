@@ -226,12 +226,13 @@ public abstract class GT_API_Proxy extends Abstract_Proxy implements IGuiHandler
 	//@SubscribeEvent(priority = EventPriority.LOWEST) public void onWorldUnload(WorldEvent.Unload aEvent) {checkSaveLocation(DimensionManager.getCurrentSaveRootDirectory(), F);}
 	//@SubscribeEvent(priority = EventPriority.LOWEST) public void onWorldSave  (WorldEvent.Save   aEvent) {checkSaveLocation(DimensionManager.getCurrentSaveRootDirectory(), F);}
 	
-	public  static final List<ITileEntityServerTickPre  > SERVER_TICK_PRE                = new ArrayListNoNulls<>(), SERVER_TICK_PR2  = new ArrayListNoNulls<>();
-	public  static final List<ITileEntityServerTickPost > SERVER_TICK_POST               = new ArrayListNoNulls<>(), SERVER_TICK_PO2T = new ArrayListNoNulls<>();
-	public  static       List<IHasWorldAndCoords>         DELAYED_BLOCK_UPDATES          = new ArrayListNoNulls<>();
-	private static       List<IHasWorldAndCoords>         DELAYED_BLOCK_UPDATES_2        = new ArrayListNoNulls<>();
-	public  static       List<ITileEntityScheduledUpdate> SCHEDULED_TILEENTITY_UPDATES   = new ArrayListNoNulls<>();
-	private static       List<ITileEntityScheduledUpdate> SCHEDULED_TILEENTITY_UPDATES_2 = new ArrayListNoNulls<>();
+	public  static final List<ITileEntityServerTickPre    > SERVER_TICK_PRE                = new ArrayListNoNulls<>(), SERVER_TICK_PR2  = new ArrayListNoNulls<>();
+	public  static final List<ITileEntityServerTickPost   > SERVER_TICK_POST               = new ArrayListNoNulls<>(), SERVER_TICK_PO2T = new ArrayListNoNulls<>();
+	public  static final List<ITileEntityMobSpawnInhibitor> MOB_SPAWN_INHIBITORS           = new ArrayListNoNulls<>();
+	public  static       List<IHasWorldAndCoords>           DELAYED_BLOCK_UPDATES          = new ArrayListNoNulls<>();
+	private static       List<IHasWorldAndCoords>           DELAYED_BLOCK_UPDATES_2        = new ArrayListNoNulls<>();
+	public  static       List<ITileEntityScheduledUpdate>   SCHEDULED_TILEENTITY_UPDATES   = new ArrayListNoNulls<>();
+	private static       List<ITileEntityScheduledUpdate>   SCHEDULED_TILEENTITY_UPDATES_2 = new ArrayListNoNulls<>();
 	
 	@SubscribeEvent(priority = EventPriority.LOWEST) 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -1339,26 +1340,25 @@ public abstract class GT_API_Proxy extends Abstract_Proxy implements IGuiHandler
 					boolean aCollectSound = T;
 					aDrops = aEvent.drops.iterator();
 					while (aDrops.hasNext()) {
-						ItemStack aDrop = ST.update(aDrops.next(), aEvent.world, aEvent.x, aEvent.y, aEvent.z);
-						
-						EntityItem tEntity = ST.entity(aEvent.harvester, aDrop);
-						EntityItemPickupEvent tEvent = new EntityItemPickupEvent(aEvent.harvester, tEntity);
-						ST.set(aDrop, tEvent.item.getEntityItem(), T, T);
-						boolean aEventCancelled = MinecraftForge.EVENT_BUS.post(tEvent);
-
-						//If some other mod picked the item up, we remove drop and continue.
-						if(tEvent.item.isDead || ST.invalid(tEvent.item.getEntityItem())){
-							aDrops.remove();
-							continue;
-						}
-						if(aEventCancelled)continue;
-
-						//Otherwise, we pick the item up and add to player's inv
-						if (tEvent.getResult() == Result.ALLOW || aDrop.stackSize <= 0 || ST.add(aEvent.harvester, aDrop)) {
-							aDrops.remove();
-							if (aCollectSound) {
-								UT.Sounds.send(SFX.MC_COLLECT, 0.2F, ((RNGSUS.nextFloat()-RNGSUS.nextFloat())*0.7F+1.0F)*2.0F, aEvent.harvester);
-								aCollectSound = F;
+						ItemStack aDrop = aDrops.next();
+						if (ST.valid(aDrop)) {
+							aDrop = ST.update(aDrop, aEvent.world, aEvent.x, aEvent.y, aEvent.z);
+							EntityItem tEntity = ST.entity(aEvent.harvester, aDrop);
+							if (tEntity != null) {
+								tEntity.isDead = F;
+								EntityItemPickupEvent tEvent = new EntityItemPickupEvent(aEvent.harvester, tEntity);
+								ST.set(aDrop, tEvent.item.getEntityItem(), T, T);
+								if (MinecraftForge.EVENT_BUS.post(tEvent)) continue;
+								if (tEvent.getResult() == Result.ALLOW || tEntity.isDead || ST.invalid(aDrop) || aDrop.stackSize <= 0) {
+									aDrops.remove();
+								} else if (ST.add(aEvent.harvester, aDrop)) {
+									aDrops.remove();
+									if (aCollectSound) {
+										UT.Sounds.send(SFX.MC_COLLECT, 0.2F, ((RNGSUS.nextFloat()-RNGSUS.nextFloat())*0.7F+1.0F)*2.0F, aEvent.harvester);
+										aCollectSound = F;
+									}
+								}
+								tEntity.isDead = T;
 							}
 						}
 					}
@@ -1373,8 +1373,18 @@ public abstract class GT_API_Proxy extends Abstract_Proxy implements IGuiHandler
 		if (aEvent.entity instanceof EntityItem && !aEvent.entity.worldObj.isRemote) {
 			ItemStack aStack = ST.update(OM.get(((EntityItem)aEvent.entity).getEntityItem()), aEvent.entity);
 			if (ST.valid(aStack) && aStack.stackSize > 0) {
-				if (ST.meta_(aStack) == W || ST.item_(aStack) == Items.gold_nugget) ST.meta(aStack, 0);
-				if (ST.meta_(aStack) == 0 && ST.item_(aStack) == IL.TF_Mushgloom.item()) ST.meta(aStack, 9);
+				Item aItem = ST.item_(aStack);
+				if (ST.meta_(aStack) == W || aItem == Items.gold_nugget) ST.meta(aStack, 0);
+				if (ST.meta_(aStack) == 0 && aItem == IL.TF_Mushgloom.item()) ST.meta(aStack, 9);
+				// Check if this is likely a badly implemented Mob Drop from a Mo'Creatures Mob.
+				try {if (null != aEvent.entity.worldObj.findNearestEntityWithinAABB(Class.forName("drzhark.mocreatures.entity.IMoCEntity"), aEvent.entity.boundingBox.expand(0.5,1.0,0.5), aEvent.entity)) {
+					// Replace stupid Wooden and Stone Tools that clutter up Mob Farms for no reason, but only if nonplayerkill.
+					if (aItem == Items.wooden_sword || aItem == Items.wooden_pickaxe || aItem == Items.wooden_shovel || aItem == Items.wooden_axe || aItem == Items.wooden_hoe) {
+						ST.set(aStack, IL.Stick.get(1));
+					} else if (aItem == Items.stone_sword || aItem == Items.stone_pickaxe || aItem == Items.stone_shovel || aItem == Items.stone_axe || aItem == Items.stone_hoe) {
+						ST.set(aStack, IL.Stick.get(2));
+					}
+				}} catch(Throwable e) {/** Do Nothing */}
 				// Life Span Stuff
 				if (((EntityItem)aEvent.entity).lifespan > 1200) {
 					if (ST.item_(aStack) == Items.egg || ST.item_(aStack) == Items.feather || ST.item_(aStack) == Items.apple) {
@@ -1497,8 +1507,22 @@ public abstract class GT_API_Proxy extends Abstract_Proxy implements IGuiHandler
 		}
 		if (GENERATE_STREETS && (UT.Code.inside(-48, 48, aX) || UT.Code.inside(-48, 48, aZ))) {aEvent.setResult(Result.DENY); return;}
 		if (SPAWN_ZONE_MOB_PROTECTION && UT.Code.inside(-144, 144, aX-aWorld.getWorldInfo().getSpawnX()) && UT.Code.inside(-144, 144, aZ-aWorld.getWorldInfo().getSpawnZ()) && WD.opq(aWorld, aX, 0, aZ, F, F)) {aEvent.setResult(Result.DENY); return;}
-		
 		//if (aEvent.entity instanceof EntityMob && !(aEvent.entity instanceof IBossDisplayData) && ((EntityMob)aEvent.entity).getCanSpawnHere()) mMobsToFastDespawn.add((EntityLiving)aEvent.entityLiving);
+		for (int i = 0; i < MOB_SPAWN_INHIBITORS.size(); i++) {
+			ITileEntityMobSpawnInhibitor tTileEntity = MOB_SPAWN_INHIBITORS.get(i);
+			if (tTileEntity.isDead()) {
+				MOB_SPAWN_INHIBITORS.remove(i--);
+				tTileEntity.onUnregisterInhibitor();
+			} else {
+				try {
+					if (tTileEntity.inhibitMobSpawn(aEvent, aWorld, aX, aY, aZ)) {aEvent.setResult(Result.DENY); return;}
+				} catch(Throwable e) {
+					MOB_SPAWN_INHIBITORS.remove(i--);
+					tTileEntity.setError("Mob Spawn Inhibitor - " + e);
+					e.printStackTrace(ERR);
+				}
+			}
+		}
 	}
 	
 	//public static List<EntityLiving> mMobsToFastDespawn = new ArrayListNoNulls<>();

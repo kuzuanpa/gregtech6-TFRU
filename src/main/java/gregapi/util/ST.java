@@ -242,6 +242,7 @@ public class ST {
 		return set(aSetStack, aToStack, T, T);
 	}
 	public static ItemStack set(ItemStack aSetStack, ItemStack aToStack, boolean aCheckStacksize, boolean aCheckNBT) {
+		if (aSetStack == aToStack) return aSetStack;
 		if (invalid(aSetStack) || invalid(aToStack)) return null;
 		aSetStack.func_150996_a(item_(aToStack));
 		if (aCheckStacksize) aSetStack.stackSize = aToStack.stackSize;
@@ -1006,6 +1007,8 @@ public class ST {
 		Items.written_book      .setMaxStackSize(64);
 		Items.writable_book     .setMaxStackSize(64);
 		Items.enchanted_book    .setMaxStackSize(64);
+		Items.snowball          .setMaxStackSize(64);
+		Items.egg               .setMaxStackSize(64);
 		return T;
 	}
 	
