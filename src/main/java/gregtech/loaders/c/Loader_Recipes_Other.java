@@ -508,8 +508,8 @@ public class Loader_Recipes_Other implements Runnable {
 		RM.Mixer            .addRecipe2(T, 16,   16, OM.dust(MT.Coal            ), tGem, OM.dust(MT.BlackQuartz));
 		RM.Mixer            .addRecipe2(T, 16,   16, OM.dust(MT.Charcoal        ), tGem, OM.dust(MT.BlackQuartz));
 		}}
-
-
+		
+		
 		RM.Mixer            .addRecipeX(T, 16,   64, ST.array(OM.dust(MT.C       ,2*U ), OM.dust(MT.SoulSand     ), OM.dust(MT.Blaze ,   U9)), OM.dust(MT.Gunpowder, 3*U ));
 		RM.Mixer            .addRecipeX(T, 16,   64, ST.array(OM.dust(MT.Charcoal,2*U ), OM.dust(MT.SoulSand     ), OM.dust(MT.Blaze ,   U9)), OM.dust(MT.Gunpowder, 3*U ));
 		RM.Mixer            .addRecipeX(T, 16,   64, ST.array(OM.dust(MT.Coal         ), OM.dust(MT.SoulSand     ), OM.dust(MT.Blaze ,   U9)), OM.dust(MT.Gunpowder, 3*U ));
@@ -669,8 +669,8 @@ public class Loader_Recipes_Other implements Runnable {
 		RM.Centrifuge   .addRecipe0(T, 64,   16, MT.WhaleOil.liquid( U8, T), MT.Hg.liquid(1, T), ZL_IS);
 		
 		RM.Coagulator   .addRecipe0(T,  0,  256, FL.Latex.make(L/9), NF, nugget.mat(MT.Rubber, 1));
-		
-		for (FluidStack tFluid : FL.array(MT.He.gas(U, T), MT.Ne.gas(U, T))) if (tFluid != null) {
+
+        for (FluidStack tFluid : FL.array(MT.He.gas(U, T), MT.Ne.gas(U, T), MT.Ar.gas(U, T), MT.Kr.gas(U, T), MT.Xe.gas(U, T), MT.Rn.gas(U, T))) if (tFluid != null) {
 			RM.CrystallisationCrucible.addRecipe1(T, 16,  72000, OM.dust(MT.Ge             ,  U9), FL.array(       tFluid    , MT.Ge            .liquid(35*U9, T)), NF, bouleGt.mat(MT.Ge              , 1));
 			RM.CrystallisationCrucible.addRecipe1(T, 16,  72000, OM.dust(MT.RedstoneAlloy  ,  U9), FL.array(       tFluid    , MT.RedstoneAlloy .liquid(35*U9, T)), NF, bouleGt.mat(MT.RedstoneAlloy   , 1));
 			RM.CrystallisationCrucible.addRecipe1(T, 16,  72000, OM.dust(MT.NikolineAlloy  ,  U9), FL.array(       tFluid    , MT.NikolineAlloy .liquid(35*U9, T)), NF, bouleGt.mat(MT.NikolineAlloy   , 1));
@@ -759,7 +759,7 @@ public class Loader_Recipes_Other implements Runnable {
 		RM.Loom    .addRecipe2(T, 16,   16, ST.tag(10), wireFine.mat(MT.Plastic, 4), IL.Rope_Plastic.get(1));
 		RM.Loom    .addRecipe2(T, 16,   16, ST.tag(10), ST.make(Blocks.vine, 4, W), IL.Rope_Vine.get(1));
         for (OreDictMaterial tMat : ANY.Steel.mToThis)
-            RM.Loom    .addRecipe2(T, 16,   64, ST.tag(10), wireFine.mat(tMat, 4), IL.Rope_Steel.get(1));
+        RM.Loom    .addRecipe2(T, 16,   64, ST.tag(10), wireFine.mat(tMat, 4), IL.Rope_Steel.get(1));
 
         RM.CokeOven.addRecipe1(T,  0,  3600, gem                   .mat(MT.Coal    , 1), NF, flList.CoalTar.make(   500), gem       .mat(MT.CoalCoke, 1));
 		RM.CokeOven.addRecipe1(T,  0,  3600, nugget                .mat(MT.Coal    , 9), NF, flList.CoalTar.make(   500), ingot     .mat(MT.CoalCoke, 1));
