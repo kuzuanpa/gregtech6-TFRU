@@ -683,10 +683,10 @@ public class MultiTileEntityBasicMachine extends TileEntityBase09FacingSingle im
 			// Ugh, I do not feel like Maths right now, but the previous incarnation of this seemed a tiny bit wrong, so I will make sure it works properly.
 			while (rMaxTimes > 1 && aRecipe.getAbsoluteTotalPower() * rMaxTimes > mInputMax * 600) rMaxTimes--;
 		}
-		
+		int slotTaken = 0;
 		for (int i = 0; i < getOutputItemsCount() && i < aRecipe.mOutputs.length; i++) {
 			int rMaxTimesi = 0;
-			for(int j = getInputItemsCount(); j < getInputItemsCount() + getOutputItemsCount() ; j++)if (ST.valid(aRecipe.mOutputs[i])) {
+			for(int j = getInputItemsCount() + slotTaken; j < getInputItemsCount() + getOutputItemsCount() ; j++)if (ST.valid(aRecipe.mOutputs[i])) {
 				if (slotHas(j)) {
 					if ((mMode & 1) != 0 || aRecipe.mNeedsEmptyOutput) {
 						mOutputBlocked++;
@@ -695,6 +695,7 @@ public class MultiTileEntityBasicMachine extends TileEntityBase09FacingSingle im
 					if (!ST.equal(slot(j), aRecipe.mOutputs[i], F)) continue;
 					rMaxTimesi += (slot(j).getMaxStackSize() - slot(j).stackSize) / aRecipe.mOutputs[i].stackSize;
 				} else {
+					slotTaken ++;
 					rMaxTimesi += Math.max(1, 64 / aRecipe.mOutputs[i].stackSize);
 				}
 			}
