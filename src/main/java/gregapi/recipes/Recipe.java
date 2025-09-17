@@ -282,7 +282,15 @@ public class Recipe {
 			if (aRecipe == null) return null;
 			aRecipe.mHidden = aHidden;
 			aRecipe.mFakeRecipe = aFakeRecipe;
-			if (aCheckForCollisions && findRecipeInternal(null, null, F, F, Long.MAX_VALUE, null, aRecipe.mFluidInputs, aRecipe.mInputs) != null) return null;
+			Recipe recipe = findRecipeInternal(null, null, F, F, Long.MAX_VALUE, null, aRecipe.mFluidInputs, aRecipe.mInputs);
+			if (aCheckForCollisions &&  recipe != null && !mNameInternal.startsWith("gt")) {
+				ERR.println("Recipe Collisions found!");
+				ERR.println("Recipe Map: " + mNameInternal);
+				logRecipeErr(aRecipe, true);
+				ERR.println("Collise with: ");
+				logRecipeErr(recipe, false);
+				return null;
+			}
 			return add(aRecipe, aLogErrors && mLogErrors);
 		}
 		
@@ -334,11 +342,7 @@ public class Recipe {
 				if (tErrored || tFailed) {
 					if (aLogErrors) {
 						ERR.println("Recipe Map: " + mNameInternal);
-						ERR.println("Input Items:  " + ST.names(aRecipe.mInputs));
-						ERR.println("Input Fluid:  " + FL.configNames(aRecipe.mFluidInputs));
-						ERR.println("Output Items: " + ST.names(aRecipe.mOutputs));
-						ERR.println("Output Fluid: " + FL.configNames(aRecipe.mFluidOutputs));
-						int i = 0; for (StackTraceElement tElement : new Exception().getStackTrace()) if (!tElement.getClassName().equals(RecipeMap.class.getName())) if (i++<5 && !tElement.getClassName().startsWith("sun")) ERR.println("\tat " + tElement); else break;
+						logRecipeErr(aRecipe , true);
 					}
 					if (tFailed) return null;
 				}
@@ -346,11 +350,7 @@ public class Recipe {
 			
 			for (FluidStack tFluid : aRecipe.mFluidInputs) if (FL.Error.is(tFluid)) {
 				ERR.println("Compat: The Fluid for a Recipe has not been found! This might just be for a Mod that is not installed or updated enough!");
-				ERR.println("Input Items:  " + ST.names(aRecipe.mInputs));
-				ERR.println("Input Fluid:  " + FL.configNames(aRecipe.mFluidInputs));
-				ERR.println("Output Items: " + ST.names(aRecipe.mOutputs));
-				ERR.println("Output Fluid: " + FL.configNames(aRecipe.mFluidOutputs));
-				int i = 0; for (StackTraceElement tElement : new Exception().getStackTrace()) if (!tElement.getClassName().equals(RecipeMap.class.getName())) if (i++<5 && !tElement.getClassName().startsWith("sun")) ERR.println("\tat " + tElement); else break;
+				logRecipeErr(aRecipe, true);
 				return null;
 			}
 			
@@ -381,6 +381,15 @@ public class Recipe {
 				mMaxFluidOutputSize = Math.max(mMaxFluidOutputSize, aFluid.amount);
 			}
 			return addToItemMap(aRecipe);
+		}
+
+		public static void logRecipeErr(Recipe aRecipe, boolean stackTrace){
+			ERR.println("Input Items:  " + ST.names(aRecipe.mInputs));
+			ERR.println("Input Fluid:  " + FL.configNames(aRecipe.mFluidInputs));
+			ERR.println("Output Items: " + ST.names(aRecipe.mOutputs));
+			ERR.println("Output Fluid: " + FL.configNames(aRecipe.mFluidOutputs));
+			if(!stackTrace)return;
+			int i = 0; for (StackTraceElement tElement : new Exception().getStackTrace()) if (!tElement.getClassName().equals(RecipeMap.class.getName())) if (i++<5 && !tElement.getClassName().startsWith("sun")) ERR.println("\tat " + tElement); else break;
 		}
 		
 		public void reInit() {
