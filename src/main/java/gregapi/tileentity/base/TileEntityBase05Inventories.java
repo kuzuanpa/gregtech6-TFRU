@@ -179,7 +179,7 @@ public abstract class TileEntityBase05Inventories extends TileEntityBase04MultiT
 			return T;
 		}
 		aStack = OM.get_(aStack);
-		if (ST.equal(tStack, aStack) && tStack.stackSize + aStack.stackSize <= Math.min(Math.max(1, tStack.getMaxStackSize()), getInventoryStackLimit())) {
+		if (ST.equal(tStack, aStack) && tStack.stackSize + aStack.stackSize <= getInventoryStackLimit()) {
 			tStack.stackSize+=aStack.stackSize;
 			updateInventory();
 			return T;

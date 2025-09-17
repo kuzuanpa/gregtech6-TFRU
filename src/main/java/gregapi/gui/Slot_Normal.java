@@ -31,5 +31,5 @@ public class Slot_Normal extends Slot_Base {
 		super(aInventory, aIndex, aX, aY);
 	}
 	
-	@Override public void putStack(ItemStack aStack) {if (ST.size(aStack) > 64) ST.size_(64, aStack); mInventory.setInventorySlotContentsGUI(mIndex, aStack); onSlotChanged();}
+	@Override public void putStack(ItemStack aStack) { mInventory.setInventorySlotContentsGUI(mIndex, aStack); onSlotChanged();}
 }

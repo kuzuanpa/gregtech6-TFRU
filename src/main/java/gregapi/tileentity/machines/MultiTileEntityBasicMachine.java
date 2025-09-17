@@ -504,8 +504,8 @@ public class MultiTileEntityBasicMachine extends TileEntityBase09FacingSingle im
 			receivedEnergyLast.addAll(receivedEnergy);
 			receivedEnergy.clear();
 
-			for (int i = 0; i < mTanksInput .length; i++) slot(getInputItemsCount() + getOutputItemsCount() + 1 + i                       , FL.display(mTanksInput [i], T, T));
-			for (int i = 0; i < mTanksOutput.length; i++) slot(getInputItemsCount() + getOutputItemsCount() + 1 + i + mTanksInput.length  , FL.display(mTanksOutput[i], T, T));
+			for (int i = 0; i < mTanksInput .length; i++) slot(getInputItemsCount() + getOutputItemsCount() + 1 + i                       , FL.display(mTanksInput [i], T, F));
+			for (int i = 0; i < mTanksOutput.length; i++) slot(getInputItemsCount() + getOutputItemsCount() + 1 + i + mTanksInput.length  , FL.display(mTanksOutput[i], T, F));
 		}
 	}
 
@@ -683,23 +683,24 @@ public class MultiTileEntityBasicMachine extends TileEntityBase09FacingSingle im
 			// Ugh, I do not feel like Maths right now, but the previous incarnation of this seemed a tiny bit wrong, so I will make sure it works properly.
 			while (rMaxTimes > 1 && aRecipe.getAbsoluteTotalPower() * rMaxTimes > mInputMax * 600) rMaxTimes--;
 		}
-		int slotTaken = 0;
-		for (int i = 0; i < getOutputItemsCount() && i < aRecipe.mOutputs.length; i++) {
-			int rMaxTimesi = 0;
-			for(int j = getInputItemsCount() + slotTaken; j < getInputItemsCount() + getOutputItemsCount() ; j++)if (ST.valid(aRecipe.mOutputs[i])) {
-				if (slotHas(j)) {
-					if ((mMode & 1) != 0 || aRecipe.mNeedsEmptyOutput) {
-						mOutputBlocked++;
-						return 0;
-					}
-					if (!ST.equal(slot(j), aRecipe.mOutputs[i], F)) continue;
-					rMaxTimesi += (slot(j).getMaxStackSize() - slot(j).stackSize) / aRecipe.mOutputs[i].stackSize;
-				} else {
-					slotTaken ++;
-					rMaxTimesi += Math.max(1, 64 / aRecipe.mOutputs[i].stackSize);
+		for (int i = 0, j = getInputItemsCount(); i < getOutputItemsCount() && i < aRecipe.mOutputs.length; i++, j++) if (ST.valid(aRecipe.mOutputs[i])) {
+			if (slotHas(j)) {
+				if ((mMode & 1) != 0 || aRecipe.mNeedsEmptyOutput) {
+					mOutputBlocked++;
+					return 0;
 				}
+				if (!ST.equal(slot(j), aRecipe.mOutputs[i], F)) {
+					mOutputBlocked++;
+					return 0;
+				}
+				rMaxTimes = Math.min(rMaxTimes, (getInventoryStackLimit() - slot(j).stackSize) / aRecipe.mOutputs[i].stackSize);
+				if (rMaxTimes <= 0) {
+					mOutputBlocked++;
+					return 0;
+				}
+			} else {
+				rMaxTimes = Math.min(rMaxTimes, Math.max(1, 64 / aRecipe.mOutputs[i].stackSize));
 			}
-			rMaxTimes = Math.min(rMaxTimes, rMaxTimesi);
 		}
 		if (aRecipe.mFluidOutputs.length > 0) {
 			int tEmptyOutputTanks = 0, tRequiredEmptyTanks = aRecipe.mFluidOutputs.length;
@@ -867,27 +868,7 @@ public class MultiTileEntityBasicMachine extends TileEntityBase09FacingSingle im
 				mProgress += aEnergy;
 			}
 			if (mProgress >= mMaxProgress && (mStateOld&&!mStateNew || !TD.Energy.ALL_ALTERNATING.contains(mEnergyTypeAccepted))) {
-				for (int i = 0, j=0; i < mOutputItems.length && getInputItemsCount() + j < getSizeInventory(); j++ ) {
-					while (i < mOutputItems.length - 1 && mOutputItems [i] == null)i++;
-					if(mOutputItems[i] == null)break;//the entire array is empty, return.
-					if(mOutputItems[i].stackSize <= 64 && addStackToSlot(getInputItemsCount() + j, mOutputItems[i])) {
-						mSuccessful = T;
-						mIgnited = 40;
-						mOutputItems[i] = null;
-						i++;
-						continue;
-					}
-					if(mOutputItems[i].stackSize > 64){
-						ItemStack stack = mOutputItems[i].copy();
-						stack.stackSize = 64;
-						if(addStackToSlot(getInputItemsCount() + j, stack)) {
-							mSuccessful = T;
-							mIgnited = 40;
-							mOutputItems[i].stackSize -= 64;
-							continue;
-						}
-					}
-				}
+				for (int i = 0; i < mOutputItems .length; i++) if (mOutputItems [i] != null && addStackToSlot(getInputItemsCount()+(i % getOutputItemsCount()), mOutputItems[i])) {mSuccessful = T; mIgnited = 40; mOutputItems[i] = null; continue;}
 				for (int i = 0; i < mOutputFluids.length; i++) if (mOutputFluids[i] != null) for (int j = 0; j < mTanksOutput.length; j++) {
 					if (mTanksOutput[j].contains(mOutputFluids[i])) {
 						updateInventory();
@@ -1111,7 +1092,12 @@ public class MultiTileEntityBasicMachine extends TileEntityBase09FacingSingle im
 	@Override public boolean getStateRunningSuccessfully() {return mSuccessful;}
 	@Override public boolean setStateOnOff(boolean aOnOff) {if (mStopped == aOnOff) {mStopped = !aOnOff; updateAdjacentToggleableEnergySources();} return !mStopped;}
 	@Override public boolean getStateOnOff() {return !mStopped;}
-	
+
+	@Override
+	public int getInventoryStackLimit() {
+		return Math.max(64, mParallel);
+	}
+
 	@Override public String getTileEntityName() {return "gt.multitileentity.machine.basic";}
 	
 	@Override
