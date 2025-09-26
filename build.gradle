@@ -590,7 +590,9 @@ if ( !project.buildInfo.tag.contains("-dirty") && (System.getenv().ONLY_RELEASES
 
 publishing {
 	publications {
+
 		mavenJava(MavenPublication) {
+			groupId = 'cn.kuzuanpa'
 			// Add any other artifacts here that you would like to publish!
 			artifact(jar) {
 				builtBy build
