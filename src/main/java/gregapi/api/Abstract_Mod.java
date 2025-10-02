@@ -19,22 +19,16 @@
 
 package gregapi.api;
 
-import static gregapi.data.CS.*;
-
-import java.util.List;
-
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.event.FMLServerStartedEvent;
-import cpw.mods.fml.common.event.FMLServerStartingEvent;
-import cpw.mods.fml.common.event.FMLServerStoppedEvent;
-import cpw.mods.fml.common.event.FMLServerStoppingEvent;
+import cpw.mods.fml.common.event.*;
 import gregapi.NEI_GT_IMCSender;
 import gregapi.code.ArrayListNoNulls;
 import gregapi.compat.ICompat;
 import gregapi.util.CR;
 import gregapi.util.UT;
+
+import java.util.List;
+
+import static gregapi.data.CS.*;
 
 /**
  * @author Gregorius Techneticies
@@ -44,7 +38,9 @@ import gregapi.util.UT;
  */
 public abstract class Abstract_Mod {
 	public static final List<Abstract_Mod> MODS_USING_GT_API = new ArrayListNoNulls<>();
-	
+
+	public static Abstract_Mod currentLoadingMod = null;
+
 	/** Contains the amount of GT API Mods. Better than doing a constant List size check. */
 	public static int sModCountUsingGTAPI = 0;
 	
@@ -152,6 +148,7 @@ public abstract class Abstract_Mod {
 	public void onModPreInit(FMLPreInitializationEvent aEvent) {
 		if (mStartedPreInit) return;
 		try {
+			currentLoadingMod = this;
 			mProxy = getProxy();
 			OUT.println(getModNameForLog() + ": ======================");
 			ORD.println(getModNameForLog() + ": ======================");
@@ -194,12 +191,15 @@ public abstract class Abstract_Mod {
 			loadRunnables("Saving Configs after Exception!", sConfigs);
 			e.printStackTrace(ERR);
 			throw new RuntimeException(e);
+		} finally {
+			currentLoadingMod = null;
 		}
 	}
 	
 	public void onModInit(FMLInitializationEvent aEvent) {
 		if (mStartedInit) return;
 		try {
+			currentLoadingMod = this;
 			OUT.println(getModNameForLog() + ": ===================");
 			ORD.println(getModNameForLog() + ": ===================");
 			
@@ -249,12 +249,15 @@ public abstract class Abstract_Mod {
 			loadRunnables("Saving Configs after Exception!", sConfigs);
 			e.printStackTrace(ERR);
 			throw new RuntimeException(e);
+		} finally {
+			currentLoadingMod = null;
 		}
 	}
 	
 	public void onModPostInit(FMLPostInitializationEvent aEvent) {
 		if (mStartedPostInit) return;
 		try {
+			currentLoadingMod = this;
 			OUT.println(getModNameForLog() + ": =======================");
 			ORD.println(getModNameForLog() + ": =======================");
 			
@@ -305,6 +308,8 @@ public abstract class Abstract_Mod {
 			loadRunnables("Saving Configs after Exception!", sConfigs);
 			e.printStackTrace(ERR);
 			throw new RuntimeException(e);
+		} finally {
+			currentLoadingMod = null;
 		}
 	}
 	

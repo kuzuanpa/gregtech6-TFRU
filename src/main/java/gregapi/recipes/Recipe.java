@@ -19,6 +19,7 @@
 
 package gregapi.recipes;
 
+import gregapi.api.Abstract_Mod;
 import gregapi.code.ArrayListNoNulls;
 import gregapi.code.HashSetNoNulls;
 import gregapi.code.ItemStackContainer;
@@ -283,7 +284,7 @@ public class Recipe {
 			aRecipe.mHidden = aHidden;
 			aRecipe.mFakeRecipe = aFakeRecipe;
 			Recipe recipe = findRecipeInternal(null, null, F, F, Long.MAX_VALUE, null, aRecipe.mFluidInputs, aRecipe.mInputs);
-			if (aCheckForCollisions &&  recipe != null && !mNameInternal.startsWith("gt")) {
+			if (aCheckForCollisions && recipe != null) {
 				ERR.println("Recipe Collisions found!");
 				ERR.println("Recipe Map: " + mNameInternal);
 				logRecipeErr(aRecipe, true);
@@ -380,6 +381,7 @@ public class Recipe {
 			for (FluidStack aFluid : aRecipe.mFluidOutputs) if (aFluid != null) {
 				mMaxFluidOutputSize = Math.max(mMaxFluidOutputSize, aFluid.amount);
 			}
+			if(Abstract_Mod.currentLoadingMod != null)aRecipe.mMod = Abstract_Mod.currentLoadingMod.getModName();
 			return addToItemMap(aRecipe);
 		}
 
@@ -690,6 +692,8 @@ public class Recipe {
 	public boolean mNeedsEmptyOutput = F;
 	/** The Dependency info displayed in NEI, use to help players identify what they actually need**/
 	public String mDepend = null;
+	/** The mod added this recipe**/
+	public String mMod = "Script";
 
 	public int getOutputChance(long aIndex) {if (aIndex < 0 || aIndex >= mChances.length) return getMaxChance(aIndex); return (int)mChances[(int)aIndex];}
 	public int getMaxChance(long aIndex) {if (aIndex < 0 || aIndex >= mMaxChances.length) return 10000; return (int)mMaxChances[(int)aIndex];}

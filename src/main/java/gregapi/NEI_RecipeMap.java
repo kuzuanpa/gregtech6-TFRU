@@ -47,7 +47,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidContainerRegistry.FluidContainerData;
 import net.minecraftforge.fluids.FluidStack;
@@ -698,7 +697,10 @@ public class NEI_RecipeMap extends TemplateRecipeHandler {
 
 		if (UT.Code.stringValid(aDepend))
 		drawText(10,113, "Depend: " + aDepend, 0xFF000000);
+		String aMod = ((CachedDefaultRecipe)arecipes.get(aRecipeIndex)).mRecipe.mMod;
 
+		if (UT.Code.stringValid(aMod))
+		drawText(10,113, "From: " + aMod, 0xFF000000);
 
 		if (UT.Code.stringValid(mRecipeMap.mNEISpecialValuePre) || UT.Code.stringValid(mRecipeMap.mNEISpecialValuePost))
 		drawText(10,123, mRecipeMap.mNEISpecialValuePre + UT.Code.makeString(((CachedDefaultRecipe)arecipes.get(aRecipeIndex)).mRecipe.mSpecialValue * mRecipeMap.mNEISpecialValueMultiplier) + mRecipeMap.mNEISpecialValuePost, 0xFF000000);
