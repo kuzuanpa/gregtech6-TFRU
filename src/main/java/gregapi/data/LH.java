@@ -235,6 +235,13 @@ public class LH {
 	, TOOLTIP_TWILIGHT_MAZE_HEDGE_BREAKING = "gt.lang.twilightforest.mazehedgebreaking"
 	, TOOLTIP_TWILIGHT_MAZE_STONE_BREAKING = "gt.lang.twilightforest.mazestonebreaking"
 	, TOOLTIP_TWILIGHT_TOWER_WOOD_BREAKING = "gt.lang.twilightforest.towerwoodbreaking"
+	, TOOLTIP_NUCLEAR_ROD = "gt.lang.nuclear.rod"
+	, TOOLTIP_NUCLEAR_EMISSION = "gt.lang.nuclear.emission"
+	, TOOLTIP_NUCLEAR_SELF = "gt.lang.nuclear.self"
+	, TOOLTIP_NUCLEAR_MAXIMUM = "gt.lang.nuclear.maximum"
+	, TOOLTIP_NUCLEAR_FACTOR = "gt.lang.nuclear.factor"
+	, TOOLTIP_NUCLEAR_NEUTRONS = "gt.lang.nuclear.neutrons"
+	, TOOLTIP_NUCLEAR_CRITICAL = "gt.lang.nuclear.critical"
 	, FLUID_DISPLAY_NULL             ="gt.lang.fluid.display.null"
 	, FLUID_DISPLAY_ERR              ="gt.lang.fluid.display.err"
 	, FLUID_DISPLAY_REG_NAME         ="gt.lang.fluid.display.reg.name"
@@ -677,6 +684,13 @@ public class LH {
 		add(TOOLTIP_TWILIGHT_MAZE_HEDGE_BREAKING        , "Can easily break Twilight Forest Maze Hedges");
 		add(TOOLTIP_TWILIGHT_MAZE_STONE_BREAKING        , "Can easily break Twilight Forest Mazestone");
 		add(TOOLTIP_TWILIGHT_TOWER_WOOD_BREAKING        , "Can easily break Twilight Forest Towerwood");
+		add(TOOLTIP_NUCLEAR_ROD                         , "Used in Nuclear Reactor Core");
+		add(TOOLTIP_NUCLEAR_EMISSION                    , "Emission");
+		add(TOOLTIP_NUCLEAR_SELF                        , "Self");
+		add(TOOLTIP_NUCLEAR_MAXIMUM                     , "Maximum");
+		add(TOOLTIP_NUCLEAR_FACTOR                      , "Factor");
+		add(TOOLTIP_NUCLEAR_NEUTRONS                    , "Neutrons");
+		add(TOOLTIP_NUCLEAR_CRITICAL                    , "Critical");
 		add(FLUID_DISPLAY_NULL                          , "CLIENTSIDE FLUID IS NULL!!!");
 		add(FLUID_DISPLAY_ERR                           , "THIS IS AN ERROR AND SHOULD NEVER BE OBTAINABLE!!!");
 		add(FLUID_DISPLAY_REG_NAME                      , "Registry");

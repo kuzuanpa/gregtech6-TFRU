@@ -19,15 +19,15 @@
 
 package gregtech.tileentity.energy.reactors;
 
-import static gregapi.data.CS.*;
-
-import java.util.List;
-
 import gregapi.data.LH;
 import gregapi.util.ST;
 import gregapi.util.UT;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+
+import java.util.List;
+
+import static gregapi.data.CS.*;
 
 /**
  * @author Gregorius Techneticies
@@ -60,19 +60,30 @@ public class MultiTileEntityReactorRodBreeder extends MultiTileEntityReactorRodB
 
 	@Override
 	public void addToolTips(List<String> aList, ItemStack aStack, boolean aF3_H) {
-		aList.add(LH.Chat.DGRAY + "Used in Nuclear Reactor Core");
-		aList.add(LH.Chat.CYAN + "Absorbs Neutrons to breed into an " + LH.Chat.WHITE + "Enriched Rod");
-		aList.add(LH.Chat.CYAN + "Emits half the Heat per Neutron on this Rod");
-		aList.add(LH.Chat.CYAN + "Can't breed with Neutrons from " + LH.Chat.RED + "Moderated" + LH.Chat.CYAN + " Fuel Rods");
-		aList.add(LH.Chat.CYAN + "The " + LH.Chat.YELLOW + "Loss" + LH.Chat.CYAN + " value gets subtracted from Neutrons entering this Rod");
-		aList.add(LH.Chat.CYAN + "This applies to each side where Neutrons enter, not to the total of all sides");
-		aList.add(LH.Chat.CYAN + "Remaining Neutrons on this Rod get added to the breeding process");
+		aList.add(LH.Chat.DGRAY + LH.get(LH.TOOLTIP_NUCLEAR_ROD));
+		aList.add(LH.Chat.CYAN + LH.get("gt.tooltip.nuclear.rod.breeder.0"));
+		aList.add(LH.Chat.CYAN + LH.get("gt.tooltip.nuclear.rod.breeder.1"));
+		aList.add(LH.Chat.CYAN + LH.get("gt.tooltip.nuclear.rod.breeder.2"));
+		aList.add(LH.Chat.CYAN + LH.get("gt.tooltip.nuclear.rod.breeder.3"));
+		aList.add(LH.Chat.CYAN + LH.get("gt.tooltip.nuclear.rod.breeder.4"));
+		aList.add(LH.Chat.CYAN + LH.get("gt.tooltip.nuclear.rod.breeder.5"));
 		if (mProductName.equals("")) mProductName = ST.meta(aStack.copy(), mProduct).getDisplayName();
-		aList.add(LH.Chat.GREEN + "Turns into: " + LH.Chat.WHITE + mProductName);
-		aList.add(LH.Chat.CYAN + "Needed: " + LH.Chat.WHITE + mDurability + LH.Chat.PURPLE + " Neutrons");
-		aList.add(LH.Chat.YELLOW + "Loss: " + LH.Chat.WHITE + mNeutronLoss + LH.Chat.PURPLE + " Neutrons");
+		aList.add(LH.Chat.GREEN + LH.get("gt.tooltip.nuclear.rod.breeder.6") + LH.Chat.WHITE + mProductName);
+		aList.add(LH.Chat.CYAN + LH.get("gt.tooltip.nuclear.rod.breeder.7") + LH.Chat.WHITE + mDurability + LH.Chat.PURPLE + " " + LH.get(LH.TOOLTIP_NUCLEAR_NEUTRONS));
+		aList.add(LH.Chat.YELLOW + LH.get("gt.tooltip.nuclear.rod.breeder.8") + LH.Chat.WHITE + mNeutronLoss + LH.Chat.PURPLE + " "+ LH.get(LH.TOOLTIP_NUCLEAR_NEUTRONS));
 	}
-	
+
+	static {
+		LH.add("gt.tooltip.nuclear.rod.breeder.0", "Absorbs Neutrons to breed into an " + LH.Chat.WHITE + "Enriched Rod");
+		LH.add("gt.tooltip.nuclear.rod.breeder.1", "Emits half the Heat per Neutron on this Rod");
+		LH.add("gt.tooltip.nuclear.rod.breeder.2", "Can't breed with Neutrons from " + LH.Chat.RED + "Moderated" + LH.Chat.CYAN + " Fuel Rods");
+		LH.add("gt.tooltip.nuclear.rod.breeder.3", "The " + LH.Chat.YELLOW + "Loss" + LH.Chat.CYAN + " value gets subtracted from Neutrons entering this Rod");
+		LH.add("gt.tooltip.nuclear.rod.breeder.4", "This applies to each side where Neutrons enter, not to the total of all sides");
+		LH.add("gt.tooltip.nuclear.rod.breeder.5", "Remaining Neutrons on this Rod get added to the breeding process");
+		LH.add("gt.tooltip.nuclear.rod.breeder.6", "Turns into: ");
+		LH.add("gt.tooltip.nuclear.rod.breeder.7", "Needed: ");
+		LH.add("gt.tooltip.nuclear.rod.breeder.8", "Loss: ");
+	}
 	@Override
 	public int getReactorRodNeutronEmission(MultiTileEntityReactorCore aReactor, int aSlot, ItemStack aStack) {
 		return 0;

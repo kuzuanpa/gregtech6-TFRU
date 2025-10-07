@@ -19,12 +19,13 @@
 
 package gregtech.tileentity.energy.reactors;
 
-import static gregapi.data.CS.*;
+import gregapi.data.LH;
+import net.minecraft.item.ItemStack;
 
 import java.util.List;
 
-import gregapi.data.LH;
-import net.minecraft.item.ItemStack;
+import static gregapi.data.CS.F;
+import static gregapi.data.LH.TOOLTIP_NUCLEAR_ROD;
 
 /**
  * @author Gregorius Techneticies
@@ -32,10 +33,13 @@ import net.minecraft.item.ItemStack;
 public class MultiTileEntityReactorRodReflector extends MultiTileEntityReactorRodBase {
 	@Override
 	public void addToolTips(List<String> aList, ItemStack aStack, boolean aF3_H) {
-		aList.add(LH.Chat.DGRAY + "Used in Nuclear Reactor Core");
-		aList.add(LH.Chat.CYAN + "Reflects Neutrons back to their Source, boosting the Reaction");
+		aList.add(LH.Chat.DGRAY + LH.get(TOOLTIP_NUCLEAR_ROD));
+		aList.add(LH.Chat.CYAN + LH.get("gt.tooltip.nuclear.rod.reflector.0"));
 	}
-	
+
+	static {
+		LH.add("gt.tooltip.nuclear.rod.reflector.0", "Reflects Neutrons back to their Source, boosting the Reaction");
+	}
 	@Override
 	public int getReactorRodNeutronEmission(MultiTileEntityReactorCore aReactor, int aSlot, ItemStack aStack) {
 		return 0;

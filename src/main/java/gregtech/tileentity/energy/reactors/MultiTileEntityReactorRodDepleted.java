@@ -19,10 +19,10 @@
 
 package gregtech.tileentity.energy.reactors;
 
-import java.util.List;
-
 import gregapi.data.LH;
 import net.minecraft.item.ItemStack;
+
+import java.util.List;
 
 /**
  * @author Gregorius Techneticies
@@ -30,9 +30,14 @@ import net.minecraft.item.ItemStack;
 public class MultiTileEntityReactorRodDepleted extends MultiTileEntityReactorRodBase {
 	@Override
 	public void addToolTips(List<String> aList, ItemStack aStack, boolean aF3_H) {
-		aList.add(LH.Chat.DGRAY + "Used in Nuclear Reactor Core");
-		aList.add(LH.Chat.CYAN + "This Rod is " + LH.Chat.RED + "Depleted" + LH.Chat.CYAN + " and will not output or accept any Neutrons");
-		aList.add(LH.Chat.CYAN + "Can be centrifuged to get valuable materials");
+		aList.add(LH.Chat.DGRAY + LH.get(LH.TOOLTIP_NUCLEAR_ROD));
+		aList.add(LH.Chat.CYAN + LH.get("gt.tooltip.nuclear.rod.depleted.0"));
+		aList.add(LH.Chat.CYAN + LH.get("gt.tooltip.nuclear.rod.depleted.1"));
+	}
+
+	static {
+		LH.add("gt.tooltip.nuclear.rod.depleted.0", "This Rod is " + LH.Chat.RED + "Depleted" + LH.Chat.CYAN + " and will not output or accept any Neutrons");
+		LH.add("gt.tooltip.nuclear.rod.depleted.1", "Can be centrifuged to get valuable materials");
 	}
 	
 	@Override public String getTileEntityName() {return "gt.multitileentity.generator.reactor.rods.depleted";}

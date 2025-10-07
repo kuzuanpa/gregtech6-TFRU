@@ -285,11 +285,13 @@ public class Recipe {
 			aRecipe.mFakeRecipe = aFakeRecipe;
 			Recipe recipe = findRecipeInternal(null, null, F, F, Long.MAX_VALUE, null, aRecipe.mFluidInputs, aRecipe.mInputs);
 			if (aCheckForCollisions && recipe != null) {
-				ERR.println("Recipe Collisions found!");
-				ERR.println("Recipe Map: " + mNameInternal);
-				logRecipeErr(aRecipe, true);
-				ERR.println("Collise with: ");
-				logRecipeErr(recipe, false);
+				if(!mNameInternal.startsWith("gt")) {
+					ERR.println("Recipe Collisions found!");
+					ERR.println("Recipe Map: " + mNameInternal);
+					logRecipeErr(aRecipe, true);
+					ERR.println("Collise with: ");
+					logRecipeErr(recipe, false);
+				}
 				return null;
 			}
 			return add(aRecipe, aLogErrors && mLogErrors);
@@ -693,7 +695,7 @@ public class Recipe {
 	/** The Dependency info displayed in NEI, use to help players identify what they actually need**/
 	public String mDepend = null;
 	/** The mod added this recipe**/
-	public String mMod = "Script";
+	public String mMod = null;
 
 	public int getOutputChance(long aIndex) {if (aIndex < 0 || aIndex >= mChances.length) return getMaxChance(aIndex); return (int)mChances[(int)aIndex];}
 	public int getMaxChance(long aIndex) {if (aIndex < 0 || aIndex >= mMaxChances.length) return 10000; return (int)mMaxChances[(int)aIndex];}

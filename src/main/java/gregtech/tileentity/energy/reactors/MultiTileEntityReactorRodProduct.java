@@ -19,14 +19,15 @@
 
 package gregtech.tileentity.energy.reactors;
 
-import static gregapi.data.CS.*;
-
-import java.util.List;
-
 import gregapi.data.LH;
 import gregapi.util.ST;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+
+import java.util.List;
+
+import static gregapi.data.CS.NBT_VALUE;
+import static gregapi.data.CS.T;
 
 /**
  * @author Gregorius Techneticies
@@ -43,13 +44,18 @@ public class MultiTileEntityReactorRodProduct extends MultiTileEntityReactorRodB
 
 	@Override
 	public void addToolTips(List<String> aList, ItemStack aStack, boolean aF3_H) {
-		aList.add(LH.Chat.DGRAY + "Used in Nuclear Reactor Core");
-		aList.add(LH.Chat.CYAN + "Emits half the Heat per Neutron on this Rod");
-		aList.add(LH.Chat.CYAN + "Can be centrifuged to get valuable materials");
+		aList.add(LH.Chat.DGRAY + LH.get(LH.TOOLTIP_NUCLEAR_ROD));
+		aList.add(LH.Chat.CYAN + LH.get("gt.tooltip.nuclear.rod.product.0"));
+		aList.add(LH.Chat.CYAN + LH.get("gt.tooltip.nuclear.rod.product.1"));
 		if (mBreedingName.equals(""))  mBreedingName = ST.meta(aStack.copy(), mBreeding).getDisplayName();
-		aList.add(LH.Chat.GREEN + "Breed from " + mBreedingName);
+		aList.add(LH.Chat.GREEN + LH.get("gt.tooltip.nuclear.rod.product.2") + " "+ mBreedingName);
 	}
 
+	static {
+		LH.add("gt.tooltip.nuclear.rod.product.0", "Emits half the Heat per Neutron on this Rod");
+		LH.add("gt.tooltip.nuclear.rod.product.1", "Can be centrifuged to get valuable materials");
+		LH.add("gt.tooltip.nuclear.rod.product.2", "Breed from");
+	}
 	@Override
 	public boolean getReactorRodNeutronReaction(MultiTileEntityReactorCore aReactor, int aSlot, ItemStack aStack) {
 		aReactor.mEnergy += aReactor.oNeutronCounts[aSlot] / 2;

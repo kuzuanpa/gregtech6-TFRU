@@ -19,14 +19,15 @@
 
 package gregtech.tileentity.energy.reactors;
 
-import static gregapi.data.CS.*;
-
-import java.util.List;
-
 import gregapi.data.LH;
 import gregapi.util.UT;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+
+import java.util.List;
+
+import static gregapi.data.CS.*;
+import static gregapi.data.LH.TOOLTIP_NUCLEAR_ROD;
 
 /**
  * @author Gregorius Techneticies, Erik3003
@@ -36,12 +37,17 @@ public class MultiTileEntityReactorRodModerator extends MultiTileEntityReactorRo
 
 	@Override
 	public void addToolTips(List<String> aList, ItemStack aStack, boolean aF3_H) {
-		aList.add(LH.Chat.DGRAY + "Used in Nuclear Reactor Core");
-		aList.add(LH.Chat.CYAN + "Reflects neutrons back times the number of fuel rods touching when active");
-		aList.add(LH.Chat.CYAN + "Touching Fuel Rods become moderated and moderate touching Fuel Rods");
-		aList.add(LH.Chat.CYAN + "Moderated Fuel Rods can't be used for Breeding and only last a quarter as long");
+		aList.add(LH.Chat.DGRAY + LH.get(TOOLTIP_NUCLEAR_ROD));
+		aList.add(LH.Chat.CYAN + LH.get("gt.tooltip.nuclear.rod.moderator.0"));
+		aList.add(LH.Chat.CYAN + LH.get("gt.tooltip.nuclear.rod.moderator.1"));
+		aList.add(LH.Chat.CYAN + LH.get("gt.tooltip.nuclear.rod.moderator.2"));
 	}
 
+	static {
+		LH.add("gt.tooltip.nuclear.rod.moderator.0", "Reflects neutrons back times the number of fuel rods touching when active");
+		LH.add("gt.tooltip.nuclear.rod.moderator.1", "Touching Fuel Rods become moderated and moderate touching Fuel Rods");
+		LH.add("gt.tooltip.nuclear.rod.moderator.2", "Moderated Fuel Rods can't be used for Breeding and only last a quarter as long");
+	}
 	@Override
 	public void readFromNBT2(NBTTagCompound aNBT) {
 		super.readFromNBT2(aNBT);

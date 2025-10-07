@@ -314,6 +314,7 @@ public abstract class Abstract_Mod {
 	}
 	
 	public void onModServerStarting(FMLServerStartingEvent aEvent) {
+		currentLoadingMod = this;
 		loadRunnables(mBeforeServerStarting);
 		mStartedServerStarting++;
 		if (mProxy != null) mProxy.onProxyBeforeServerStarting(this, aEvent);
@@ -322,9 +323,11 @@ public abstract class Abstract_Mod {
 		if (mProxy != null) mProxy.onProxyAfterServerStarting(this, aEvent);
 		mFinishedServerStarting++;
 		loadRunnables(mAfterServerStarting);
+		currentLoadingMod = null;
 	}
 	
 	public void onModServerStarted(FMLServerStartedEvent aEvent) {
+		currentLoadingMod = this;
 		loadRunnables(mBeforeServerStarted);
 		mStartedServerStarted++;
 		if (mProxy != null) mProxy.onProxyBeforeServerStarted(this, aEvent);
@@ -333,6 +336,7 @@ public abstract class Abstract_Mod {
 		if (mProxy != null) mProxy.onProxyAfterServerStarted(this, aEvent);
 		mFinishedServerStarted++;
 		loadRunnables(mAfterServerStarted);
+		currentLoadingMod = null;
 	}
 	
 	public void onModServerStopping(FMLServerStoppingEvent aEvent) {
