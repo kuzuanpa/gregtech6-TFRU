@@ -2,6 +2,7 @@ package gregapi.block.multitileentity;
 
 import gregapi.code.TagData;
 import gregapi.data.LH;
+import gregapi.data.TD;
 import gregapi.fluid.FluidTankGT;
 import gregapi.tileentity.energy.ITileEntityEnergy;
 import gregapi.tileentity.machines.ITileEntityRunningActively;
@@ -156,13 +157,13 @@ public interface IWailaTile {
 
             ITileEntityEnergy tile = (ITileEntityEnergy) accessor.getTileEntity();
             for (byte i = 0; i < 6; i++) for (TagData energyType : tile.getEnergyTypes(i)) {
-                if (!tile.isEnergyAcceptingFrom(energyType, i, true)) continue;
+                if (energyType.equals(TD.Energy.TU) || !tile.isEnergyAcceptingFrom(energyType, i, true)) continue;
                 long vMin = tile.getEnergySizeInputMin(energyType, i), vMax = tile.getEnergySizeInputMax(energyType, i);
                 if(vMin == vMax)addEnergyFlowDesc(currentTip, LH.get(LH.ENERGY_INPUT)+" ", energyType, vMin, 1, "");
                 else            addEnergyFlowDesc(currentTip, LH.get(LH.ENERGY_INPUT)+" ", energyType, vMin, vMax, 1, "");
             }
             for (byte i = 0; i < 6; i++) for (TagData energyType : tile.getEnergyTypes(i)) {
-                if (!tile.isEnergyEmittingTo(energyType, i, true)) continue;
+                if (energyType.equals(TD.Energy.TU) || !tile.isEnergyEmittingTo(energyType, i, true)) continue;
                 long vMin =  tile.getEnergySizeOutputMin(energyType, i), vMax = tile.getEnergySizeOutputMax(energyType, i);
                 if(vMin == vMax)addEnergyFlowDesc(currentTip, LH.get(LH.ENERGY_OUTPUT)+" ", energyType, vMin, 1, "");
                 else            addEnergyFlowDesc(currentTip, LH.get(LH.ENERGY_OUTPUT)+" ", energyType, vMin, vMax, 1, "");
@@ -178,12 +179,12 @@ public interface IWailaTile {
 
             ITileEntityEnergy tile = (ITileEntityEnergy) accessor.getTileEntity();
             for (byte i = 0; i < 6; i++) for (TagData energyType : tile.getEnergyTypes(i)) {
-                if (!tile.isEnergyEmittingTo(energyType, i, true)) continue;
+                if (energyType.equals(TD.Energy.TU) || !tile.isEnergyEmittingTo(energyType, i, true)) continue;
                 addEnergyFlowDesc(currentTip, LH.get(LH.ENERGY_OUTPUT)+" ", energyType, tile.getEnergySizeOutputRecommended(energyType, i), 1, "");
             }
 
             for (byte i = 0; i < 6; i++) for (TagData energyType : tile.getEnergyTypes(i)) {
-                if (!tile.isEnergyAcceptingFrom(energyType, i, true)) continue;
+                if (energyType.equals(TD.Energy.TU) || !tile.isEnergyAcceptingFrom(energyType, i, true)) continue;
                 addEnergyFlowDesc(currentTip, LH.get(LH.ENERGY_INPUT)+" ", energyType, tile.getEnergySizeInputRecommended(energyType, i), 1, "");
             }
             return currentTip;

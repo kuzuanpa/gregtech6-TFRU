@@ -19,11 +19,8 @@
 
 package gregapi.tileentity.machines;
 
-import static gregapi.data.CS.*;
-
-import java.util.List;
-
 import gregapi.GT_API_Proxy;
+import gregapi.block.multitileentity.IWailaTile;
 import gregapi.computer.ITileEntityComputerizable;
 import gregapi.data.BI;
 import gregapi.data.LH;
@@ -32,6 +29,8 @@ import gregapi.render.IIconContainer;
 import gregapi.tileentity.ITileEntityServerTickPost;
 import gregapi.tileentity.delegate.DelegatorTileEntity;
 import gregapi.util.UT;
+import mcp.mobius.waila.api.IWailaConfigHandler;
+import mcp.mobius.waila.api.IWailaDataAccessor;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -39,10 +38,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 
+import java.util.List;
+
+import static gregapi.data.CS.*;
+
 /**
  * @author Gregorius Techneticies
  */
-public abstract class MultiTileEntitySensorTE extends MultiTileEntitySensor implements ITileEntityComputerizable, ITileEntityServerTickPost {
+public abstract class MultiTileEntitySensorTE extends MultiTileEntitySensor implements ITileEntityComputerizable, ITileEntityServerTickPost, IWailaTile {
 	public static final byte
 	  MODE_COUNT    = 8
 	  
@@ -299,5 +302,38 @@ public abstract class MultiTileEntitySensorTE extends MultiTileEntitySensor impl
 	@Override
 	public Object[] callComputerizableMethod(DelegatorTileEntity<TileEntity> aDelegator, int aFunctionIndex, Object[] aArguments) {
 		return new Object[] {aFunctionIndex == 1 ? mCurrentMax : mCurrentValue};
+	}
+
+	@Override
+	public NBTTagCompound getWailaNBT(TileEntity te, NBTTagCompound aNBT) {
+		aNBT.setInteger("waila.v", mCurrentValue);
+		if(mSetNumber != 0)aNBT.setInteger("waila.s", mSetNumber);
+		aNBT.setInteger("waila.max", mCurrentMax);
+		if(mValues.length > 1)aNBT.setInteger("waila.a", mValues.length);
+		aNBT.setByte("waila.mo", (byte) (mMode & 127));
+		return aNBT;
+	}
+
+	@Override
+	public List<String> getWailaBody(List<String> currentTip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
+		NBTTagCompound nbt = accessor.getNBTData();
+		currentTip.add(Chat.GRAY + "Value "+ Chat.WHITE + nbt.getInteger("waila.v"));
+		if(nbt.hasKey("waila.s"))currentTip.add(Chat.GRAY + "Bound "+ Chat.WHITE + nbt.getInteger("waila.s"));
+		currentTip.add(Chat.GRAY + "Max Value "+ Chat.WHITE + nbt.getInteger("waila.max"));
+		if(nbt.hasKey("waila.a"))currentTip.add(Chat.GRAY + "Averaging over "+ Chat.WHITE + nbt.getInteger("waila.a"));
+
+		String mode = Chat.GRAY + "Mode "+ Chat.WHITE;
+		switch (nbt.getByte("waila.mo")) {
+			case MODE_DISPLAY   : mode = null; break;
+			case MODE_GREATER   : mode += "If Value Greater than Bound"; break;
+			case MODE_EQUAL     : mode += "If Value Equal to Bound"; break;
+			case MODE_SMALLER   : mode += "If Value Smaller than Bound";  break;
+			case MODE_SCALE     : mode += "Scale Value from 0 to Bound"; break;
+			case MODE_PERCENT   : mode += "Value as Percentage of Max Value"; break;
+			case MODE_FULL      : mode += "If Value Greater or Equal to Max Value"; break;
+			case MODE_NOT_FULL  : mode += "If Value Smaller than Max Value"; break;
+		}
+		if(mode != null) currentTip.add(mode);
+		return currentTip;
 	}
 }

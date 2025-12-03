@@ -28,6 +28,7 @@ import gregapi.block.multitileentity.IMultiTileEntity.IMTE_OnWalkOver;
 import gregapi.block.multitileentity.IWailaTile;
 import gregapi.block.multitileentity.MultiTileEntityRegistry;
 import gregapi.code.TagData;
+import gregapi.computer.ITileEntityComputerizable;
 import gregapi.data.FL;
 import gregapi.data.LH;
 import gregapi.network.INetworkHandler;
@@ -78,7 +79,7 @@ import static gregapi.data.CS.*;
 /**
  * @author Gregorius Techneticies
  */
-public class MultiTileEntityMultiBlockPart extends TileEntityBase05Paintable implements ITileEntityEnergy, ITileEntityCrucible, ITileEntityLogistics, IMTE_OnWalkOver, ITileEntityTemperature, ITileEntityGibbl, ITileEntityProgress, ITileEntityWeight, ITileEntityTapAccessible, ITileEntityFunnelAccessible, ITileEntityEnergyDataCapacitor, ITileEntityAdjacentInventoryUpdatable, IFluidHandler, IMTE_OnBlockAdded, IMTE_BreakBlock,IMTE_AddToolTips, ITileEntityRunningSuccessfully, ITileEntitySwitchableMode, ITileEntitySwitchableOnOff, IMultiTileEntity.IMTE_SyncDataByteArray, IWailaTile {
+public class MultiTileEntityMultiBlockPart extends TileEntityBase05Paintable implements ITileEntityEnergy, ITileEntityCrucible, ITileEntityLogistics, IMTE_OnWalkOver, ITileEntityTemperature, ITileEntityGibbl, ITileEntityProgress, ITileEntityWeight, ITileEntityTapAccessible, ITileEntityFunnelAccessible, ITileEntityEnergyDataCapacitor, ITileEntityAdjacentInventoryUpdatable, IFluidHandler, IMTE_OnBlockAdded, IMTE_BreakBlock,IMTE_AddToolTips, ITileEntityRunningSuccessfully, ITileEntitySwitchableMode, ITileEntitySwitchableOnOff, IMultiTileEntity.IMTE_SyncDataByteArray, ITileEntityComputerizable, IWailaTile {
 	public ChunkCoordinates mTargetPos = null;
 	
 	public ITileEntityMultiBlockController mTarget = null;
@@ -707,6 +708,77 @@ public class MultiTileEntityMultiBlockPart extends TileEntityBase05Paintable imp
 		ITileEntityMultiBlockController tTileEntity = getTarget(T);
 		if (tTileEntity instanceof ITileEntityCrucible) return ((ITileEntityCrucible)tTileEntity).fillMoldAtSide(aMold, aSide, aSideOfMold);
 		return F;
+	}
+
+
+	@Override
+	public String getComputerizableName(DelegatorTileEntity<TileEntity> aDelegator) {
+		ITileEntityMultiBlockController tTileEntity = getTarget(T);
+		if (tTileEntity instanceof ITileEntityComputerizable) return ((ITileEntityComputerizable) tTileEntity).getComputerizableName(aDelegator);
+		return null;
+	}
+
+	@Override
+	public String[] allComputerizableArgs(DelegatorTileEntity<TileEntity> aDelegator) {
+		ITileEntityMultiBlockController tTileEntity = getTarget(T);
+		if (tTileEntity instanceof ITileEntityComputerizable) return ((ITileEntityComputerizable) tTileEntity).allComputerizableArgs(aDelegator);
+		return null;
+	}
+
+	@Override
+	public String[] allComputerizableHelps(DelegatorTileEntity<TileEntity> aDelegator) {
+		ITileEntityMultiBlockController tTileEntity = getTarget(T);
+		if (tTileEntity instanceof ITileEntityComputerizable) return ((ITileEntityComputerizable) tTileEntity).allComputerizableHelps(aDelegator);
+		return null;
+	}
+
+	@Override
+	public String[] allComputerizableMethods(DelegatorTileEntity<TileEntity> aDelegator) {
+		ITileEntityMultiBlockController tTileEntity = getTarget(T);
+		if (tTileEntity instanceof ITileEntityComputerizable) return ((ITileEntityComputerizable) tTileEntity).allComputerizableMethods(aDelegator);
+		return null;
+	}
+
+	@Override
+	public Class<?>[] allComputerizableReturns(DelegatorTileEntity<TileEntity> aDelegator) {
+		ITileEntityMultiBlockController tTileEntity = getTarget(T);
+		if (tTileEntity instanceof ITileEntityComputerizable) return ((ITileEntityComputerizable) tTileEntity).allComputerizableReturns(aDelegator);
+		return null;
+	}
+
+	@Override
+	public String getComputerizableArgs(DelegatorTileEntity<TileEntity> aDelegator, int aFunctionIndex) {
+		ITileEntityMultiBlockController tTileEntity = getTarget(T);
+		if (tTileEntity instanceof ITileEntityComputerizable) return ((ITileEntityComputerizable) tTileEntity).getComputerizableArgs(aDelegator, aFunctionIndex);
+		return null;
+	}
+
+	@Override
+	public String getComputerizableHelp(DelegatorTileEntity<TileEntity> aDelegator, int aFunctionIndex) {
+		ITileEntityMultiBlockController tTileEntity = getTarget(T);
+		if (tTileEntity instanceof ITileEntityComputerizable) return ((ITileEntityComputerizable) tTileEntity).getComputerizableHelp(aDelegator, aFunctionIndex);
+		return null;
+	}
+
+	@Override
+	public String getComputerizableMethod(DelegatorTileEntity<TileEntity> aDelegator, int aFunctionIndex) {
+		ITileEntityMultiBlockController tTileEntity = getTarget(T);
+		if (tTileEntity instanceof ITileEntityComputerizable) return ((ITileEntityComputerizable) tTileEntity).getComputerizableMethod(aDelegator, aFunctionIndex);
+		return null;
+	}
+
+	@Override
+	public Class<?> getComputerizableReturn(DelegatorTileEntity<TileEntity> aDelegator, int aFunctionIndex) {
+		ITileEntityMultiBlockController tTileEntity = getTarget(T);
+		if (tTileEntity instanceof ITileEntityComputerizable) return ((ITileEntityComputerizable) tTileEntity).getComputerizableReturn(aDelegator, aFunctionIndex);
+		return null;
+	}
+
+	@Override
+	public Object[] callComputerizableMethod(DelegatorTileEntity<TileEntity> aDelegator, int aFunctionIndex, Object[] aArguments) {
+		ITileEntityMultiBlockController tTileEntity = getTarget(T);
+		if (tTileEntity instanceof ITileEntityComputerizable) return ((ITileEntityComputerizable) tTileEntity).callComputerizableMethod(aDelegator, aFunctionIndex, aArguments);
+		return null;
 	}
 
 	@Override
