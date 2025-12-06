@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2024 GregTech-6 Team
+ * Copyright (c) 2025 GregTech-6 Team
  *
  * This file is part of GregTech.
  *
@@ -142,7 +142,7 @@ public final class OreDictMaterial implements ITagDataContainer<OreDictMaterial>
 	public static OreDictMaterial createMaterial(int aID, String aNameOreDict, String aLocalName) {
 		aID = (aID < 0 || aID >= MATERIAL_ARRAY.length || aID == W ? -1 : aID);
 		// Replace all Spaces and Minuses, and capitalise the String.
-		aNameOreDict = UT.Code.capitalise(aNameOreDict.replaceAll(" ", "").replaceAll("-", "").replaceAll("'", "").replaceAll("/", ""));
+		aNameOreDict = sanitize(aNameOreDict);
 		// That would cause really bad shit to happen.
 		if (aNameOreDict.isEmpty())
 		throw new IllegalArgumentException("This OreDict Name is not usable, due to being an empty String, after stripping all the minuses and spaces.");
@@ -199,6 +199,10 @@ public final class OreDictMaterial implements ITagDataContainer<OreDictMaterial>
 	public static OreDictMaterial get(OreDictMaterial aMaterial) {
 		while (aMaterial != aMaterial.mTargetRegistration) aMaterial = aMaterial.mTargetRegistration;
 		return aMaterial;
+	}
+	
+	public static String sanitize(String aString) {
+		return UT.Code.capitalise(aString.replaceAll(" ", "").replaceAll("-", "").replaceAll("'", "").replaceAll("/", ""));
 	}
 	
 	/** The Index of this Material inside the Array. Negative for "Not in the Array" and therefore also for "Not Unificatable", 0 is the NULL Material so a > 0 check could be useful for you. */
@@ -346,7 +350,14 @@ public final class OreDictMaterial implements ITagDataContainer<OreDictMaterial>
 	
 	/** Adds Identical Names which are getting re-registered to this Material. returns this Material, not the newly created ones. */
 	public OreDictMaterial addIdenticalNames(String... aNames) {
-		for (String aName : aNames) addReRegistrations(createMaterial(-1, aName, aName).setRegistration(this));
+		for (String aName : aNames) {
+			aName = sanitize(aName);
+			if (mNameInternal.equals(aName)) {
+				ERR.println("The Material '" + mNameInternal + "' has almost registered an identical Name as an alternative Name by accident, almost leading to Issues with the Recipe System.");
+			} else {
+				addReRegistrations(createMaterial(-1, aName, aName).setRegistration(this));
+			}
+		}
 		return this;
 	}
 	
@@ -443,7 +454,7 @@ public final class OreDictMaterial implements ITagDataContainer<OreDictMaterial>
 		ALLOYS.add(this);
 		for (OreDictMaterialStack tMaterial : aConfiguration.getUndividedComponents()) {
 			if (tMaterial.mMaterial != MT.Air) {
-				if (mMeltingPoint >= tMaterial.mMaterial.mBoilingPoint) mMeltingPoint = Math.max(C+20, tMaterial.mMaterial.mBoilingPoint-20);
+				if (mMeltingPoint >= tMaterial.mMaterial.mBoilingPoint && !contains(TD.Atomic.ELEMENT)) mMeltingPoint = Math.max(C+20, tMaterial.mMaterial.mBoilingPoint-20);
 				if (mMeltingPoint >= tMaterial.mMaterial.mBoilingPoint) ERR.println("The Alloy '" + mNameInternal + "' cannot be created due to the Melting Point being higher than the Boiling Point of its Component '" + tMaterial.mMaterial.mNameInternal + "'");
 			}
 			tMaterial.mMaterial.mAlloyComponentReferences.add(this);
@@ -454,6 +465,8 @@ public final class OreDictMaterial implements ITagDataContainer<OreDictMaterial>
 	
 	/** Sets the Molecule Configuration or Components of this Material. Calculates the Average of the MainStats and sets them. */
 	public OreDictMaterial setMoleculeConfiguration(IOreDictConfigurationComponent aComponents) {
+		if (contains(TD.Atomic.ELEMENT)) new IllegalArgumentException("Detected problematic tampering with Elements of the Periodic Table").printStackTrace(ERR);
+		
 		mComponents = aComponents;
 		double tDivider = 0, tProtons = 0, tElectrons = 0, tNeutrons = 0, tMass = 0, tGramPerCubicCentimeter = 0, tMeltingPoint = 0, tBoilingPoint = 0, tPlasmaPoint = 0;
 		for (OreDictMaterialStack tMaterial : aComponents.getComponents()) tDivider += tMaterial.mAmount;
@@ -880,6 +893,10 @@ public final class OreDictMaterial implements ITagDataContainer<OreDictMaterial>
 	@Deprecated public OreDictMaterial setMeltingPoint(long aMeltingPoint) {return heat(aMeltingPoint);}
 	/** Sets the energetic Stats of this Material. Everything is measured in Kelvin. */
 	public OreDictMaterial heat(long aMeltingPoint) {
+		if (contains(TD.Atomic.ELEMENT)) {
+			if (mMeltingPoint != 1000 && aMeltingPoint != mMeltingPoint) new IllegalArgumentException("Detected problematic tampering with Elements of the Periodic Table").printStackTrace(ERR);
+		//  if (mBoilingPoint != 3000 && aBoilingPoint != mBoilingPoint) new IllegalArgumentException("Detected problematic tampering with Elements of the Periodic Table").printStackTrace(ERR);
+		}
 		mMeltingPoint = aMeltingPoint;
 		mBoilingPoint = mMeltingPoint * 2;
 		mPlasmaPoint = mBoilingPoint * 100;
@@ -889,6 +906,10 @@ public final class OreDictMaterial implements ITagDataContainer<OreDictMaterial>
 	@Deprecated public OreDictMaterial setStatsEnergetic(long aMeltingPoint, long aBoilingPoint) {return heat(aMeltingPoint, aBoilingPoint);}
 	/** Sets the energetic Stats of this Material. Everything is measured in Kelvin. */
 	public OreDictMaterial heat(long aMeltingPoint, long aBoilingPoint) {
+		if (contains(TD.Atomic.ELEMENT)) {
+			if (mMeltingPoint != 1000 && aMeltingPoint != mMeltingPoint) new IllegalArgumentException("Detected problematic tampering with Elements of the Periodic Table").printStackTrace(ERR);
+			if (mBoilingPoint != 3000 && aBoilingPoint != mBoilingPoint) new IllegalArgumentException("Detected problematic tampering with Elements of the Periodic Table").printStackTrace(ERR);
+		}
 		if (aMeltingPoint > aBoilingPoint) throw new IllegalArgumentException("The Melting Point cannot be above the Boiling Point.");
 		mMeltingPoint = aMeltingPoint;
 		mBoilingPoint = aBoilingPoint;
@@ -899,6 +920,10 @@ public final class OreDictMaterial implements ITagDataContainer<OreDictMaterial>
 	@Deprecated public OreDictMaterial setStatsEnergetic(long aMeltingPoint, long aBoilingPoint, long aPlasmaPoint) {return heat(aMeltingPoint, aBoilingPoint, aPlasmaPoint);}
 	/** Sets the energetic Stats of this Material. Everything is measured in Kelvin. */
 	public OreDictMaterial heat(long aMeltingPoint, long aBoilingPoint, long aPlasmaPoint) {
+		if (contains(TD.Atomic.ELEMENT)) {
+			if (mMeltingPoint != 1000 && aMeltingPoint != mMeltingPoint) new IllegalArgumentException("Detected problematic tampering with Elements of the Periodic Table").printStackTrace(ERR);
+			if (mBoilingPoint != 3000 && aBoilingPoint != mBoilingPoint) new IllegalArgumentException("Detected problematic tampering with Elements of the Periodic Table").printStackTrace(ERR);
+		}
 		if (aMeltingPoint > aBoilingPoint) throw new IllegalArgumentException("The Melting Point cannot be above the Boiling Point.");
 		if (aBoilingPoint > aPlasmaPoint) throw new IllegalArgumentException("The Boiling Point cannot be above the Plasmafication Point.");
 		mMeltingPoint = aMeltingPoint;
