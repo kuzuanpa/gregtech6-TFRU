@@ -6,10 +6,12 @@ Nothing (I tend to only add finished Stuff to the Changelog).
 
 
 6.17.06: (Not released yet)
+[FIXED] Crucibles did not accept excessive amounts of Air while nearly full. We talking >1000KU worth of Air in ONE go, while only one Ingot worth of space is in the Crucible.
 [FIXED] GT6 Alexandrite Ore Veins will no longer generate when HBM NTM is installed (balance concerns), it also generally wont be on the "Small Gem Ores List" anymore. You can still use the Matter Replicator to make Alexandrite though, if you find a sample first.
 [CHANGED] GT6 Mossy Cobble (Not Vanilla Mossy Cobble) will make you (and Mobs) slide off if you are not sneaking. This Block spawns Mobs AND makes them slide off if there is space, which is Ideal for Mob Farms.
 [CHANGED] Mobs can no longer drop Wooden or Stone Tools of Vanilla Minecraft and instead will drop Sticks in those cases. This should very much declutter some Mob Farms.
 [CHANGED] Oil Shale in Coke Oven now gives you 10x the Oil, making it actually worthwhile to use at all.
+[CHANGED] The 3 Types of Golden Juices now make roughly ten times less Biomass than before, they now either produce 65x (64x plus base value), 9x (8x plus base value) or 2x (1x plus base value) the output of Juice based Biomass.
 [ADDED] Steel Rope, which is just another type of Rope.
 [ADDED] Ultimet Boilers corresponding to the TaHFC Burning Boxes.
 [ADDED] Yellow and Brown Grass now indicate Lava, Gas and Oil Springs. Greener Grass indicates Water Springs.
@@ -17,6 +19,7 @@ Nothing (I tend to only add finished Stuff to the Changelog).
 
 6.17.05:
 [FIXED] A rather critical stupidity in the way my Worldgen Random works... I mixed up the Seed and the coordinate parameters...
+[ADDED] Strings as a drop for Berry Bushes, making them into Cotton Bushes basically.
 [ADDED] Using any of the Cooking Oils in a GT6 Oven will duplicate Meat and Fish Output at the cost of 50L of Cooking Oil.
 [ADDED] Canned Air. As in putting 16000L of Naturally Sparkling, Salt-Free Air into a Food Can. It can be used to replenish Air Underwater and will overfill your Air Bar. Also has Enviromine Heat Stats depending on which type of Air you drink.
 [ADDED] Brass Set of Kinetic Axles and Gearboxes. Also things that handle Rotational Units now make a Minecart noise. This includes Gearboxes, but does not include Basic Machines and Axles (would make too much noise).
