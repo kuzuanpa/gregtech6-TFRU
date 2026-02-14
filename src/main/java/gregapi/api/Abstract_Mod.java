@@ -20,7 +20,6 @@
 package gregapi.api;
 
 import cpw.mods.fml.common.event.*;
-import gregapi.NEI_GT_IMCSender;
 import gregapi.code.ArrayListNoNulls;
 import gregapi.compat.ICompat;
 import gregapi.util.CR;
@@ -233,15 +232,7 @@ public abstract class Abstract_Mod {
 			
 			loadRunnables("Saving Configs", sConfigs);
 			
-			if (sFinishedInit >= sModCountUsingGTAPI) {
-				for (Abstract_Mod tMod : MODS_USING_GT_API) try {tMod.onModFinalInit(aEvent);} catch(Throwable e) {e.printStackTrace(ERR);}
-				//send Recipe infos to NEI, because NEI handle these info in PostInit and wont accept anything after that.
-				//Although strange, I cannot find a place better than there:
-				// GT_MOD runs their init phase after GT_API_POST, funny making only machines of addons be loaded but GT itself not.
-				// GT_MOD itself doesn't seem like a place to place that.
-				// GT_API runs after NEI in Post init phase, making GT_API load before it will make loop depend.
-				new NEI_GT_IMCSender().run();
-			}
+			if (sFinishedInit >= sModCountUsingGTAPI) for (Abstract_Mod tMod : MODS_USING_GT_API) try {tMod.onModFinalInit(aEvent);} catch(Throwable e) {e.printStackTrace(ERR);}
 			
 			OUT.println(getModNameForLog() + ": ====================");
 			ORD.println(getModNameForLog() + ": ====================");
