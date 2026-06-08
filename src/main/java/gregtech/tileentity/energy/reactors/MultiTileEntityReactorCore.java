@@ -324,8 +324,9 @@ public abstract class MultiTileEntityReactorCore extends TileEntityBase10FacingD
 	public byte getStateMode() {return mMode;}
 
 	@Override
-	public IWailaInfoProvider[] getWailaInfos() {
-		return instanceInfoState.asArray();
+	public List<IWailaInfoProvider> getWailaInfos(List<IWailaInfoProvider> list) {
+		list.add(IWailaTile.instanceInfoState);
+		return list;
 	}
 
 	@Override
@@ -354,11 +355,12 @@ public abstract class MultiTileEntityReactorCore extends TileEntityBase10FacingD
 		IWailaTile.addTankDesc(currentTip,LH.get(LH.CONTENT)+"1 ", mTanks[0],"");
 		IWailaTile.addTankDesc(currentTip,LH.get(LH.CONTENT)+"2 ", mTanks[1],"");
 		for (int i = 0; i < 4; i++) {
+			if(!aNBT.hasKey("gt.waila."+i))continue;
 			NBTTagCompound tag = aNBT.getCompoundTag("gt.waila."+i);
 			ItemStack stack = ST.load(tag,"item");
 			if(stack==null || !(stack.getItem() instanceof IItemReactorRod))continue;
 			boolean moderated = tag.getBoolean("m");
-			currentTip.add(Chat.WHITE + tag.getLong("num")+ Chat.PURPLE + " N " + Chat.WHITE + stack.getDisplayName()+Chat.GRAY+" "+LH.get(LH.REMAIN)+" " + Chat.WHITE+ stack.getTagCompound().getLong(NBT_DURABILITY)/120000 +Chat.PURPLE+"NU"+(moderated?Chat.ORANGE+" M":""));
+			currentTip.add(Chat.WHITE + tag.getLong("num")+ Chat.PURPLE + " N " + Chat.WHITE + stack.getDisplayName()+Chat.GRAY+" "+(stack.hasTagCompound()? LH.get(LH.REMAIN)+" " + Chat.WHITE+ stack.getTagCompound().getLong(NBT_DURABILITY)/120000 +Chat.PURPLE+"NU": "")+(moderated?Chat.ORANGE+" M":""));
 		}
 
 		return currentTip;
