@@ -119,6 +119,8 @@ public class LH {
 	, POWER_CONDUCTING_FLUIDS_SLOW = "gt.lang.no.powerconducting.fluids"
 	, OWNER_CONTROLLED = "gt.lang.owner.controlled"
 	, CHEAP_OVERCLOCKING = "gt.lang.cheap.overclocking"
+	, NO_CONSTANT_POWER = "gt.lang.no.constant.power"
+	, NO_WASTE_ENERGY = "gt.lang.no.waste.energy"
 	, KEY_CONTROLLED = "gt.lang.key.controlled"
 	, COVER_TOOLTIP = "gt.lang.cover.tooltip"
 	, TOOL_TO_SET_FACING_PRE = "gt.lang.use.x.to.toggle.facing.pre"
@@ -306,6 +308,7 @@ public class LH {
 	, STATE = "gt.lang.state"
 	, STATE_STOPPED_FORCE = "gt.lang.state.stopped.force"
 	, STATE_STOPPED   = "gt.lang.state.stopped"
+	, STATE_POWER_SAVING= "gt.lang.state.power.saving"
 	, STATE_READY     = "gt.lang.state.ready"
 	, STATE_PASSIVE   = "gt.lang.state.passive"
 	, STATE_ACTIVE    = "gt.lang.state.active"
@@ -568,6 +571,8 @@ public class LH {
 		add(POWER_CONDUCTING_FLUIDS_SLOW, "All entering Power Conductor Fluids will be voided!");
 		add(OWNER_CONTROLLED                            , "This Block can only be interacted with by its Owner!");
 		add(CHEAP_OVERCLOCKING                          , "Can be overclocked without additional Energy Loss");
+		add(NO_CONSTANT_POWER                           , "Progress won't lost if not powered");
+		add(NO_WASTE_ENERGY                             , "Can auto save power when not working");
 		add(KEY_CONTROLLED                              , "This Block can only be opened with a Key!");
 		add(COVER_TOOLTIP                               , "This Item can be used as Cover");
 		add(TOOL_TO_REMOVE_SHOVEL                       , "Use Shovel to empty this");
@@ -755,6 +760,7 @@ public class LH {
 		add(STATE                                       , "State");
 		add(STATE_STOPPED_FORCE                         , "Force Stopped");
 		add(STATE_STOPPED                               , "Stopped");
+		add(STATE_POWER_SAVING                          , "Power saving");
 		add(STATE_READY                                 , "Ready");
 		add(STATE_PASSIVE                               , "Passively");
 		add(STATE_ACTIVE                                , "Active");

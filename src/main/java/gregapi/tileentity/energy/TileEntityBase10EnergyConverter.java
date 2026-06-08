@@ -31,6 +31,7 @@ import gregapi.tileentity.behavior.TE_Behavior_Energy_Capacitor;
 import gregapi.tileentity.behavior.TE_Behavior_Energy_Converter;
 import gregapi.tileentity.behavior.TE_Behavior_Energy_Stats;
 import gregapi.tileentity.machines.ITileEntityRunningActively;
+import gregapi.tileentity.machines.ITileEntityRunningPowerSaving;
 import gregapi.util.UT;
 import gregapi.util.WD;
 import mcp.mobius.waila.api.IWailaConfigHandler;
@@ -48,7 +49,7 @@ import static gregapi.data.CS.*;
 /**
  * @author Gregorius Techneticies
  */
-public abstract class TileEntityBase10EnergyConverter extends TileEntityBase09FacingSingle implements ITileEntityEnergy, ITileEntityRunningActively, IMeterDetectable, IWailaTile {
+public abstract class TileEntityBase10EnergyConverter extends TileEntityBase09FacingSingle implements ITileEntityEnergy, ITileEntityRunningActively, ITileEntityRunningPowerSaving, IMeterDetectable, IWailaTile {
 	protected boolean mStopped = F, mNegativeInput = F, oNegativeInput = F;
 	protected byte mExplosionPrevention = 0, mMode = 0;
 	
@@ -102,6 +103,7 @@ public abstract class TileEntityBase10EnergyConverter extends TileEntityBase09Fa
 	public void addToolTipsEnergy(List<String> aList, ItemStack aStack, boolean aF3_H) {
 		mConverter.mEnergyIN .addToolTips(aList, aStack, aF3_H, getLocalisedInputSide (), F);
 		mConverter.mEnergyOUT.addToolTips(aList, aStack, aF3_H, getLocalisedOutputSide(), T);
+		if(!mConverter.mWasteEnergy)aList.add(LH.Chat.BLUE + LH.get(LH.NO_WASTE_ENERGY));
 	}
 	
 	public void addToolTipsEfficiency(List<String> aList, ItemStack aStack, boolean aF3_H) {
@@ -174,7 +176,8 @@ public abstract class TileEntityBase10EnergyConverter extends TileEntityBase09Fa
 	@Override public Collection<TagData> getEnergyTypes(byte aSide) {return new ArrayListNoNulls<>(F, mConverter.mEnergyIN.mType, mConverter.mEnergyOUT.mType);}
 	
 	@Override public boolean canDrop(int aInventorySlot) {return F;}
-	
+
+	@Override public boolean getStateRunningPowerSaving() {return !mConverter.mWasteEnergy && !mConverter.mEmitsEnergy;}
 	@Override public boolean getStateRunningPossible() {return T;}
 	@Override public boolean getStateRunningPassively() {return mActivity.mActive;}
 	@Override public boolean getStateRunningActively() {return mConverter.mEmitsEnergy;}

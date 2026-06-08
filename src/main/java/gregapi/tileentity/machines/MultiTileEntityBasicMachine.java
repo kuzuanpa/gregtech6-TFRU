@@ -93,8 +93,8 @@ import static gregapi.data.CS.*;
 @Optional.InterfaceList(value = {
 	@Optional.Interface(iface = "buildcraft.api.tiles.IHasWork", modid = ModIDs.BC)
 })
-public class MultiTileEntityBasicMachine extends TileEntityBase09FacingSingle implements IHasWork, ITileEntityFunnelAccessible, ITileEntityTapAccessible, ITileEntitySwitchableOnOff, ITileEntityRunningSuccessfully, ITileEntityAdjacentInventoryUpdatable, ITileEntityEnergy, ITileEntityProgress, ITileEntityGibbl, IFluidHandler, IMeterDetectable, IWailaTile {
-	public boolean mSpecialIsStartEnergy = F, mNoConstantEnergy = F, mCheapOverclocking = F, mCouldUseRecipe = F, mStopped = F, oActive = F, oRunning = F, mStateNew = F, mStateOld = F, mDisabledItemInput = F, mDisabledItemOutput = F, mDisabledFluidInput = F, mDisabledFluidOutput = F, mRequiresIgnition = F, mParallelDuration = F, mCanUseOutputTanks = F, mOutputCatalyzer =F;
+public class MultiTileEntityBasicMachine extends TileEntityBase09FacingSingle implements IHasWork, ITileEntityFunnelAccessible, ITileEntityTapAccessible, ITileEntitySwitchableOnOff, ITileEntityRunningSuccessfully, ITileEntityRunningPowerSaving, ITileEntityAdjacentInventoryUpdatable, ITileEntityEnergy, ITileEntityProgress, ITileEntityGibbl, IFluidHandler, IMeterDetectable, IWailaTile {
+	public boolean mWasteEnergy = T, mSpecialIsStartEnergy = F, mNoConstantEnergy = F, mCheapOverclocking = F, mCouldUseRecipe = F, mStopped = F, oActive = F, oRunning = F, mStateNew = F, mStateOld = F, mDisabledItemInput = F, mDisabledItemOutput = F, mDisabledFluidInput = F, mDisabledFluidOutput = F, mRequiresIgnition = F, mParallelDuration = F, mCanUseOutputTanks = F, mOutputCatalyzer =F;
 	public byte mEnergyInputs = 127, mEnergyOutput = SIDE_UNDEFINED, mOutputBlocked = 0, mMode = 0, mIgnited = 0;
 	public byte mItemInputs   = 127, mItemOutputs  = 127, mItemAutoInput  = SIDE_UNDEFINED, mItemAutoOutput  = SIDE_UNDEFINED;
 	public byte mFluidInputs  = 127, mFluidOutputs = 127, mFluidAutoInput = SIDE_UNDEFINED, mFluidAutoOutput = SIDE_UNDEFINED;
@@ -126,6 +126,7 @@ public class MultiTileEntityBasicMachine extends TileEntityBase09FacingSingle im
 		if (aNBT.hasKey(NBT_NEEDS_IGNITION)) mRequiresIgnition = aNBT.getBoolean(NBT_NEEDS_IGNITION);
 		if (aNBT.hasKey(NBT_CHEAP_OVERCLOCKING)) mCheapOverclocking = aNBT.getBoolean(NBT_CHEAP_OVERCLOCKING);
 		if (aNBT.hasKey(NBT_NO_CONSTANT_POWER)) mNoConstantEnergy = aNBT.getBoolean(NBT_NO_CONSTANT_POWER);
+		if (aNBT.hasKey(NBT_WASTE_ENERGY)) mWasteEnergy = aNBT.getBoolean(NBT_WASTE_ENERGY);
 		if (aNBT.hasKey(NBT_SPECIAL_IS_START_ENERGY)) mSpecialIsStartEnergy = aNBT.getBoolean(NBT_SPECIAL_IS_START_ENERGY);
 		if (aNBT.hasKey(NBT_EFFICIENCY)) mEfficiency = (short)UT.Code.bind_(0, 10000, aNBT.getShort(NBT_EFFICIENCY));
 		if (aNBT.hasKey(NBT_INPUT)) {mInput = aNBT.getLong(NBT_INPUT); mInputMin = mInput / 2; mInputMax = mInput * 2;}
@@ -290,6 +291,12 @@ public class MultiTileEntityBasicMachine extends TileEntityBase09FacingSingle im
 		
 		if (mCheapOverclocking)
 		aList.add(Chat.YELLOW + LH.get(LH.CHEAP_OVERCLOCKING));
+
+		if(mNoConstantEnergy)
+		aList.add(Chat.CYAN + LH.get(LH.NO_CONSTANT_POWER));
+		if(!mWasteEnergy)
+		aList.add(Chat.CYAN + LH.get(LH.NO_WASTE_ENERGY));
+
 		if (mEfficiency != 10000)
 		aList.add(LH.getToolTipEfficiency(mEfficiency));
 		
@@ -836,6 +843,12 @@ public class MultiTileEntityBasicMachine extends TileEntityBase09FacingSingle im
 		if (mEnergy >= mInputMin && mEnergy >= mMinEnergy && checkStructure(F)) {
 			mActive = doActive(aTimer, Math.min(mInputMax, mEnergy));
 			mRunning = T;
+
+			if(!mWasteEnergy && mActive){
+				mEnergy -= mInputMax;
+				if (mEnergy < 0) mEnergy = 0;
+			}
+
 		} else {
 			if (aTimer > 40) {
 				mActive = doInactive(aTimer);
@@ -843,7 +856,11 @@ public class MultiTileEntityBasicMachine extends TileEntityBase09FacingSingle im
 			}
 			mSuccessful = F;
 		}
-		mEnergy -= mInputMax; if (mEnergy < 0) mEnergy = 0;
+
+		if(mWasteEnergy) {
+			mEnergy -= mInputMax;
+			if (mEnergy < 0) mEnergy = 0;
+		}
 		if (mIgnited > 0) mIgnited--;
 	}
 	
@@ -1085,7 +1102,8 @@ public class MultiTileEntityBasicMachine extends TileEntityBase09FacingSingle im
 	@Override public long getProgressMax  (byte aSide) {return Math.max(1,                           mMinEnergy < 1 ? mMaxProgress : UT.Code.divup(mMaxProgress , mMinEnergy ));}
 	@Override public long getGibblValue   (byte aSide) {long rGibbl = 0; for (int i = 0; i < mTanksInput.length; i++) rGibbl += mTanksInput[i].amount  (); return rGibbl;}
 	@Override public long getGibblMax     (byte aSide) {long rGibbl = 0; for (int i = 0; i < mTanksInput.length; i++) rGibbl += mTanksInput[i].capacity(); return rGibbl;}
-	
+
+	@Override public boolean getStateRunningPowerSaving () {return !mWasteEnergy && mRunning && !mActive;}
 	@Override public boolean getStateRunningPossible    () {return mCouldUseRecipe || mActive || mMaxProgress > 0 || mChargeRequirement > 0 || (mIgnited > 0 && !mDisabledItemOutput && mOutputBlocked != 0);}
 	@Override public boolean getStateRunningPassively   () {return mRunning;}
 	@Override public boolean getStateRunningActively    () {return mActive;}
