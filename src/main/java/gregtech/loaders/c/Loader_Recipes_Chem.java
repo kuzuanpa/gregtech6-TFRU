@@ -262,7 +262,7 @@ public class Loader_Recipes_Chem implements Runnable {
 		RM.Bath         .addRecipe1(T, 0,   512, OM.dust(MT.Eudialyte, U*16), FL.array(MT.H2SO4.liquid(U2*7, T)), FL.array(MT.GrayVitriol.liquid(U*3, F), FL.Saltwater.make(2000), MT.O.gas(U, F)), OM.dust(MT.Zircon, U4*9), OM.dust(MT.SiO2, U*9), OM.dust(MT.Na, U2*3), OM.dust(MT.Ca, U4*3));
 		
 		
-		RM.Mixer        .addRecipe0(T, 16,   16, FL.array(MT.Fuel.liquid(2*U5, T), MT.Glyceryl.fluid(U10, T))                                                              , MT.NitroFuel      .liquid(U2, F), ZL_IS);
+		RM.Mixer        .addRecipe0(T, 16,   16, FL.array(FL.Diesel.make(400), MT.Glyceryl.fluid(U10, T))                                                              , MT.NitroFuel      .liquid(U2, F), ZL_IS);
 		RM.Mixer        .addRecipe0(T, 16,   64, FL.array(MT.HNO3.liquid(U*5, T), MT.HCl.fluid(U*8, T))                                                                    , MT.AquaRegia      .fluid(U*13, F), ZL_IS);
 		RM.Mixer        .addRecipe0(T, 16,   16, FL.array(MT.He.gas(U200, T), MT.Ne.gas(U200, T))                                                                          , MT.HeNe           .gas(U100, F), ZL_IS);
 		
@@ -374,14 +374,14 @@ public class Loader_Recipes_Chem implements Runnable {
 		
 		
 		for (OreDictMaterial tMat : ANY.C.mToThis) if (tMat != MT.Graphene)
-		RM.Roasting     .addRecipe1(T, 16,   16, OM.dust(tMat                       ), MT.CO2.gas( 3*U  , T), MT.CO .gas( 4*U  , F), ZL_IS);
-		RM.Roasting     .addRecipe1(T, 16,   16, OM.dust(MT.Charcoal                ), MT.CO2.gas( 3*U  , T), MT.CO .gas( 4*U  , F), ZL_IS);
-		RM.Roasting     .addRecipe1(T, 16,   16, OM.dust(MT.Coal                    ), MT.CO2.gas( 6*U  , T), MT.CO .gas( 8*U  , F), ZL_IS);
-		RM.Roasting     .addRecipe1(T, 16,   16, OM.dust(MT.CoalCoke                ), MT.CO2.gas( 6*U  , T), MT.CO .gas( 8*U  , F), ZL_IS);
+		RM.Roasting     .addRecipe1(T, 16,   16, OM.dust(tMat                       ), MT.CO2.gas( 1*U  , T), MT.CO .gas( 2*U  , F), ZL_IS);
+		RM.Roasting     .addRecipe1(T, 16,   16, OM.dust(MT.Charcoal                ), MT.CO2.gas( 1*U  , T), MT.CO .gas( 2*U  , F), ZL_IS);
+		RM.Roasting     .addRecipe1(T, 16,   16, OM.dust(MT.Coal                    ), MT.CO2.gas( 2*U  , T), MT.CO .gas( 4*U  , F), ZL_IS);
+		RM.Roasting     .addRecipe1(T, 16,   16, OM.dust(MT.CoalCoke                ), MT.CO2.gas( 2*U  , T), MT.CO .gas( 4*U  , F), ZL_IS);
 		for (OreDictMaterial tMat : ANY.Diamond.mToThis)
-		RM.Roasting     .addRecipe1(T, 16,   16, OM.dust(tMat                       ), MT.CO2.gas(12*U  , T), MT.CO .gas(16*U  , F), ZL_IS);
+		RM.Roasting     .addRecipe1(T, 16,   16, OM.dust(tMat                       ), MT.CO2.gas(8*U  , T), MT.CO .gas(16*U  , F), ZL_IS);
 		
-		
+
 		
 		for (String tOxygen : FluidsGT.OXYGEN) if (FL.exists(tOxygen)) {
 		RM.Roasting     .addRecipe1(T, 16,  512, OM.dust(MT.Pyrite                  ), FL.make(tOxygen,  1834), MT.SO2.gas( 6*U3 , F), OM.dust(MT.Fe2O3, 5*U6 ));
