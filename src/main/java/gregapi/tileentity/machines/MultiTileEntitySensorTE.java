@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2021 GregTech-6 Team
+ * Copyright (c) 2025 GregTech-6 Team
  *
  * This file is part of GregTech.
  *
@@ -28,6 +28,7 @@ import gregapi.data.LH.Chat;
 import gregapi.render.IIconContainer;
 import gregapi.tileentity.ITileEntityServerTickPost;
 import gregapi.tileentity.delegate.DelegatorTileEntity;
+import gregapi.tileentity.multiblocks.MultiTileEntityMultiBlockPart;
 import gregapi.util.UT;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
@@ -129,6 +130,12 @@ public abstract class MultiTileEntitySensorTE extends MultiTileEntitySensor impl
 			mDisplayedNumber = mSetNumber = UT.Code.bind16(mSetNumber);
 			
 			DelegatorTileEntity<TileEntity> tDelegator = getAdjacentTileEntity(mSecondFacing);
+			if (tDelegator.mTileEntity instanceof MultiTileEntityMultiBlockPart) {
+				if (((MultiTileEntityMultiBlockPart)tDelegator.mTileEntity).mTarget != null) {
+					tDelegator = new DelegatorTileEntity<>((TileEntity)((MultiTileEntityMultiBlockPart)tDelegator.mTileEntity).mTarget, tDelegator.mSideOfTileEntity);
+				}
+			}
+			
 			mValues[mIndex] = UT.Code.bindInt(getCurrentValue(tDelegator));
 			mCurrentValue = (mValues.length == 1 ? mValues[0] : UT.Code.averageInts(mValues));
 			mCurrentMax = UT.Code.bindInt(getCurrentMax(tDelegator));

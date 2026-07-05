@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2023 GregTech-6 Team
+ * Copyright (c) 2026 GregTech-6 Team
  *
  * This file is part of GregTech.
  *
@@ -19,13 +19,9 @@
 
 package gregtech.blocks.tree;
 
-import static gregapi.data.CS.*;
-
-import java.util.Random;
-
 import gregapi.block.multitileentity.MultiTileEntityRegistry;
 import gregapi.block.tree.BlockBaseSapling;
-import gregapi.data.CS.BlocksGT;
+import gregapi.data.CS.*;
 import gregapi.data.LH;
 import gregapi.data.OP;
 import gregapi.old.Textures;
@@ -33,12 +29,17 @@ import gregapi.util.OM;
 import gregapi.util.ST;
 import gregapi.util.UT;
 import gregapi.util.WD;
+import gregtech.tileentity.plants.MultiTileEntityResinHoleRubber;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.ForgeDirection;
+
+import java.util.Random;
+
+import static gregapi.data.CS.*;
 
 public class BlockTreeSaplingAB extends BlockBaseSapling {
 	public BlockTreeSaplingAB(String aUnlocalised) {
@@ -90,7 +91,7 @@ public class BlockTreeSaplingAB extends BlockBaseSapling {
 			boolean tCanPlaceResinHole = T;
 			
 			for (int tY = aY+1; tY < tMaxHeight; tY++) {
-				if (tCanPlaceResinHole && tMaxHeight - tY > 5 && aRandom.nextInt(2) == 0) {
+				if (tCanPlaceResinHole && tMaxHeight - tY > 5 && (aRandom.nextInt(2) == 0 || !MultiTileEntityResinHoleRubber.nearby(aWorld, aX, aY, aZ))) {
 					tCanPlaceResinHole = F;
 					MultiTileEntityRegistry tRegistry = MultiTileEntityRegistry.getRegistry("gt.multitileentity");
 					if (tRegistry != null) {

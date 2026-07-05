@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2024 GregTech-6 Team
+ * Copyright (c) 2026 GregTech-6 Team
  *
  * This file is part of GregTech.
  *
@@ -395,7 +395,7 @@ public class Recipe {
 			if(!stackTrace)return;
 			int i = 0; for (StackTraceElement tElement : new Exception().getStackTrace()) if (!tElement.getClassName().equals(RecipeMap.class.getName())) if (i++<5 && !tElement.getClassName().startsWith("sun")) ERR.println("\tat " + tElement); else break;
 		}
-		
+
 		public void reInit() {
 			mRecipeItemMap.clear();
 			for (Recipe tRecipe : mRecipeList) {
@@ -697,6 +697,10 @@ public class Recipe {
 	/** The mod added this recipe**/
 	public String mMod = null;
 
+	/** If this Recipe is not supposed to check for Input NBT Values. Thanks Applied Energistics Crystal Seeds for somehow messing something up somewhere where i cant find it... */
+	public boolean mNoNBTChecks = F;
+
+
 	public int getOutputChance(long aIndex) {if (aIndex < 0 || aIndex >= mChances.length) return getMaxChance(aIndex); return (int)mChances[(int)aIndex];}
 	public int getMaxChance(long aIndex) {if (aIndex < 0 || aIndex >= mMaxChances.length) return 10000; return (int)mMaxChances[(int)aIndex];}
 	
@@ -722,6 +726,11 @@ public class Recipe {
 	
 	public Recipe setNeedEmptyOut() {
 		mNeedsEmptyOutput = T;
+		return this;
+	}
+
+	public Recipe setNoNBTChecks() {
+		mNoNBTChecks = T;
 		return this;
 	}
 
@@ -790,7 +799,7 @@ public class Recipe {
 			for (int i = 0; i < aInputs.length; i++) if (!tChecked[i]) {
 				ItemStack aInput = aInputs[i];
 				if (ST.valid(aInput)) {
-					if ((aDontCheckStackSizes || aInput.stackSize >= tInput.stackSize) && OreDictManager.INSTANCE.equal_(F, aInput, tInput, !tInput.hasTagCompound())) {
+					if ((aDontCheckStackSizes || aInput.stackSize >= tInput.stackSize) && OreDictManager.INSTANCE.equal_(F, aInput, tInput, mNoNBTChecks || !tInput.hasTagCompound())) {
 						if (aDecreaseStacksizeBySuccess) aInput.stackSize -= tInput.stackSize;
 						tChecked[i] = T;
 						temp = F;
@@ -886,6 +895,7 @@ public class Recipe {
 		mSpecialValue = aRecipe.mSpecialValue;
 		mNeedsEmptyOutput = aRecipe.mNeedsEmptyOutput;
 		mCanBeBuffered = aRecipe.mCanBeBuffered;
+		mNoNBTChecks = aRecipe.mNoNBTChecks;
 		mFakeRecipe = aRecipe.mFakeRecipe;
 		mEnabled = aRecipe.mEnabled;
 		mHidden = aRecipe.mHidden;
@@ -952,8 +962,10 @@ public class Recipe {
 			}
 		}
 		
+		mNoNBTChecks = T;
 		for (int i = 0; i < aInputs .length; i++) if (aInputs [i] != NI) {
 			if (aInputs [i].stackSize > 64) aInputs [i].stackSize = 64;
+			if (aInputs [i].hasTagCompound()) mNoNBTChecks = F;
 		}
 		for (int i = 0; i < aOutputs.length; i++) if (aOutputs[i] != NI) {
 			aOutputs[i] = ST.update(aOutputs[i]);

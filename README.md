@@ -1,41 +1,19 @@
-This is the Git Repository for GregTech-6
+# gregtech6-TFRU
 
-# License
+Fork of GregTech 6 maintained for the TFRU pack.
 
-This Mod is licensed under the [GNU Lesser General Public License](LICENSE).
-All assets, unless otherwise stated, are dedicated to the public domain
-according to the [CC0 1.0 Universal Public Domain Dedication](src/main/resources/LICENSE.assets).
-Any assets containing the [GregTech logo](src/main/resources/logos) or any
-derivative of it are licensed under the
-[Creative Commons Attribution-NonCommercial 4.0 International Public License](src/main/resources/LICENSE.logos).
+## Fork focus
+This README only describes local fork work authored in this repository by the TFRU maintainers, excluding upstream patches that were later merged in.
 
-# Support
+## Notable local changes
+- Reworked a large set of TFRU-specific recipes and progression details, including Glyceryl, Carbon Crucible, Melter/Smelter flow, Oil Distill, rough glass, steam turbine cost, laser shell cost, and other value changes.
+- Added or refined machine behavior such as the `POWER_SAVING` state, higher-than-64 basic machine parallel scaling, rate-limited tanks, meter-detectable converters, valve/relay controller interactions, and output/full-state safeguards.
+- Built extensive WAILA support, tooltip improvements, and recipe-origin visibility, including automatic `From` tagging and richer tile information.
+- Added or adjusted pack compatibility hooks for TFRU, TFC armor and hazmat handling, kTFRUAddon integration, specified TFRU world generation, seawater generation, and environment detection.
+- Changed content presentation and cleanup in multiple places, including circuit textures, hidden unused materials, translation/i18n work, logging cleanup, and transparent/glowing texture compatibility fixes.
+- Added Maven publication setup and follow-up publish-position cleanup while keeping the fork buildable.
 
-You can use the Issue Tracker, or you can just use the [Forums](https://forum.mechaenetia.com/). Both ways will notify Greg at the very same time.
-
-# Dev Environment Setup
-
-Once you have this project cloned then forge needs to be set up.  There are 2 options:
-
-* If you want to just compile GT6 as quick as possible, then start by running `./gradlew setupCIWorkspace`.  This tasks just builds enough of Minecraft and Forge to be able to build Forge Mods, but not to do any development.
-* If you want to compile GT6 and want the full decompiled and deobfuscated source code in the development environment and want to be able to run MC from within the development environment then run `./gradlew setupDevWorkspace setupDecompWorkspace`.
-
-Once you have set up your environment then you can run the `assemble` task to build GT6 like:  `./gradlew assemble`
-
-If you want to run the client then you can run the `runClient` task:  `./gradlew runClient`
-
-Ditto with `runServer` for a server run.
-
-To edit the code in an IDE just open the gradle project in IntelliJ or other decent IDE.  Use the `assemble` gradle task to build or `runClient` or `runServer` tasks to be able to actively debug the running the game.
-
-On the commandline you can combine classes altogether, for example, to just build GT6 you can do this after a fresh clone:
-```sh
-./gradlew setupCIWorkspace assemble
-```
-And the file will be in `build/libs` as usual.
-
-Can fully get a full dev environment, build, and run the client all at once from a fresh clone with:
-```sh
-./gradlew setupDevWorkspace setupDecompWorkspace assemble runClient
-```
-
+## Build / publish notes
+- Gradle build files and license files are present in the repository root.
+- Local history explicitly includes `init maven publish`, publication cleanup, and repeated TFRU-targeted maintenance commits.
+- This README intentionally excludes upstream GT6 work that exists independently of the fork.

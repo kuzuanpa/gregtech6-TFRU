@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2025 GregTech-6 Team
+ * Copyright (c) 2026 GregTech-6 Team
  *
  * This file is part of GregTech.
  *
@@ -128,8 +128,8 @@ public class Loader_Fuels implements Runnable {
 		FM.Engine       .addRecipe0(T, - 16, 14, tFuel                                       , FL.CarbonDioxide.make(1), ZL_IS);
 		}
 		for (FluidStack tFuel : FL.BioDiesel.list(1)) {
-		FM.Burn         .addRecipe0(T, - 16,  9, tFuel                                       , FL.CarbonDioxide.make(1), ZL_IS);
-		FM.Engine       .addRecipe0(T, - 16, 14, tFuel                                       , FL.CarbonDioxide.make(1), ZL_IS);
+		FM.Burn         .addRecipe0(T, - 32,  6, tFuel                                       , FL.CarbonDioxide.make(1), ZL_IS);
+		FM.Engine       .addRecipe0(T, - 32,  8, tFuel                                       , FL.CarbonDioxide.make(1), ZL_IS);
 		}
 		for (FluidStack tFuel : FL.BioFuel.list(1)) {
 		FM.Burn         .addRecipe0(T, - 64,  9, tFuel                                       , FL.CarbonDioxide.make(1), ZL_IS);

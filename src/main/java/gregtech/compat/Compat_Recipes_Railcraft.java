@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2023 GregTech-6 Team
+ * Copyright (c) 2025 GregTech-6 Team
  *
  * This file is part of GregTech.
  *
@@ -90,8 +90,9 @@ public class Compat_Recipes_Railcraft extends CompatMods {
 		CR.shaped(ST.make(MD.RC, "machine.beta"           , 4, 14), tBits | DEL_IF_NO_DYES                                , "PIP"   , "G"+tWrench+"G" ,    "PIP"      , 'P', OP.plate.dat(ANY.Steel),'I'  ,OP.plate.dat(MT.StainlessSteel),'G',OD.paneGlassColorless);
 		CR.shaped(ST.make(MD.RC, "machine.beta"           , 1, 15), tBits | DEL_IF_NO_DYES                                , "CCC"          , " "+tWrench+" "               , "P P"     , 'P', OP.plate.dat(ANY.Steel)                     , 'C', OP.plateCurved.dat(MT.StainlessSteel));
 		
+		ItemsGT.VOIDING_ITEMS.add(MD.RC, "machine.beta", 11);
 		if (ConfigsGT.RECIPES.get(ConfigCategories.Recipes.disabledrecipes, "railcraft-void-chests", T)) {
-			ItemsGT.RECIPE_REMOVED_USE_TRASH_BIN_INSTEAD.add(ST.make(MD.RC, "machine.beta", 1, 11));
+			ItemsGT.RECIPE_REMOVED_USE_TRASH_BIN_INSTEAD.add(MD.RC, "machine.beta", 11);
 			CR.delate(MD.RC, "machine.beta", 11);
 		} else {
 			CR.shaped(ST.make(MD.RC, "machine.beta", 1, 11), tBits, "OOO", "OEO", "OOO", 'E', OP.gem.dat(MT.EnderPearl), 'O', OP.blockSolid.dat(MT.Obsidian));

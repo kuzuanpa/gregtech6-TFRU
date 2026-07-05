@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2023 GregTech-6 Team
+ * Copyright (c) 2026 GregTech-6 Team
  *
  * This file is part of GregTech.
  *
@@ -20,7 +20,6 @@
 package gregtech.tileentity.plants;
 
 import gregapi.code.ArrayListNoNulls;
-import gregapi.data.CS.*;
 import gregapi.data.FL;
 import gregapi.data.IL;
 import gregapi.old.Textures;
@@ -31,7 +30,11 @@ import gregapi.tileentity.misc.MultiTileEntityTreeHole;
 import gregapi.util.ST;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
+
+import java.util.Iterator;
+import java.util.List;
 
 import static gregapi.data.CS.*;
 
@@ -39,6 +42,25 @@ import static gregapi.data.CS.*;
  * @author Gregorius Techneticies
  */
 public class MultiTileEntityResinHoleRubber extends MultiTileEntityTreeHole {
+	
+	public static List<MultiTileEntityResinHoleRubber> sListResinHoles = new ArrayListNoNulls<>();
+	
+	public static boolean nearby(World aWorld, int aX, int aY, int aZ) {
+		Iterator<MultiTileEntityResinHoleRubber> tIterator = sListResinHoles.iterator();
+		while (tIterator.hasNext()) {
+			MultiTileEntityResinHoleRubber tHole = tIterator.next();
+			if (tHole == null || tHole.isDead()) {tIterator.remove(); continue;}
+			if (tHole.worldObj != aWorld) continue;
+			if (Math.abs(tHole.xCoord - aX) < 256 && Math.abs(tHole.zCoord - aZ) < 256) return T;
+		}
+		return F;
+	}
+	
+	@Override
+	public void onTickFirst2(boolean aIsServerSide) {
+		if (aIsServerSide) sListResinHoles.add(this);
+	}
+	
 	@Override
 	public void onTick2(long aTimer, boolean aIsServerSide) {
 		super.onTick2(aTimer, aIsServerSide);

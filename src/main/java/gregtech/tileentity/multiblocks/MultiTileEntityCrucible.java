@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2025 GregTech-6 Team
+ * Copyright (c) 2026 GregTech-6 Team
  *
  * This file is part of GregTech.
  *
@@ -711,6 +711,8 @@ public class MultiTileEntityCrucible extends TileEntityBase10MultiBlockBase impl
 	@Override public long getEnergySizeInputRecommended(TagData aEnergyType, byte aSide) {return 2048;}
 	@Override public long getEnergySizeInputMax(TagData aEnergyType, byte aSide) {return Long.MAX_VALUE;}
 	@Override public Collection<TagData> getEnergyTypes(byte aSide) {return ENERGYTYPES;}
+	
+	@Override public float getBlockHardness() {return mDisplayedHeight != 0 ? super.getBlockHardness() * 100 : super.getBlockHardness();}
 	
 	@Override public String getTileEntityName() {return "gt.multitileentity.multiblock.crucible";}
 

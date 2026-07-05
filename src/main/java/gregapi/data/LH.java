@@ -62,6 +62,7 @@ public class LH {
 	, RECIPES_IGNITER = "gt.lang.recipes.igniter"
 	, RECIPES_QUALITY = "gt.lang.recipes.quality"
 	, STRUCTURE = "gt.lang.structure"
+	, RANGE = "gt.lang.range"
 	, ENERGY_CONTAINED = "gt.lang.energy.contained"
 	, ENERGY_CACHED = "gt.lang.energy.cached"
 	, ENERGY_CAPACITY = "gt.lang.energy.capacity"
@@ -515,6 +516,7 @@ public class LH {
 		add(RECIPES_IGNITER                             , "Performs Ignition Rightclicks and incinerates Blocks");
 		add(RECIPES_QUALITY                             , "This has a Tool Quality of");
 		add(STRUCTURE                                   , "Structure");
+		add(RANGE                                       , "Range");
 		add(ENERGY_CONTAINED                            , "Stored Energy");
 		add(ENERGY_CACHED                               , "Cached Energy");
 		add(ENERGY_CAPACITY                             , "Capacity");
