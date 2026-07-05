@@ -1,20 +1,43 @@
 This is the most recent Changelog. It also contains some of the changes inside the >>>UPCOMING<<< Versions (most of the time). This is for 1.7.10 btw.
 
 
-6.17.07: (Not released yet)
+6.17.08: (Not released yet)
 Nothing (I tend to only add finished Stuff to the Changelog).
 
 
-6.17.06: (Not released yet)
+6.17.07: (Not released yet)
+[FIXED] Some World Loading Issue that HodgePodge introduced with FastUtils. If you use Libraries like this to replace stuff, make sure they actually work the same on the outside...
+[FIXED] Supporter Certificates were causing Lag because a File just grew in size over time. Lets hope people dont get spammed with duplicate Certificates after this fix.
+[FIXED] Some Tooltip Crash with TiC Tweaks, i think. They really shouldnt have made the iterator BEFORE posting the Tooltip Event and then use that likely to be invalid Iterator afterwards...
+[FIXED] Recipes related to AE Seed Crystals, which should fucking WORK now...
+[CHANGED] Crucibles are now 100 times harder to break when not empty.
+[CHANGED] Rubber-Tree-Resin-Holes will now always spawn, if there is no other loaded Rubber-Tree-Resin-Holes within 256 Blocks.
+[CHANGED] Slightly more than doubled Bio Diesel Fuel Value and added Mixer Recipe to obtain it.
+[ADDED] Vindicator Flower to indicate Rare Earth deposits. Please note that previously those were indicated by Orechids, so there isnt much to them aside from the pun.
+[ADDED] Kilo-Gibbl-O-Meter for more heavy duty Gibbl related sensoring.
+
+
+6.17.06:
+[FIXED] Apparently I did something that accidentially fixed the Gibbl-O-Meter when used on Boilers. Apparently it always showed double the Gibbl it was supposed to? I have no Idea what was wrong, but it behaves as intended right now so I am not unfixing it either. Not that I know what or how I fixed it either.
 [FIXED] Crucibles did not accept excessive amounts of Air while nearly full. We talking >1000KU worth of Air in ONE go, while only one Ingot worth of space is in the Crucible.
 [FIXED] GT6 Alexandrite Ore Veins will no longer generate when HBM NTM is installed (balance concerns), it also generally wont be on the "Small Gem Ores List" anymore. You can still use the Matter Replicator to make Alexandrite though, if you find a sample first.
 [CHANGED] GT6 Mossy Cobble (Not Vanilla Mossy Cobble) will make you (and Mobs) slide off if you are not sneaking. This Block spawns Mobs AND makes them slide off if there is space, which is Ideal for Mob Farms.
 [CHANGED] Mobs can no longer drop Wooden or Stone Tools of Vanilla Minecraft and instead will drop Sticks in those cases. This should very much declutter some Mob Farms.
 [CHANGED] Oil Shale in Coke Oven now gives you 10x the Oil, making it actually worthwhile to use at all.
 [CHANGED] The 3 Types of Golden Juices now make roughly ten times less Biomass than before, they now either produce 65x (64x plus base value), 9x (8x plus base value) or 2x (1x plus base value) the output of Juice based Biomass.
+[CHANGED] Can now rightclick a Tap or Nozzle with an Ender Garbage Bin or similar other Mod Voiding Items, to drain one attached Fluid Tank entirely.
+[CHANGED] Bedrock Drill can now accept the "Running Possible Detector" to check if there is 100L of Lubricant inside (and if the Structure is Okay).
+[CHANGED] Crucibles are now 1000* times harder to break when not empty. (changed to 100 times in next Release)
+[CHANGED] Sensors are now able to cleanly read GT6 Multiblock Stats without needing to be adjacent to the Controller. (before this there was plenty of hacks that made it work somewhat)
 [ADDED] Steel Rope, which is just another type of Rope.
 [ADDED] Ultimet Boilers corresponding to the TaHFC Burning Boxes.
 [ADDED] Yellow and Brown Grass now indicate Lava, Gas and Oil Springs. Greener Grass indicates Water Springs.
+[ADDED]
+Von Da Graagg Generator
+A Multiblock that turns Energy into "Mobs wont spawn except on Mossy Cobblestone", in a Square Radius of up to 256m (512x512). It consumes 16EU/m/t to do so.
+Its Design is like what english people tend to call a Tesla Coil, see https://en.wikipedia.org/wiki/Van_de_Graaff_generator for its inspiration.
+The exception of Mossy Cobblestone (from both Vanilla and GregTech) was made so people can use this for highly efficient Mob Farms.
+As always, if you have trouble understanding the Tooltip, just use the GT Builder Wand to build it.
 
 
 6.17.05:

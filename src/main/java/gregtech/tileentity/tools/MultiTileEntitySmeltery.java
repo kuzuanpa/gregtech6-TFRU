@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2025 GregTech-6 Team
+ * Copyright (c) 2026 GregTech-6 Team
  *
  * This file is part of GregTech.
  *
@@ -738,6 +738,9 @@ public class MultiTileEntitySmeltery extends TileEntityBase07Paintable implement
 		currentTip.add(LH.get(LH.WEIGHT) +" "+Chat.WHITE+ aNBT.getLong("gt.waila.weight")/10f +Chat.YELLOW+" kg");
 		return currentTip;
 	}
+
+
+	@Override public float getBlockHardness() {return mDisplayedHeight != 0 ? super.getBlockHardness() * 100 : super.getBlockHardness();}
 
 	@Override public String getTileEntityName() {return "gt.multitileentity.smeltery";}
 }

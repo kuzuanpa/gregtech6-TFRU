@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2025 GregTech-6 Team
+ * Copyright (c) 2026 GregTech-6 Team
  *
  * This file is part of GregTech.
  *
@@ -51,49 +51,59 @@ public class Loader_Recipes_Other implements Runnable {
 		RM.ic2_compressor(OM.dust(tWax, U4), foil .mat(tWax, 1));
 		}
 		
-		RM.Mixer.addRecipe2(T, 16, 64, dust     .mat(MT.Cu    , 3), dust     .mat(MT.Sn, 1), IL.Compound_Bronze       .get(36));
-		RM.Mixer.addRecipe2(T, 16, 64, dust     .mat(MT.Cu    , 3), dust     .mat(MT.Zn, 1), IL.Compound_Brass        .get(36));
-		RM.Mixer.addRecipe2(T, 16, 64, dust     .mat(MT.Cu    , 3), dust     .mat(MT.As, 1), IL.Compound_ArsenicCopper.get(36));
-		RM.Mixer.addRecipe2(T, 16, 80, dust     .mat(MT.Bronze, 4), dust     .mat(MT.As, 1), IL.Compound_ArsenicBronze.get(45));
-		RM.Mixer.addRecipe2(T, 16, 80, IL.Compound_Bronze .get(36), dust     .mat(MT.As, 1), IL.Compound_ArsenicBronze.get(45));
-		RM.Mixer.addRecipe2(T, 16, 80, dust     .mat(MT.Brass , 4), dust     .mat(MT.Bi, 1), IL.Compound_BismuthBronze.get(45));
-		RM.Mixer.addRecipe2(T, 16, 80, IL.Compound_Brass  .get(36), dust     .mat(MT.Bi, 1), IL.Compound_BismuthBronze.get(45));
-		RM.Mixer.addRecipe2(T, 16, 16, dustSmall.mat(MT.Cu    , 3), dustSmall.mat(MT.Sn, 1), IL.Compound_Bronze       .get( 9));
-		RM.Mixer.addRecipe2(T, 16, 16, dustSmall.mat(MT.Cu    , 3), dustSmall.mat(MT.Zn, 1), IL.Compound_Brass        .get( 9));
-		RM.Mixer.addRecipe2(T, 16, 16, dustSmall.mat(MT.Cu    , 3), dustSmall.mat(MT.As, 1), IL.Compound_ArsenicCopper.get( 9));
-		RM.Mixer.addRecipe2(T, 16, 80, dustSmall.mat(MT.Bronze,16), dustSmall.mat(MT.As, 4), IL.Compound_ArsenicBronze.get(45));
-		RM.Mixer.addRecipe2(T, 16, 80, IL.Compound_Bronze .get(36), dustSmall.mat(MT.As, 4), IL.Compound_ArsenicBronze.get(45));
-		RM.Mixer.addRecipe2(T, 16, 80, dustSmall.mat(MT.Brass ,16), dustSmall.mat(MT.Bi, 4), IL.Compound_BismuthBronze.get(45));
-		RM.Mixer.addRecipe2(T, 16, 80, IL.Compound_Brass  .get(36), dustSmall.mat(MT.Bi, 4), IL.Compound_BismuthBronze.get(45));
+		RM.Mixer.addRecipe2(T, 16, 64, dust     .mat(MT.Cu           , 3), dust     .mat(MT.Sn, 1), IL.Compound_Bronze       .get(36));
+		RM.Mixer.addRecipe2(T, 16, 64, dust     .mat(MT.Cu           , 3), dust     .mat(MT.Zn, 1), IL.Compound_Brass        .get(36));
+		RM.Mixer.addRecipe2(T, 16, 64, dust     .mat(MT.Cu           , 3), dust     .mat(MT.As, 1), IL.Compound_ArsenicCopper.get(36));
+		RM.Mixer.addRecipe2(T, 16, 80, dust     .mat(MT.ArsenicCopper, 4), dust     .mat(MT.Sn, 1), IL.Compound_ArsenicBronze.get(45));
+		RM.Mixer.addRecipe2(T, 16, 80, IL.Compound_ArsenicCopper .get(36), dust     .mat(MT.Sn, 1), IL.Compound_ArsenicBronze.get(45));
+		RM.Mixer.addRecipe2(T, 16, 80, dust     .mat(MT.Bronze       , 4), dust     .mat(MT.As, 1), IL.Compound_ArsenicBronze.get(45));
+		RM.Mixer.addRecipe2(T, 16, 80, IL.Compound_Bronze        .get(36), dust     .mat(MT.As, 1), IL.Compound_ArsenicBronze.get(45));
+		RM.Mixer.addRecipe2(T, 16, 80, dust     .mat(MT.Brass        , 4), dust     .mat(MT.Bi, 1), IL.Compound_BismuthBronze.get(45));
+		RM.Mixer.addRecipe2(T, 16, 80, IL.Compound_Brass         .get(36), dust     .mat(MT.Bi, 1), IL.Compound_BismuthBronze.get(45));
+		RM.Mixer.addRecipe2(T, 16, 16, dustSmall.mat(MT.Cu           , 3), dustSmall.mat(MT.Sn, 1), IL.Compound_Bronze       .get( 9));
+		RM.Mixer.addRecipe2(T, 16, 16, dustSmall.mat(MT.Cu           , 3), dustSmall.mat(MT.Zn, 1), IL.Compound_Brass        .get( 9));
+		RM.Mixer.addRecipe2(T, 16, 16, dustSmall.mat(MT.Cu           , 3), dustSmall.mat(MT.As, 1), IL.Compound_ArsenicCopper.get( 9));
+		RM.Mixer.addRecipe2(T, 16, 80, dustSmall.mat(MT.ArsenicCopper,16), dustSmall.mat(MT.Sn, 4), IL.Compound_ArsenicBronze.get(45));
+		RM.Mixer.addRecipe2(T, 16, 80, IL.Compound_ArsenicCopper .get(36), dustSmall.mat(MT.Sn, 4), IL.Compound_ArsenicBronze.get(45));
+		RM.Mixer.addRecipe2(T, 16, 80, dustSmall.mat(MT.Bronze       ,16), dustSmall.mat(MT.As, 4), IL.Compound_ArsenicBronze.get(45));
+		RM.Mixer.addRecipe2(T, 16, 80, IL.Compound_Bronze        .get(36), dustSmall.mat(MT.As, 4), IL.Compound_ArsenicBronze.get(45));
+		RM.Mixer.addRecipe2(T, 16, 80, dustSmall.mat(MT.Brass        ,16), dustSmall.mat(MT.Bi, 4), IL.Compound_BismuthBronze.get(45));
+		RM.Mixer.addRecipe2(T, 16, 80, IL.Compound_Brass         .get(36), dustSmall.mat(MT.Bi, 4), IL.Compound_BismuthBronze.get(45));
 		for (OreDictPrefix tPrefixA : new OreDictPrefix[] {dustTiny, nugget, scrapGt}) {
-		RM.Mixer.addRecipe2(T, 16, 64, tPrefixA .mat(MT.Cu    ,27), dust     .mat(MT.Sn, 1), IL.Compound_Bronze       .get(36));
-		RM.Mixer.addRecipe2(T, 16, 64, tPrefixA .mat(MT.Cu    ,27), dust     .mat(MT.Zn, 1), IL.Compound_Brass        .get(36));
-		RM.Mixer.addRecipe2(T, 16, 64, tPrefixA .mat(MT.Cu    ,27), dust     .mat(MT.As, 1), IL.Compound_ArsenicCopper.get(36));
-		RM.Mixer.addRecipe2(T, 16, 80, tPrefixA .mat(MT.Bronze,36), dust     .mat(MT.As, 1), IL.Compound_ArsenicBronze.get(45));
-		RM.Mixer.addRecipe2(T, 16, 80, tPrefixA .mat(MT.Brass ,36), dust     .mat(MT.Bi, 1), IL.Compound_BismuthBronze.get(45));
-		RM.Mixer.addRecipe2(T, 16, 64, tPrefixA .mat(MT.Cu    ,27), dustSmall.mat(MT.Sn, 4), IL.Compound_Bronze       .get(36));
-		RM.Mixer.addRecipe2(T, 16, 64, tPrefixA .mat(MT.Cu    ,27), dustSmall.mat(MT.Zn, 4), IL.Compound_Brass        .get(36));
-		RM.Mixer.addRecipe2(T, 16, 64, tPrefixA .mat(MT.Cu    ,27), dustSmall.mat(MT.As, 4), IL.Compound_ArsenicCopper.get(36));
-		RM.Mixer.addRecipe2(T, 16, 80, tPrefixA .mat(MT.Bronze,36), dustSmall.mat(MT.As, 4), IL.Compound_ArsenicBronze.get(45));
-		RM.Mixer.addRecipe2(T, 16, 80, tPrefixA .mat(MT.Brass ,36), dustSmall.mat(MT.Bi, 4), IL.Compound_BismuthBronze.get(45));
-		RM.Mixer.addRecipe2(T, 16, 22, dust     .mat(MT.Cu    , 1), tPrefixA .mat(MT.Sn, 3), IL.Compound_Bronze       .get(12));
-		RM.Mixer.addRecipe2(T, 16, 22, dust     .mat(MT.Cu    , 1), tPrefixA .mat(MT.Zn, 3), IL.Compound_Brass        .get(12));
-		RM.Mixer.addRecipe2(T, 16, 22, dust     .mat(MT.Cu    , 1), tPrefixA .mat(MT.As, 3), IL.Compound_ArsenicCopper.get(12));
-		RM.Mixer.addRecipe2(T, 16, 80, dust     .mat(MT.Bronze, 4), tPrefixA .mat(MT.As, 9), IL.Compound_ArsenicBronze.get(45));
-		RM.Mixer.addRecipe2(T, 16, 80, dust     .mat(MT.Brass , 4), tPrefixA .mat(MT.Bi, 9), IL.Compound_BismuthBronze.get(45));
-		RM.Mixer.addRecipe2(T, 16, 22, dustSmall.mat(MT.Cu    , 4), tPrefixA .mat(MT.Sn, 3), IL.Compound_Bronze       .get(12));
-		RM.Mixer.addRecipe2(T, 16, 22, dustSmall.mat(MT.Cu    , 4), tPrefixA .mat(MT.Zn, 3), IL.Compound_Brass        .get(12));
-		RM.Mixer.addRecipe2(T, 16, 22, dustSmall.mat(MT.Cu    , 4), tPrefixA .mat(MT.As, 3), IL.Compound_ArsenicCopper.get(12));
-		RM.Mixer.addRecipe2(T, 16, 80, dustSmall.mat(MT.Bronze,16), tPrefixA .mat(MT.As, 9), IL.Compound_ArsenicBronze.get(45));
-		RM.Mixer.addRecipe2(T, 16, 10, IL.Compound_Bronze .get( 4), tPrefixA .mat(MT.As, 1), IL.Compound_ArsenicBronze.get( 5));
-		RM.Mixer.addRecipe2(T, 16, 80, dustSmall.mat(MT.Brass ,16), tPrefixA .mat(MT.Bi, 9), IL.Compound_BismuthBronze.get(45));
-		RM.Mixer.addRecipe2(T, 16, 10, IL.Compound_Brass  .get( 4), tPrefixA .mat(MT.Bi, 1), IL.Compound_BismuthBronze.get( 5));
+		RM.Mixer.addRecipe2(T, 16, 64, tPrefixA .mat(MT.Cu           ,27), dust     .mat(MT.Sn, 1), IL.Compound_Bronze       .get(36));
+		RM.Mixer.addRecipe2(T, 16, 64, tPrefixA .mat(MT.Cu           ,27), dust     .mat(MT.Zn, 1), IL.Compound_Brass        .get(36));
+		RM.Mixer.addRecipe2(T, 16, 64, tPrefixA .mat(MT.Cu           ,27), dust     .mat(MT.As, 1), IL.Compound_ArsenicCopper.get(36));
+		RM.Mixer.addRecipe2(T, 16, 80, tPrefixA .mat(MT.ArsenicCopper,36), dust     .mat(MT.Sn, 1), IL.Compound_ArsenicBronze.get(45));
+		RM.Mixer.addRecipe2(T, 16, 80, tPrefixA .mat(MT.Bronze       ,36), dust     .mat(MT.As, 1), IL.Compound_ArsenicBronze.get(45));
+		RM.Mixer.addRecipe2(T, 16, 80, tPrefixA .mat(MT.Brass        ,36), dust     .mat(MT.Bi, 1), IL.Compound_BismuthBronze.get(45));
+		RM.Mixer.addRecipe2(T, 16, 64, tPrefixA .mat(MT.Cu           ,27), dustSmall.mat(MT.Sn, 4), IL.Compound_Bronze       .get(36));
+		RM.Mixer.addRecipe2(T, 16, 64, tPrefixA .mat(MT.Cu           ,27), dustSmall.mat(MT.Zn, 4), IL.Compound_Brass        .get(36));
+		RM.Mixer.addRecipe2(T, 16, 64, tPrefixA .mat(MT.Cu           ,27), dustSmall.mat(MT.As, 4), IL.Compound_ArsenicCopper.get(36));
+		RM.Mixer.addRecipe2(T, 16, 80, tPrefixA .mat(MT.ArsenicCopper,36), dustSmall.mat(MT.Sn, 4), IL.Compound_ArsenicBronze.get(45));
+		RM.Mixer.addRecipe2(T, 16, 80, tPrefixA .mat(MT.Bronze       ,36), dustSmall.mat(MT.As, 4), IL.Compound_ArsenicBronze.get(45));
+		RM.Mixer.addRecipe2(T, 16, 80, tPrefixA .mat(MT.Brass        ,36), dustSmall.mat(MT.Bi, 4), IL.Compound_BismuthBronze.get(45));
+		RM.Mixer.addRecipe2(T, 16, 22, dust     .mat(MT.Cu           , 1), tPrefixA .mat(MT.Sn, 3), IL.Compound_Bronze       .get(12));
+		RM.Mixer.addRecipe2(T, 16, 22, dust     .mat(MT.Cu           , 1), tPrefixA .mat(MT.Zn, 3), IL.Compound_Brass        .get(12));
+		RM.Mixer.addRecipe2(T, 16, 22, dust     .mat(MT.Cu           , 1), tPrefixA .mat(MT.As, 3), IL.Compound_ArsenicCopper.get(12));
+		RM.Mixer.addRecipe2(T, 16, 80, dust     .mat(MT.ArsenicCopper, 4), tPrefixA .mat(MT.Sn, 9), IL.Compound_ArsenicBronze.get(45));
+		RM.Mixer.addRecipe2(T, 16, 80, dust     .mat(MT.Bronze       , 4), tPrefixA .mat(MT.As, 9), IL.Compound_ArsenicBronze.get(45));
+		RM.Mixer.addRecipe2(T, 16, 80, dust     .mat(MT.Brass        , 4), tPrefixA .mat(MT.Bi, 9), IL.Compound_BismuthBronze.get(45));
+		RM.Mixer.addRecipe2(T, 16, 22, dustSmall.mat(MT.Cu           , 4), tPrefixA .mat(MT.Sn, 3), IL.Compound_Bronze       .get(12));
+		RM.Mixer.addRecipe2(T, 16, 22, dustSmall.mat(MT.Cu           , 4), tPrefixA .mat(MT.Zn, 3), IL.Compound_Brass        .get(12));
+		RM.Mixer.addRecipe2(T, 16, 22, dustSmall.mat(MT.Cu           , 4), tPrefixA .mat(MT.As, 3), IL.Compound_ArsenicCopper.get(12));
+		RM.Mixer.addRecipe2(T, 16, 80, dustSmall.mat(MT.ArsenicCopper,16), tPrefixA .mat(MT.Sn, 9), IL.Compound_ArsenicBronze.get(45));
+		RM.Mixer.addRecipe2(T, 16, 80, dustSmall.mat(MT.Bronze       ,16), tPrefixA .mat(MT.As, 9), IL.Compound_ArsenicBronze.get(45));
+		RM.Mixer.addRecipe2(T, 16, 80, dustSmall.mat(MT.Brass        ,16), tPrefixA .mat(MT.Bi, 9), IL.Compound_BismuthBronze.get(45));
+		RM.Mixer.addRecipe2(T, 16, 10, IL.Compound_ArsenicCopper .get( 4), tPrefixA .mat(MT.Sn, 1), IL.Compound_ArsenicBronze.get( 5));
+		RM.Mixer.addRecipe2(T, 16, 10, IL.Compound_Bronze        .get( 4), tPrefixA .mat(MT.As, 1), IL.Compound_ArsenicBronze.get( 5));
+		RM.Mixer.addRecipe2(T, 16, 10, IL.Compound_Brass         .get( 4), tPrefixA .mat(MT.Bi, 1), IL.Compound_BismuthBronze.get( 5));
 		for (OreDictPrefix tPrefixB : new OreDictPrefix[] {dustTiny, nugget, scrapGt}) {
-		RM.Mixer.addRecipe2(T, 16,  8, tPrefixA .mat(MT.Cu    , 3), tPrefixB .mat(MT.Sn, 1), IL.Compound_Bronze       .get( 4));
-		RM.Mixer.addRecipe2(T, 16,  8, tPrefixA .mat(MT.Cu    , 3), tPrefixB .mat(MT.Zn, 1), IL.Compound_Brass        .get( 4));
-		RM.Mixer.addRecipe2(T, 16,  8, tPrefixA .mat(MT.Cu    , 3), tPrefixB .mat(MT.As, 1), IL.Compound_ArsenicCopper.get( 4));
-		RM.Mixer.addRecipe2(T, 16, 10, tPrefixA .mat(MT.Bronze, 4), tPrefixB .mat(MT.As, 1), IL.Compound_ArsenicBronze.get( 5));
-		RM.Mixer.addRecipe2(T, 16, 10, tPrefixA .mat(MT.Brass , 4), tPrefixB .mat(MT.Bi, 1), IL.Compound_BismuthBronze.get( 5));
+		RM.Mixer.addRecipe2(T, 16,  8, tPrefixA .mat(MT.Cu           , 3), tPrefixB .mat(MT.Sn, 1), IL.Compound_Bronze       .get( 4));
+		RM.Mixer.addRecipe2(T, 16,  8, tPrefixA .mat(MT.Cu           , 3), tPrefixB .mat(MT.Zn, 1), IL.Compound_Brass        .get( 4));
+		RM.Mixer.addRecipe2(T, 16,  8, tPrefixA .mat(MT.Cu           , 3), tPrefixB .mat(MT.As, 1), IL.Compound_ArsenicCopper.get( 4));
+		RM.Mixer.addRecipe2(T, 16, 10, tPrefixA .mat(MT.ArsenicCopper, 4), tPrefixB .mat(MT.Sn, 1), IL.Compound_ArsenicBronze.get( 5));
+		RM.Mixer.addRecipe2(T, 16, 10, tPrefixA .mat(MT.Bronze       , 4), tPrefixB .mat(MT.As, 1), IL.Compound_ArsenicBronze.get( 5));
+		RM.Mixer.addRecipe2(T, 16, 10, tPrefixA .mat(MT.Brass        , 4), tPrefixB .mat(MT.Bi, 1), IL.Compound_BismuthBronze.get( 5));
 		}
 		}
 		
@@ -424,7 +434,7 @@ public class Loader_Recipes_Other implements Runnable {
 		RM.Bath             .addRecipe1(T,  0,   16, ST.make(Blocks.stone               , 1, 0), FL.Mana_TE.make(1), NF, ST.make(Blocks.stonebrick, 1, 3));
 		RM.Bath             .addRecipe1(T,  0,   16, ST.make(Blocks.lapis_ore           , 1, W), FL.Mana_TE.make(5), NF, ST.make(Blocks.lapis_block, 1, 0));
 		RM.Bath             .addRecipe1(T,  0,   16, ST.make(Blocks.redstone_ore        , 1, W), FL.Mana_TE.make(5), NF, ST.make(Blocks.redstone_block, 1, 0));
-		RM.Bath             .addRecipe1(T,  0,   16, ST.make(Blocks.lit_redstone_ore    , 1, W), FL.Mana_TE.make(5), NF, ST.make(Blocks.redstone_block, 1, 0));
+//      RM.Bath             .addRecipe1(T,  0,   16, ST.make(Blocks.lit_redstone_ore    , 1, W), FL.Mana_TE.make(5), NF, ST.make(Blocks.redstone_block, 1, 0));
 		}
 		
 		RM.Bath             .addRecipe2(T,  0,   16, ST.make(Items.paper, 2, W), ST.tag(2), FL.Glue.make( 125), NF, plateDouble.mat(MT.Paper, 1));

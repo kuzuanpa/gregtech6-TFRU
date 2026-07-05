@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2025 GregTech-6 Team
+ * Copyright (c) 2026 GregTech-6 Team
  *
  * This file is part of GregTech.
  *
@@ -50,9 +50,15 @@ public class LoaderUnificationTargets implements Runnable {
 		OreDictManager.INSTANCE.setTarget(OP.dust           , MT.Mingrade               , MD.HBM, "item.powder_red_copper"          , 0);
 		OreDictManager.INSTANCE.setTarget(OP.ingot          , MT.Mingrade               , MD.HBM, "item.ingot_red_copper"           , 0);
 		OreDictManager.INSTANCE.setTarget(OP.blockIngot     , MT.Mingrade               , MD.HBM, "tile.block_red_copper"           , 0);
+		OreDictManager.INSTANCE.setTarget(OP.billet         , MT.IronMagnetic           , MD.HBM, "item.lodestone"                  , 0);
 		OreDictManager.INSTANCE.setTarget(OP.scrapGt        , MT.MeteoricIron           , MD.HBM, "item.fragment_meteorite"         , 0);
 		OreDictManager.INSTANCE.setTarget(OP.dustTiny       , MT.MeteoricIron           , MD.HBM, "item.powder_meteorite_tiny"      , 0);
 		OreDictManager.INSTANCE.setTarget(OP.dust           , MT.MeteoricIron           , MD.HBM, "item.powder_meteorite"           , 0);
+		OreDictManager.INSTANCE.setTarget(OP.oreSpace       , MT.MeteoricIron           , MD.HBM, "tile.ore_meteor"                 , 0);
+		OreDictManager.INSTANCE.setTarget(OP.oreSpace       , MT.Cu                     , MD.HBM, "tile.ore_meteor"                 , 1);
+		OreDictManager.INSTANCE.setTarget(OP.oreSpace       , MT.Al2O3                  , MD.HBM, "tile.ore_meteor"                 , 2);
+		OreDictManager.INSTANCE.setTarget(OP.oreSpace       , MT.RareEarth              , MD.HBM, "tile.ore_meteor"                 , 3);
+		OreDictManager.INSTANCE.setTarget(OP.oreSpace       , MT.OREMATS.Cobaltite      , MD.HBM, "tile.ore_meteor"                 , 4);
 		OreDictManager.INSTANCE.setTarget(OP.oreSpace       , MT.Al2O3                  , MD.HBM, "tile.ore_meteor_aluminium"       , 0);
 		OreDictManager.INSTANCE.setTarget(OP.oreSpace       , MT.Cu                     , MD.HBM, "tile.ore_meteor_copper"          , 0);
 		OreDictManager.INSTANCE.setTarget(OP.oreSpace       , MT.Pb                     , MD.HBM, "tile.ore_meteor_lead"            , 0);
@@ -1332,6 +1338,7 @@ public class LoaderUnificationTargets implements Runnable {
 		OreDictManager.INSTANCE.setTarget(OP.oreVanillastone, MT.Sn                     , ST.make(MD.IC2, "tinOre"        , 1, 0));
 		OreDictManager.INSTANCE.setTarget(OP.oreVanillastone, MT.OREMATS.Uraninite      , ST.make(MD.IC2, "uraniumOre"    , 1, 0));
 		if (MD.IC2C.mLoaded) {
+		OreDictManager.INSTANCE.setTarget(OP.ingot          , MT.U_238                  , MD.IC2, "item.itemIngotUran", 0);
 		OreDictManager.INSTANCE.setTarget(OP.plateDense     , MT.Cu                     , MD.IC2, "item.itemPartDCP", 0);
 		} else {
 		OreDictManager.INSTANCE.setTarget(OP.dust           , MT.EnergiumRed            , ST.mkic("energiumDust", 1));

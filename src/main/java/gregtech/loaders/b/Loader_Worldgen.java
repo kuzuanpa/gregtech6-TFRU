@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2025 GregTech-6 Team
+ * Copyright (c) 2026 GregTech-6 Team
  *
  * This file is part of GregTech.
  *
@@ -535,10 +535,11 @@ public class Loader_Worldgen implements Runnable {
 		, new StoneLayerOres(MT.OREMATS.Mirabilite      , U8 , 16, 64)
 		, new StoneLayerOres(MT.OREMATS.Trona           , U8 , 16, 64)
 		);
-		StoneLayer.bothsides(MT.STONES.Gneiss, MT.Gypsum
-		, new StoneLayerOres(MT.OREMATS.Mirabilite      , U8 , 16, 64)
-		, new StoneLayerOres(MT.OREMATS.Trona           , U8 , 16, 64)
-		);
+		// This Line was duplicated and I do not remember which part of it was supposed to be changed to a different Material...
+		//StoneLayer.bothsides(MT.STONES.Gneiss, MT.Gypsum
+		//, new StoneLayerOres(MT.OREMATS.Mirabilite      , U8 , 16, 64)
+		//, new StoneLayerOres(MT.OREMATS.Trona           , U8 , 16, 64)
+		//);
 		StoneLayer.bothsides(MT.STONES.Granite, MT.NaCl
 		, new StoneLayerOres(MT.OREMATS.Zeolite         , U8 , 16, 48)
 		);
@@ -741,9 +742,9 @@ public class Loader_Worldgen implements Runnable {
 		new WorldgenOresBedrock("ore.bedrock.gold.b"       , T, T,  32000, MT.Au                  , BlocksGT.FlowersB, 2, GEN_FLOOR);
 		new WorldgenOresBedrock("ore.bedrock.cooperite"    , T, T,  16000, MT.OREMATS.Cooperite   , BlocksGT.FlowersA, 6, GEN_FLOOR);
 		new WorldgenOresBedrock("ore.bedrock.copper"       , T, T,  16000, MT.Cu                  , BlocksGT.FlowersB, 3, GEN_FLOOR);
-		new WorldgenOresBedrock("ore.bedrock.monazite"     , T, T,  16000, MT.Monazite            , BlocksGT.FlowersA, 7, GEN_FLOOR); // TODO Rare Earth Flower
+		new WorldgenOresBedrock("ore.bedrock.monazite"     , T, T,  16000, MT.Monazite            , BlocksGT.FlowersA, 9, GEN_FLOOR);
 		new WorldgenOresBedrock("ore.bedrock.powellite"    , T, T,  14000, MT.OREMATS.Powellite   , BlocksGT.FlowersA, 7, GEN_FLOOR); // Molybdenum Flower? I think I should just keep this one as Orechid.
-		new WorldgenOresBedrock("ore.bedrock.bastnasite"   , T, T,   8000, MT.OREMATS.Bastnasite  , BlocksGT.FlowersA, 7, GEN_FLOOR); // TODO Rare Earth Flower
+		new WorldgenOresBedrock("ore.bedrock.bastnasite"   , T, T,   8000, MT.OREMATS.Bastnasite  , BlocksGT.FlowersA, 9, GEN_FLOOR);
 		new WorldgenOresBedrock("ore.bedrock.stibnite"     , T, T,   8000, MT.OREMATS.Arsenopyrite, BlocksGT.FlowersB, 0, GEN_FLOOR);
 		new WorldgenOresBedrock("ore.bedrock.redstone"     , T, T,   7000, MT.Redstone            , BlocksGT.FlowersB, 4, GEN_FLOOR);
 		new WorldgenOresBedrock("ore.bedrock.vanadium"     , T, T,   6000, MT.V2O5                , BlocksGT.FlowersA, 7, GEN_FLOOR); // TODO Vanadium Flower
@@ -831,6 +832,7 @@ public class Loader_Worldgen implements Runnable {
 		new WorldgenOresSmall("ore.small.amber"            , T,   5,  70,   1, MT.Amber               , GEN_OVERWORLD, GEN_GT, GEN_AETHER                                                 );
 		new WorldgenOresSmall("ore.small.craponite"        , T,   5, 250,   2, MT.Craponite           , GEN_OVERWORLD, GEN_GT, GEN_AETHER, GEN_NETHER, GEN_END, GEN_ASTEROIDS, GEN_PLANETS);
 		new WorldgenOresSmall("ore.small.redstone"         , T,   5,  20,  16, MT.Redstone            , GEN_OVERWORLD, GEN_GT, GEN_AETHER, GEN_NETHER                        , GEN_PLANETS);
+		new WorldgenOresSmall("ore.small.redcinnabar"      , T,   5,  20,   4, MT.OREMATS.Cinnabar    , GEN_OVERWORLD, GEN_GT, GEN_PFAA, GEN_A97, GEN_A97_GT, GEN_ENVM, GEN_ENVM_GT, GEN_CW2_AquaCavern, GEN_CW2_AquaCavern_GT, GEN_CW2_Caveland, GEN_CW2_Caveland_GT, GEN_CW2_Cavenia, GEN_CW2_Cavenia_GT, GEN_CW2_Cavern, GEN_CW2_Cavern_GT, GEN_CW2_Caveworld, GEN_CW2_Caveworld_GT, GEN_EREBUS, GEN_BETWEENLANDS, GEN_ATUM, GEN_ALFHEIM, GEN_AETHER, GEN_NETHER         , GEN_MARS                         , GEN_PLANETS);
 		new WorldgenOresSmall("ore.small.lapis"            , T,  20,  40,   8, MT.Lapis               , GEN_OVERWORLD, GEN_GT, GEN_AETHER                                                 );
 		new WorldgenOresSmall("ore.small.eudialyte"        , T,  20,  40,   4, MT.Eudialyte           , GEN_OVERWORLD, GEN_GT                                                             );
 		new WorldgenOresSmall("ore.small.azurite"          , T,  20,  40,   4, MT.Azurite             , GEN_OVERWORLD, GEN_GT                                                             );

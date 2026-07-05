@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2025 GregTech-6 Team
+ * Copyright (c) 2026 GregTech-6 Team
  *
  * This file is part of GregTech.
  *
@@ -250,6 +250,9 @@ public class GT_API_Proxy_Client extends GT_API_Proxy {
 					case 4: aEvent.toolTip.set(0, LH.Chat.WHITE+LH.get("oredict.plateLead")); break;
 					}
 				}
+			} else {
+				// Anything from TiC with an NBT on it has a potential to Crash if its Tooltip is touched, due to them establishing a frikkin Iterator before sending the Tooltip Event, so lets avoid that...
+				if (MD.TiC.owns(aRegName)) return;
 			}
 			
 			if (MD.Mek.owns(aRegName)) aEvent.toolTip.set(0, aEvent.toolTip.get(0).replaceAll("Osmium", MT.Ge.mNameLocal));
