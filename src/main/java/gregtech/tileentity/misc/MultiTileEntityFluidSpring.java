@@ -20,8 +20,10 @@
 package gregtech.tileentity.misc;
 
 import gregapi.block.multitileentity.IMultiTileEntity.*;
+import gregapi.block.multitileentity.IWailaTile;
 import gregapi.block.multitileentity.MultiTileEntityRegistry;
 import gregapi.data.FL;
+import gregapi.data.LH;
 import gregapi.network.INetworkHandler;
 import gregapi.network.IPacket;
 import gregapi.old.Textures;
@@ -34,6 +36,8 @@ import gregapi.tileentity.data.ITileEntitySurface;
 import gregapi.util.ST;
 import gregapi.util.UT;
 import gregapi.util.WD;
+import mcp.mobius.waila.api.IWailaConfigHandler;
+import mcp.mobius.waila.api.IWailaDataAccessor;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
@@ -41,12 +45,14 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.BlockFluidFinite;
 import net.minecraftforge.fluids.FluidStack;
 
+import java.util.List;
+
 import static gregapi.data.CS.*;
 
 /**
  * @author Gregorius Techneticies
  */
-public class MultiTileEntityFluidSpring extends TileEntityBase04MultiTileEntities implements IMTE_OnRegistration, ITileEntitySurface, IMTE_IsSideSolid, IMTE_GetExplosionResistance, IMTE_GetBlockHardness, IMTE_GetLightOpacity, IMTE_SyncDataShort {
+public class MultiTileEntityFluidSpring extends TileEntityBase04MultiTileEntities implements IMTE_OnRegistration, ITileEntitySurface, IMTE_IsSideSolid, IMTE_GetExplosionResistance, IMTE_GetBlockHardness, IMTE_GetLightOpacity, IMTE_SyncDataShort, IWailaTile {
 	public FluidStack mFluid = FL.Water.make(1);
 	public boolean mActive = F;
 	
@@ -157,6 +163,13 @@ public class MultiTileEntityFluidSpring extends TileEntityBase04MultiTileEntitie
 	@Override public boolean isSurfaceSolid         (byte aSide) {return T;}
 	@Override public boolean isSurfaceOpaque        (byte aSide) {return T;}
 	@Override public boolean isSideSolid            (byte aSide) {return T;}
-	
+
+	@Override
+	public List<String> getWailaBody(List<String> currentTip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
+		IWailaTile.super.getWailaBody(currentTip, accessor, config);
+		currentTip.add(LH.Chat.GRAY+LH.get(LH.SPRING_STATS_INTERVAL)+" "+LH.Chat.WHITE+ mFluid.amount +LH.get(LH.TIME_TICKS));
+		return currentTip;
+	}
+
 	@Override public String getTileEntityName() {return "gt.multitileentity.fluid.spring";}
 }
