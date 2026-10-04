@@ -382,7 +382,6 @@ public class MultiItemTechnological extends MultiItemRandomWithCompat {
 		
 		
 		IL.Comp_Laser_Gas_Empty            .set(addItem(11000, "Empty Gas Laser Emitter"          , "For Electric Lasers"                             , TC.stack(TC.LUX, 1), TC.stack(TC.VACUOS, 2)));
-		CR.shaped(IL.Comp_Laser_Gas_Empty.get(1), CR.DEF_REV_NCC, "CWM", "WGx", "MTd", 'W', MT.DATA.CABLES_01[2], 'C', OD_CIRCUITS[1], 'M', OP.plate.dat(MT.Ag), 'T', OP.screw.dat(MT.StainlessSteel), 'G', OD.blockGlassColorless);
 		
 		IL.Comp_Laser_Gas_He               .set(addItem(11001, "Helium Laser Emitter"             , "Purpose: Weak Optical Appliances"                , TC.stack(TC.LUX, 2), TC.stack(TC.AER, 1), OM.data(IL.Comp_Laser_Gas_Empty.get(1))));
 		IL.Comp_Laser_Gas_Ne               .set(addItem(11002, "Neon Laser Emitter"               , "Purpose: Weak Optical Appliances"                , TC.stack(TC.LUX, 2), TC.stack(TC.AER, 1), OM.data(IL.Comp_Laser_Gas_Empty.get(1))));
@@ -393,14 +392,6 @@ public class MultiItemTechnological extends MultiItemRandomWithCompat {
 		IL.Comp_Laser_Gas_CO               .set(addItem(11007, "Carbon Monoxide Laser Emitter"    , "Purpose: Weak Material Processing"               , TC.stack(TC.LUX, 2), TC.stack(TC.AER, 1), OM.data(IL.Comp_Laser_Gas_Empty.get(1))));
 		IL.Comp_Laser_Gas_CO2              .set(addItem(11008, "Carbon Dioxide Laser Emitter"     , "Purpose: Strong Material Processing"             , TC.stack(TC.LUX, 2), TC.stack(TC.AER, 1), OM.data(IL.Comp_Laser_Gas_Empty.get(1))));
 		
-		RM.Canner.addRecipe1(T, 16, 128, IL.Comp_Laser_Gas_Empty.get(1), MT.He      .gas(U, T), NF, IL.Comp_Laser_Gas_He.get(1));
-		RM.Canner.addRecipe1(T, 16, 128, IL.Comp_Laser_Gas_Empty.get(1), MT.Ne      .gas(U, T), NF, IL.Comp_Laser_Gas_Ne.get(1));
-		RM.Canner.addRecipe1(T, 16, 128, IL.Comp_Laser_Gas_Empty.get(1), MT.Ar      .gas(U, T), NF, IL.Comp_Laser_Gas_Ar.get(1));
-		RM.Canner.addRecipe1(T, 16, 128, IL.Comp_Laser_Gas_Empty.get(1), MT.Kr      .gas(U, T), NF, IL.Comp_Laser_Gas_Kr.get(1));
-		RM.Canner.addRecipe1(T, 16, 128, IL.Comp_Laser_Gas_Empty.get(1), MT.Xe      .gas(U, T), NF, IL.Comp_Laser_Gas_Xe.get(1));
-		RM.Canner.addRecipe1(T, 16, 128, IL.Comp_Laser_Gas_Empty.get(1), MT.HeNe    .gas(U, T), NF, IL.Comp_Laser_Gas_HeNe.get(1));
-		RM.Canner.addRecipe1(T, 16, 128, IL.Comp_Laser_Gas_Empty.get(1), MT.CO      .gas(U, T), NF, IL.Comp_Laser_Gas_CO.get(1));
-		RM.Canner.addRecipe1(T, 16, 128, IL.Comp_Laser_Gas_Empty.get(1), MT.CO2     .gas(U, T), NF, IL.Comp_Laser_Gas_CO2.get(1));
 		
 		CR.shaped(IL.MOTORS[0].get(1), CR.DEF_REV   , "CWR", "WIW", "PWC", 'I', OP.bolt     .dat(MT.IronMagnetic)       , 'P', OP.plateCurved.dat(MT.DATA.Electric_T[0]), 'R', OP.stick.dat(MT.DATA.Electric_T[0]), 'W', OP.wireFine.dat(ANY.Cu), 'C', MT.DATA.CABLES_01[0]);
 		CR.shaped(IL.MOTORS[0].get(1), CR.DEF       , "CWR", "WIW", "PWC", 'I', OP.bolt     .dat(MT.SteelMagnetic)      , 'P', OP.plateCurved.dat(MT.DATA.Electric_T[0]), 'R', OP.stick.dat(MT.DATA.Electric_T[0]), 'W', OP.wireFine.dat(ANY.Cu), 'C', MT.DATA.CABLES_01[0]);
