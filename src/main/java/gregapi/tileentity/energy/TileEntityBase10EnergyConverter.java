@@ -20,7 +20,7 @@
 package gregapi.tileentity.energy;
 
 import cn.kuzuanpa.ktfruaddon.api.tile.IMeterDetectable;
-import gregapi.block.multitileentity.IWailaTile;
+import cn.kuzuanpa.ktfruaddon.api.tile.IWailaTile;
 import gregapi.code.ArrayListNoNulls;
 import gregapi.code.TagData;
 import gregapi.data.LH;

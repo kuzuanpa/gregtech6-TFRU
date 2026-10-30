@@ -1,6 +1,17 @@
 package gregtech;
 
-public class TFRUEnvHelper {
-    public static boolean isModTFRU = true;
+import cn.kuzuanpa.ktfruaddon.EnvironmentHelper;
+
+public class TFRUEnvHelper implements EnvironmentHelper.TFRUModEnvHelper {
     public static boolean isInTFRU = false;
+
+    @Override
+    public boolean isModTFRU() {
+        return true;
+    }
+
+    @Override
+    public void setModInTFRU() {
+        isInTFRU = true;
+    }
 }

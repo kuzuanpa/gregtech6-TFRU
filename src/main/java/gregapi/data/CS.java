@@ -35,7 +35,6 @@ import gregapi.compat.industrialcraft.ICompatIC2;
 import gregapi.compat.industrialcraft.ICompatIC2EUItem;
 import gregapi.compat.opencomputers.ICompatOC;
 import gregapi.compat.thaumcraft.ICompatTC;
-import gregapi.compat.waila.ICompatWaila;
 import gregapi.compat.warpdrive.ICompatWD;
 import gregapi.config.Config;
 import gregapi.dummies.DummyWorld;
@@ -211,9 +210,9 @@ public class CS {
 	/** The value of how many Fuel Ticks a Furnace Smelt has. */
 	public static int TICKS_PER_SMELT = 200;
 	/** The value of how many Energy Units are worth a Furnace Tick in regards of Fuel -> Energy */
-	public static int EU_PER_FURNACE_TICK = 25;
+	public static int EU_PER_FURNACE_TICK = 50;
 	/** The value of how many Energy Units are worth a Smelt Operation in regards of Energy -> Smelt, because many Mods including IC2 have cheaper smelting. In GT, I go for a Max Efficiency of 19.53125 times that value, so 256 GU per Furnace Operation. */
-	public static int EU_PER_SMELT = 256;
+	public static int EU_PER_SMELT = 512;
 	/** The value of how many Energy Units a Liter of Lava is worth. It is worth about 180 to 333 RF in TE. Well, I go for 320 RF in GT, meaning 80 GU/L or 80000 GU per Bucket. Cannot be above 200 GU/L or else MFR exploit with infinite Lava! */
 	public static int EU_PER_LAVA = 80;
 	/** The value of how many Energy Units a Liter of Hot Coolant also known as "Heatant" is worth. It is worth 20 EU in IC2 Experimental, so it's the same 20 GU in GT6. */
@@ -1075,9 +1074,6 @@ public class CS {
 	public static ICompatGC         COMPAT_GC;
 	/** Used to register Warpdrive Stuff, this Object might be null if Warpdrive isn't installed. */
 	public static ICompatWD         COMPAT_WD;
-	/** Used to register Waila Stuff, this Object might be null if Warpdrive isn't installed. */
-	public static ICompatWaila      COMPAT_Waila;
-	
 	/** Date and Time of when the Game launched. */
 	public static final String DATE_OF_GAME_START = UT.Code.dateAndTime();
 
@@ -1299,6 +1295,7 @@ public class CS {
 	, NBT_CHEAP_OVERCLOCKING        = "gt.cheap.overclocking"       // Boolean
 	, NBT_NO_CONSTANT_POWER         = "gt.no.constant.power"        // Boolean
 	, NBT_EFFICIENCY                = "gt.eff"                      // Short from 0 to 10000 describing the Efficiency of a Generator or Converter.
+	, NBT_EFFICIENCY_HEAT           = "gt.eff.heat"                 // Short from 0 to 10000 describing how much of the absorbed Heat actually becomes Steam inside a Boiler, the rest is lost.
 	, NBT_MULTIPLIER                = "gt.multiplier"               // Number
 	, NBT_INV_SIZE                  = "gt.invsize"                  // Short
 	, NBT_INV_LIST                  = "gt.invlist"                  // NBT List

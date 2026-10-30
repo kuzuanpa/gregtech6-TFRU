@@ -20,7 +20,7 @@
 package gregtech.tileentity.multiblocks;
 
 import gregapi.GT_API_Proxy;
-import gregapi.block.multitileentity.IWailaTile;
+import cn.kuzuanpa.ktfruaddon.api.tile.IWailaTile;
 import gregapi.block.multitileentity.MultiTileEntityContainer;
 import gregapi.code.ArrayListNoNulls;
 import gregapi.code.HashSetNoNulls;

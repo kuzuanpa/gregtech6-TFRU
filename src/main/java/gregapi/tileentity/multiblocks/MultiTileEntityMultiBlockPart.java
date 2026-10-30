@@ -25,7 +25,7 @@ import gregapi.block.multitileentity.IMultiTileEntity.IMTE_AddToolTips;
 import gregapi.block.multitileentity.IMultiTileEntity.IMTE_BreakBlock;
 import gregapi.block.multitileentity.IMultiTileEntity.IMTE_OnBlockAdded;
 import gregapi.block.multitileentity.IMultiTileEntity.IMTE_OnWalkOver;
-import gregapi.block.multitileentity.IWailaTile;
+import cn.kuzuanpa.ktfruaddon.api.tile.IWailaTile;
 import gregapi.block.multitileentity.MultiTileEntityRegistry;
 import gregapi.code.TagData;
 import gregapi.computer.ITileEntityComputerizable;

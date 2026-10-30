@@ -21,7 +21,7 @@ package gregapi.tileentity.tank;
 
 import gregapi.block.multitileentity.IMultiTileEntity.IMTE_AddToolTips;
 import gregapi.block.multitileentity.IMultiTileEntity.IMTE_GetMaxStackSize;
-import gregapi.block.multitileentity.IWailaTile;
+import cn.kuzuanpa.ktfruaddon.api.tile.IWailaTile;
 import gregapi.data.*;
 import gregapi.data.LH.Chat;
 import gregapi.fluid.FluidTankGT;

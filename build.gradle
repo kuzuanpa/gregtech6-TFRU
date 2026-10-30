@@ -93,6 +93,7 @@ idea{
 }
 
 repositories {
+	mavenLocal()
 	maven {
 		name = "gt"
 		url = "https://gregtech.mechaenetia.com/"
@@ -185,6 +186,10 @@ minecraft {
 }
 
 dependencies {
+	// TFRU-series dependencies (pulled from the local maven repository)
+	implementation "cn.kuzuanpa:ktfruaddon:1.1.2:dev"
+	implementation "cn.kuzuanpa:TerraFirmaCraft-TFRU:0.83.0:dev"
+
 	//compile fileTree(dir: 'libs', include: '*.jar')
 	//shade 'net.onedaybeard.artemis:artemis-odb:2.2.0'
 	//shade 'net.mostlyoriginal.artemis-odb:contrib-core:2.3.0'

@@ -22,7 +22,7 @@ package gregtech.tileentity.energy.converters;
 import gregapi.block.multitileentity.IMultiTileEntity.IMTE_GetCollisionBoundingBoxFromPool;
 import gregapi.block.multitileentity.IMultiTileEntity.IMTE_OnEntityCollidedWithBlock;
 import gregapi.block.multitileentity.IMultiTileEntity.IMTE_RemovedByPlayer;
-import gregapi.block.multitileentity.IWailaTile;
+import cn.kuzuanpa.ktfruaddon.api.tile.IWailaTile;
 import gregapi.code.TagData;
 import gregapi.data.BI;
 import gregapi.data.FL;
@@ -70,7 +70,7 @@ import static gregapi.data.CS.*;
  */
 public class MultiTileEntityBoilerTank extends TileEntityBase09FacingSingle implements ITileEntityEnergy, ITileEntityFunnelAccessible, ITileEntityGibbl, ITileEntityEnergyDataCapacitor, IFluidHandler, IMTE_RemovedByPlayer, IMTE_GetCollisionBoundingBoxFromPool, IMTE_OnEntityCollidedWithBlock, IWailaTile {
 	protected byte mBarometer = 0, oBarometer = 0, inDanger =0;
-	protected short mEfficiency = 10000, mCoolDownResetTimer = 128;
+	protected short mEfficiency = 10000, mHeatEfficiency = 10000, mCoolDownResetTimer = 128; // mEfficiency drops through Calcification, mHeatEfficiency is the NBT-defined Heat-to-Steam ratio.
 	protected long mEnergy = 0, mCapacity = 640000, mOutput = 64;
 	protected TagData mEnergyTypeAccepted = TD.Energy.HU;
 	protected FluidTankGT[] mTanks = new FluidTankGT[] {new FluidTankGT(4000), new FluidTankGT(64000)};
@@ -85,6 +85,7 @@ public class MultiTileEntityBoilerTank extends TileEntityBase09FacingSingle impl
 		if (aNBT.hasKey(NBT_CAPACITY)) mCapacity = aNBT.getLong(NBT_CAPACITY);
 		if (aNBT.hasKey(NBT_CAPACITY_SU)) mTanks[1].setCapacity(aNBT.getLong(NBT_CAPACITY_SU));
 		if (aNBT.hasKey(NBT_EFFICIENCY)) mEfficiency = (short)UT.Code.bind_(0, 10000, aNBT.getShort(NBT_EFFICIENCY));
+		if (aNBT.hasKey(NBT_EFFICIENCY_HEAT)) mHeatEfficiency = (short)UT.Code.bind_(0, 10000, aNBT.getShort(NBT_EFFICIENCY_HEAT));
 		if (aNBT.hasKey(NBT_ENERGY_ACCEPTED)) mEnergyTypeAccepted = TagData.createTagData(aNBT.getString(NBT_ENERGY_ACCEPTED));
 		for (int i = 0; i < mTanks.length; i++) mTanks[i].readFromNBT(aNBT, NBT_TANK+"."+i);
 	}
@@ -101,9 +102,10 @@ public class MultiTileEntityBoilerTank extends TileEntityBase09FacingSingle impl
 	public void addToolTips(List<String> aList, ItemStack aStack, boolean aF3_H) {
 		aList.add(Chat.CYAN     + LH.get(LH.CONVERTS_FROM_X)        + " 1 L " + FL.name(FluidRegistry.WATER, T) + " " + LH.get(LH.CONVERTS_TO_Y) + " 160 L " + FL.name(FL.Steam.make(0), T) + " " + LH.get(LH.CONVERTS_USING_Z) + " 80 " + mEnergyTypeAccepted.getLocalisedNameShort());
 		aList.add(LH.getToolTipEfficiency(mEfficiency));
+		aList.add(Chat.YELLOW   + "Heat Efficiency: " + Chat.WHITE + LH.percent(mHeatEfficiency) + "%");
 		aList.add(Chat.GREEN    + LH.get(LH.ENERGY_INPUT)           + ": " + Chat.WHITE + (mOutput/STEAM_PER_EU)                        + " " + mEnergyTypeAccepted.getLocalisedChatNameShort() + Chat.WHITE + "/t ("+LH.get(LH.FACE_ANY)+")");
 		aList.add(Chat.GREEN    + LH.get(LH.ENERGY_CAPACITY)        + ": " + Chat.WHITE + mCapacity                                     + " " + mEnergyTypeAccepted.getLocalisedChatNameShort() + Chat.WHITE);
-		aList.add(Chat.RED      + LH.get(LH.ENERGY_OUTPUT)          + ": " + Chat.WHITE + UT.Code.units(mOutput, 10000, mEfficiency, F) + " " + TD.Energy.STEAM.getLocalisedChatNameLong()      + Chat.WHITE + "/t ("+LH.get(LH.FACE_TOP)+")");
+		aList.add(Chat.RED      + LH.get(LH.ENERGY_OUTPUT)          + ": " + Chat.WHITE + UT.Code.units(UT.Code.units(mOutput, 10000, mEfficiency, F), 10000, mHeatEfficiency, F) + " " + TD.Energy.STEAM.getLocalisedChatNameLong()      + Chat.WHITE + "/t ("+LH.get(LH.FACE_TOP)+")");
 		aList.add(Chat.RED      + LH.get(LH.ENERGY_CAPACITY)        + ": " + Chat.WHITE + mCapacity                                     + " " + TD.Energy.STEAM.getLocalisedChatNameLong()      + Chat.WHITE);
 		aList.add(Chat.ORANGE   + LH.get(LH.REQUIREMENT_WATER_PURE));
 		aList.add(Chat.ORANGE   + LH.get(LH.NO_GUI_FUNNEL_TO_TANK));
@@ -121,12 +123,14 @@ public class MultiTileEntityBoilerTank extends TileEntityBase09FacingSingle impl
 			// Convert Water to Steam
 			long tConversions = Math.min(mTanks[1].capacity() / 2560, Math.min(mEnergy / 80, mTanks[0].amount()));
 			if (tConversions > 0) {
+				long tSteam = UT.Code.units(tConversions, 10000, mEfficiency * 160, F);
+				tSteam = UT.Code.units(tSteam, 10000, mHeatEfficiency, F);
 				mTanks[0].remove(tConversions);
 				if (rng(10) == 0 && mEfficiency > 5000 && mTanks[0].has() && !FL.distw(mTanks[0])) {
 					mEfficiency -= tConversions;
 					if (mEfficiency < 5000) mEfficiency = 5000;
 				}
-				mTanks[1].setFluid(FL.Steam.make(mTanks[1].amount() + UT.Code.units(tConversions, 10000, mEfficiency * 160, F)));
+				mTanks[1].setFluid(FL.Steam.make(mTanks[1].amount() + tSteam));
 				mEnergy -= tConversions * 80;
 				mCoolDownResetTimer = 128;
 			}
@@ -205,6 +209,7 @@ public class MultiTileEntityBoilerTank extends TileEntityBase09FacingSingle impl
 				} else {
 					aChatReturn.add("No Calcification in this Boiler");
 				}
+				aChatReturn.add("Heat Loss: " + LH.percent(10000 - mHeatEfficiency) + "%");
 				aChatReturn.add(mTanks[0].content("WARNING: NO WATER!!!"));
 			}
 			return 1;
@@ -314,6 +319,7 @@ public class MultiTileEntityBoilerTank extends TileEntityBase09FacingSingle impl
 	public NBTTagCompound getWailaNBT(TileEntity te, NBTTagCompound aNBT) {
 		IWailaTile.super.getWailaNBT(te, aNBT);
 		UT.NBT.setNumber(aNBT, NBT_EFFICIENCY, mEfficiency);
+		UT.NBT.setNumber(aNBT, NBT_EFFICIENCY_HEAT, mHeatEfficiency);
 		UT.NBT.setNumber(aNBT, NBT_ENERGY, mEnergy);
 		for (int i = 0; i < mTanks.length; i++) mTanks[i].writeToNBT(aNBT, NBT_TANK+"."+i);
 		return aNBT;
@@ -322,6 +328,7 @@ public class MultiTileEntityBoilerTank extends TileEntityBase09FacingSingle impl
 	@Override
 	public List<String> getWailaBody(List<String> currentTip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
 		currentTip.add("Efficiency "+Chat.WHITE+accessor.getNBTData().getShort(NBT_EFFICIENCY)/100F+"%");
+		currentTip.add("Heat Efficiency "+Chat.WHITE+accessor.getNBTData().getShort(NBT_EFFICIENCY_HEAT)/100F+"%");
 
 		IWailaTile.super.getWailaBody(currentTip, accessor, config);
 		IWailaTile.addEnergyAmountDesc(currentTip, LH.get(LH.ENERGY_CONTAINED), mEnergyTypeAccepted, accessor.getNBTData().getLong(NBT_ENERGY),"");

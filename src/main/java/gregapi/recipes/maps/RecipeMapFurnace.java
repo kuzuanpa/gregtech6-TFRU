@@ -151,7 +151,7 @@ public class RecipeMapFurnace extends RecipeMapNonGTRecipes {
 			}
 		}
 		// return the Recipe
-		return new Recipe(F, F, F, ST.array(ST.amount(1, aInputs[0])), ST.array(tOutput), null, null, tCookingOil != null && tCookingOil.amount > 0 ? FL.array(tCookingOil) : ZL_FS, rXP != null && rXP.amount > 0 ? FL.array(rXP) : ZL_FS, 16, 16, 0);
+		return new Recipe(F, F, F, ST.array(ST.amount(1, aInputs[0])), ST.array(tOutput), null, null, tCookingOil != null && tCookingOil.amount > 0 ? FL.array(tCookingOil) : ZL_FS, rXP != null && rXP.amount > 0 ? FL.array(rXP) : ZL_FS, 16, 32, 0);
 	}
 	
 	@Override public boolean containsInput(ItemStack aStack, IHasWorldAndCoords aTileEntity, ItemStack aSpecialSlot) {return ST.valid(RM.get_smelting(aStack));}

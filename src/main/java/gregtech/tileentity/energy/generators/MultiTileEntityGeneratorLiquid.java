@@ -21,7 +21,7 @@ package gregtech.tileentity.energy.generators;
 
 import gregapi.block.multitileentity.IMultiTileEntity.IMTE_GetCollisionBoundingBoxFromPool;
 import gregapi.block.multitileentity.IMultiTileEntity.IMTE_OnEntityCollidedWithBlock;
-import gregapi.block.multitileentity.IWailaTile;
+import cn.kuzuanpa.ktfruaddon.api.tile.IWailaTile;
 import gregapi.code.TagData;
 import gregapi.data.FL;
 import gregapi.data.FM;

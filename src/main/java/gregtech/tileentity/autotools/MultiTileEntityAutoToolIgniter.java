@@ -20,7 +20,7 @@
 package gregtech.tileentity.autotools;
 
 import gregapi.block.IBlockToolable;
-import gregapi.block.multitileentity.IWailaTile;
+import cn.kuzuanpa.ktfruaddon.api.tile.IWailaTile;
 import gregapi.code.TagData;
 import gregapi.data.LH;
 import gregapi.data.LH.Chat;

@@ -20,7 +20,7 @@
 package gregapi.tileentity.machines;
 
 import gregapi.GT_API_Proxy;
-import gregapi.block.multitileentity.IWailaTile;
+import cn.kuzuanpa.ktfruaddon.api.tile.IWailaTile;
 import gregapi.computer.ITileEntityComputerizable;
 import gregapi.data.BI;
 import gregapi.data.LH;

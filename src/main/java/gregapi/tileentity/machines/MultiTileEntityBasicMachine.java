@@ -22,7 +22,7 @@ package gregapi.tileentity.machines;
 import buildcraft.api.tiles.IHasWork;
 import cpw.mods.fml.common.Optional;
 import gregapi.GT_API;
-import gregapi.block.multitileentity.IWailaTile;
+import cn.kuzuanpa.ktfruaddon.api.tile.IWailaTile;
 import gregapi.block.multitileentity.MultiTileEntityRegistry;
 import gregapi.code.ItemStackContainer;
 import gregapi.code.TagData;

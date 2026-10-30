@@ -20,7 +20,7 @@
 package gregtech.tileentity.energy.generators;
 
 import cn.kuzuanpa.ktfruaddon.api.tile.IMeterDetectable;
-import gregapi.block.multitileentity.IWailaTile;
+import cn.kuzuanpa.ktfruaddon.api.tile.IWailaTile;
 import gregapi.code.TagData;
 import gregapi.data.LH;
 import gregapi.data.TD;
