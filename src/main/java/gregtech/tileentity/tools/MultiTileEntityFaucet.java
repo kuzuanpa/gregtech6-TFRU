@@ -118,6 +118,8 @@ public class MultiTileEntityFaucet extends TileEntityBase11AttachmentSmall imple
 		}
 		if (tDelegator.mTileEntity instanceof ITileEntityMold) return ((ITileEntityMold)tDelegator.mTileEntity).fillMold(aMaterial, aTemperature, tDelegator.mSideOfTileEntity);
 		if (tDelegator.mTileEntity instanceof MultiTileEntityBathingPot || tDelegator.mTileEntity instanceof MultiTileEntityMixingBowl) {
+			// Ordinary fluid containers cannot preserve the crucible's temperature.
+			if (aTemperature >= 600) return 0;
 			if (aMaterial.mAmount < U) {
 				FluidStack tFluid = aMaterial.mMaterial.liquid(aMaterial.mAmount, F);
 				if (FL.zero(tFluid)) return 0;
