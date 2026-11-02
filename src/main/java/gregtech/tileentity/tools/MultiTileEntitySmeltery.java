@@ -454,7 +454,7 @@ public class MultiTileEntitySmeltery extends TileEntityBase07Paintable implement
 				if (aStack != null) {
 					FluidStack tFluid = FL.getFluid(ST.amount(1, aStack), T);
 					if (tFluid == null) {
-						if (mTemperature < 600 && tLightest != null && tLightest.mMaterial.mLiquid != null) {
+						if (mTemperature < NORMAL_FLUID_CONTAINER_TEMPERATURE_LIMIT && tLightest != null && tLightest.mMaterial.mLiquid != null) {
 							long tTemperature = FL.temperature(tLightest.mMaterial.mLiquid);
 							if (mTemperature >= tLightest.mMaterial.mMeltingPoint && (tTemperature < 320 || mTemperature >= tTemperature)) {
 								tFluid = tLightest.mMaterial.liquid(tLightest.mAmount, F);

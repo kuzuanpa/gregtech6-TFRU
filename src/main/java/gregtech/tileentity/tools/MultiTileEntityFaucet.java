@@ -107,6 +107,11 @@ public class MultiTileEntityFaucet extends TileEntityBase11AttachmentSmall imple
 	
 	@Override
 	public long fillMold(OreDictMaterialStack aMaterial, long aTemperature, byte aSide) {
+		return fillMold(aMaterial, aTemperature, aSide, aTemperature < ITileEntityCrucible.NORMAL_FLUID_CONTAINER_TEMPERATURE_LIMIT);
+	}
+
+	/** @param aAllowFluidOutput allow output molten fluid, otherside only fill molds */
+	public long fillMold(OreDictMaterialStack aMaterial, long aTemperature, byte aSide, boolean aAllowFluidOutput) {
 		if (aSide != mFacing || aMaterial == null || aMaterial.mMaterial == null || (!mAcidProof && aMaterial.mMaterial.contains(TD.Properties.ACID))) return 0;
 		if (aTemperature > getMoldMaxTemperature()) {
 			UT.Sounds.send(SFX.MC_FIZZ, this, F);
@@ -119,7 +124,7 @@ public class MultiTileEntityFaucet extends TileEntityBase11AttachmentSmall imple
 		if (tDelegator.mTileEntity instanceof ITileEntityMold) return ((ITileEntityMold)tDelegator.mTileEntity).fillMold(aMaterial, aTemperature, tDelegator.mSideOfTileEntity);
 		if (tDelegator.mTileEntity instanceof MultiTileEntityBathingPot || tDelegator.mTileEntity instanceof MultiTileEntityMixingBowl) {
 			// Ordinary fluid containers cannot preserve the crucible's temperature.
-			if (aTemperature >= 600) return 0;
+			if (!aAllowFluidOutput) return 0;
 			if (aMaterial.mAmount < U) {
 				FluidStack tFluid = aMaterial.mMaterial.liquid(aMaterial.mAmount, F);
 				if (FL.zero(tFluid)) return 0;

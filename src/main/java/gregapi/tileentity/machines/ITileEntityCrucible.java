@@ -25,5 +25,8 @@ import gregapi.tileentity.ITileEntityUnloadable;
  * @author Gregorius Techneticies
  */
 public interface ITileEntityCrucible extends ITileEntityUnloadable {
+	/** At or above this Kelvin temperature, output requires a temperature-preserving receiver. */
+	public static final long NORMAL_FLUID_CONTAINER_TEMPERATURE_LIMIT = 700;
+
 	public boolean fillMoldAtSide(ITileEntityMold aMold, byte aSide, byte aSideOfMold);
 }
