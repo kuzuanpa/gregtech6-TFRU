@@ -133,6 +133,7 @@ public class LH {
 	, TOOL_TO_SET_DIRECTION_MONKEY_WRENCH = "gt.lang.use.monkey.wrench.to.toggle.direction"
 	, TOOL_TO_SET_INPUT_MONKEY_WRENCH = "gt.lang.use.monkey.wrench.to.set.input.side"
 	, TOOL_TO_SET_OUTPUT_MONKEY_WRENCH = "gt.lang.use.monkey.wrench.to.set.output.side"
+	, TOOL_TO_ADJUST_THROTTLE = "gt.lang.use.monkey.wrench.to.adjust.throttle"
 	, TOOL_TO_TOGGLE_INPUTS_MONKEY_WRENCH = "gt.lang.use.monkey.wrench.to.toggle.inputs"
 	, TOOL_TO_TOGGLE_OUTPUTS_MONKEY_WRENCH = "gt.lang.use.monkey.wrench.to.toggle.outputs"
 	, TOOL_TO_TOGGLE_AUTO_INPUTS_MONKEY_WRENCH = "gt.lang.use.monkey.wrench.to.toggle.auto.inputs"
@@ -602,6 +603,7 @@ public class LH {
 		add(TOOL_TO_UNTAPE                              , "Use Scissors or a Knife to remove Tape");
 		add(TOOL_TO_SET_INPUT_MONKEY_WRENCH             , "Use Monkey Wrench to set Input Side");
 		add(TOOL_TO_SET_OUTPUT_MONKEY_WRENCH            , "Use Monkey Wrench to set Output Side");
+		add(TOOL_TO_ADJUST_THROTTLE                     , "Use Monkey Wrench to adjust the Throttle Valve");
 		add(TOOL_TO_SET_DIRECTION_MONKEY_WRENCH         , "Use Monkey Wrench to set Direction");
 		add(TOOL_TO_SET_FACING_PRE                      , "Use ");
 		add(TOOL_TO_SET_FACING_POST                     , " to set Facing");

@@ -38,6 +38,7 @@ import gregapi.render.ITexture;
 import gregapi.tileentity.ITileEntityFunnelAccessible;
 import gregapi.tileentity.ITileEntityTapAccessible;
 import gregapi.tileentity.base.TileEntityBase09FacingSingle;
+import gregapi.tileentity.energy.EnergyOutputThrottle;
 import gregapi.tileentity.energy.ITileEntityEnergy;
 import gregapi.tileentity.machines.ITileEntityRunningActively;
 import gregapi.util.ST;
@@ -69,7 +70,7 @@ public class MultiTileEntityGeneratorFluidBed extends TileEntityBase09FacingSing
 	private static int FLAME_RANGE = 2;
 	
 	protected short mEfficiency = 10000;
-	protected long mEnergy = 0, mRate = 1;
+	protected long mEnergy = 0, mRate = 1, mRateMaximum = 1, mRateMinimum = 1;
 	protected boolean mBurning = F, oBurning = F;
 	protected TagData mEnergyTypeEmitted = TD.Energy.HU;
 	protected RecipeMap mRecipes = FM.FluidBed;
@@ -83,11 +84,13 @@ public class MultiTileEntityGeneratorFluidBed extends TileEntityBase09FacingSing
 		mEnergy = aNBT.getLong(NBT_ENERGY);
 		mBurning = aNBT.getBoolean(NBT_ACTIVE);
 		mOutput1 = ST.load(aNBT, NBT_INV_OUT + ".1");
-		if (aNBT.hasKey(NBT_OUTPUT)) mRate = aNBT.getLong(NBT_OUTPUT);
+		if (aNBT.hasKey(NBT_OUTPUT)) mRateMaximum = aNBT.getLong(NBT_OUTPUT);
+		mRateMinimum = EnergyOutputThrottle.readMinimum(aNBT, mRateMaximum);
+		mRate = EnergyOutputThrottle.read(aNBT, mRateMaximum);
 		if (aNBT.hasKey(NBT_FUELMAP)) mRecipes = RecipeMap.RECIPE_MAPS.get(aNBT.getString(NBT_FUELMAP));
 		if (aNBT.hasKey(NBT_EFFICIENCY)) mEfficiency = (short)UT.Code.bind_(0, 10000, aNBT.getShort(NBT_EFFICIENCY));
 		if (aNBT.hasKey(NBT_ENERGY_EMITTED)) mEnergyTypeEmitted = TagData.createTagData(aNBT.getString(NBT_ENERGY_EMITTED));
-		mTank.setCapacity(Math.max(mRecipes.mMaxFluidInputSize, mRate));
+		mTank.setCapacity(Math.max(mRecipes.mMaxFluidInputSize, mRateMaximum));
 		mTank.readFromNBT(aNBT, NBT_TANK);
 	}
 	
@@ -96,6 +99,7 @@ public class MultiTileEntityGeneratorFluidBed extends TileEntityBase09FacingSing
 		super.writeToNBT2(aNBT);
 		UT.NBT.setNumber(aNBT, NBT_ENERGY, mEnergy);
 		UT.NBT.setBoolean(aNBT, NBT_ACTIVE, mBurning);
+		EnergyOutputThrottle.write(aNBT, mRateMinimum, mRate);
 		ST.save(aNBT, NBT_INV_OUT + ".1", mOutput1);
 		mTank.writeToNBT(aNBT, NBT_TANK);
 	}
@@ -105,6 +109,7 @@ public class MultiTileEntityGeneratorFluidBed extends TileEntityBase09FacingSing
 		aList.add(Chat.CYAN     + LH.get(LH.RECIPES)        + ": " + Chat.WHITE + LH.get(mRecipes.mNameInternal));
 		aList.add(LH.getToolTipEfficiency(mEfficiency));
 		LH.addEnergyToolTips(this, aList, null, mEnergyTypeEmitted, null, LH.get(LH.FACE_TOP));
+		EnergyOutputThrottle.addToolTip(aList);
 		aList.add(Chat.ORANGE   + LH.get(LH.REQUIREMENT_AIR_IN_FRONT));
 		aList.add(Chat.ORANGE   + LH.get(LH.REQUIREMENT_EMPTY_ASHES) + " (" + LH.get(LH.FACE_FRONT) + ")");
 		aList.add(Chat.ORANGE   + LH.get(LH.REQUIREMENT_IGNITE_FIRE) + " (" + LH.get(LH.FACE_FRONT) + ")");
@@ -205,6 +210,13 @@ public class MultiTileEntityGeneratorFluidBed extends TileEntityBase09FacingSing
 		if (aTool.equals(TOOL_igniter       ) && (aSide == mFacing || aPlayer == null)) {mBurning = T; return 10000;}
 		if (aTool.equals(TOOL_extinguisher  ) && (aSide == mFacing || aPlayer == null)) {mBurning = F; return 10000;}
 		
+		if (aTool.equals(TOOL_monkeywrench)) {
+			mRate = EnergyOutputThrottle.adjust(mRateMinimum, mRate, mRateMaximum, aSneaking);
+			markDirty();
+			if (aChatReturn != null) aChatReturn.add(LH.get(LH.ENERGY_OUTPUT) + ": " + mRateMinimum + " - " + mRate + " " + mEnergyTypeEmitted.getLocalisedChatNameShort() + "/t");
+			return 10000;
+		}
+
 		if (aTool.equals(TOOL_plunger)) return GarbageGT.trash(mTank);
 		
 		if (aTool.equals(TOOL_magnifyingglass)) {
@@ -267,7 +279,7 @@ public class MultiTileEntityGeneratorFluidBed extends TileEntityBase09FacingSing
 	@Override public boolean isEnergyEmittingTo(TagData aEnergyType, byte aSide, boolean aTheoretical) {return SIDES_TOP[aSide] && super.isEnergyEmittingTo(aEnergyType, aSide, aTheoretical);}
 	@Override public long getEnergyOffered(TagData aEnergyType, byte aSide, long aSize) {return Math.min(mRate, mEnergy);}
 	@Override public long getEnergySizeOutputRecommended(TagData aEnergyType, byte aSide) {return mRate;}
-	@Override public long getEnergySizeOutputMin(TagData aEnergyType, byte aSide) {return mRate;}
+	@Override public long getEnergySizeOutputMin(TagData aEnergyType, byte aSide) {return mRateMinimum;}
 	@Override public long getEnergySizeOutputMax(TagData aEnergyType, byte aSide) {return mRate;}
 	@Override public Collection<TagData> getEnergyTypes(byte aSide) {return mEnergyTypeEmitted.AS_LIST;}
 	
@@ -320,17 +332,23 @@ public class MultiTileEntityGeneratorFluidBed extends TileEntityBase09FacingSing
 	public NBTTagCompound getWailaNBT(TileEntity te, NBTTagCompound aNBT) {
 		IWailaTile.super.getWailaNBT(te, aNBT);
 		UT.NBT.setNumber(aNBT, NBT_ENERGY, mEnergy);
+		UT.NBT.setNumber(aNBT, NBT_OUTPUT, mRateMaximum);
+		UT.NBT.setNumber(aNBT, NBT_OUTPUT_MIN, mRateMinimum);
+		UT.NBT.setNumber(aNBT, NBT_OUTPUT_MAX, mRate);
 		mTank.writeToNBT(aNBT, NBT_TANK);
 		return aNBT;
 	}
 
 	@Override
 	public List<String> getWailaBody(List<String> currentTip, IWailaDataAccessor accessor, IWailaConfigHandler config) {
-		IWailaTile.super.getWailaBody(currentTip, accessor, config);
 		NBTTagCompound aNBT = accessor.getNBTData();
 
 		mEnergy = aNBT.getLong(NBT_ENERGY);
-		mTank.setCapacity(Math.max(mRecipes.mMaxFluidInputSize, mRate));
+		if (aNBT.hasKey(NBT_OUTPUT)) mRateMaximum = aNBT.getLong(NBT_OUTPUT);
+		mRateMinimum = EnergyOutputThrottle.readMinimum(aNBT, mRateMaximum);
+		if (aNBT.hasKey(NBT_OUTPUT_MAX)) mRate = EnergyOutputThrottle.read(aNBT, mRateMaximum);
+		IWailaTile.super.getWailaBody(currentTip, accessor, config);
+		mTank.setCapacity(Math.max(mRecipes.mMaxFluidInputSize, mRateMaximum));
 		mTank.readFromNBT(aNBT, NBT_TANK);
 
 		IWailaTile.addTankDesc(currentTip, LH.get(LH.CONTENT)+" ", mTank,"");

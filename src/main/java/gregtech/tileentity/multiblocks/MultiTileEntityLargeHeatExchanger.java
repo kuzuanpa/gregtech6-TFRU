@@ -29,6 +29,7 @@ import gregapi.fluid.FluidTankGT;
 import gregapi.recipes.Recipe;
 import gregapi.recipes.Recipe.RecipeMap;
 import gregapi.tileentity.behavior.TE_Behavior_Active_Trinary;
+import gregapi.tileentity.energy.EnergyOutputThrottle;
 import gregapi.tileentity.energy.ITileEntityEnergy;
 import gregapi.tileentity.machines.ITileEntityRunningActively;
 import gregapi.tileentity.multiblocks.*;
@@ -53,7 +54,7 @@ import static gregapi.data.CS.*;
  */
 public class MultiTileEntityLargeHeatExchanger extends TileEntityBase10MultiBlockBase implements IFluidHandler, ITileEntityRunningActively, ITileEntityEnergy, IMultiBlockFluidHandler, IMultiBlockEnergy {
 	public short mEfficiency = 10000;
-	public long mEnergy = 0, mRate = 8;
+	public long mEnergy = 0, mRate = 8, mRateMaximum = 8, mRateMinimum = 1;
 	public TagData mEnergyTypeEmitted = TD.Energy.HU;
 	public RecipeMap mRecipes = FM.Hot;
 	public Recipe mLastRecipe = null;
@@ -65,11 +66,13 @@ public class MultiTileEntityLargeHeatExchanger extends TileEntityBase10MultiBloc
 		super.readFromNBT2(aNBT);
 		mEnergy = aNBT.getLong(NBT_ENERGY);
 		mActivity = new TE_Behavior_Active_Trinary(this, aNBT);
-		if (aNBT.hasKey(NBT_OUTPUT)) mRate = aNBT.getLong(NBT_OUTPUT);
+		if (aNBT.hasKey(NBT_OUTPUT)) mRateMaximum = aNBT.getLong(NBT_OUTPUT);
+		mRateMinimum = EnergyOutputThrottle.readMinimum(aNBT, mRateMaximum);
+		mRate = EnergyOutputThrottle.read(aNBT, mRateMaximum);
 		if (aNBT.hasKey(NBT_FUELMAP)) mRecipes = RecipeMap.RECIPE_MAPS.get(aNBT.getString(NBT_FUELMAP));
 		if (aNBT.hasKey(NBT_EFFICIENCY)) mEfficiency = (short)UT.Code.bind_(0, 10000, aNBT.getShort(NBT_EFFICIENCY));
 		if (aNBT.hasKey(NBT_ENERGY_EMITTED)) mEnergyTypeEmitted = TagData.createTagData(aNBT.getString(NBT_ENERGY_EMITTED));
-		mTanks[0].setCapacity(mRate * 10);
+		mTanks[0].setCapacity(mRateMaximum * 10);
 		mTanks[0].readFromNBT(aNBT, NBT_TANK+".0");
 		mTanks[1].readFromNBT(aNBT, NBT_TANK+".1");
 	}
@@ -78,6 +81,7 @@ public class MultiTileEntityLargeHeatExchanger extends TileEntityBase10MultiBloc
 	public void writeToNBT2(NBTTagCompound aNBT) {
 		super.writeToNBT2(aNBT);
 		UT.NBT.setNumber(aNBT, NBT_ENERGY, mEnergy);
+		EnergyOutputThrottle.write(aNBT, mRateMinimum, mRate);
 		mActivity.save(aNBT);
 		mTanks[0].writeToNBT(aNBT, NBT_TANK+".0");
 		mTanks[1].writeToNBT(aNBT, NBT_TANK+".1");
@@ -137,6 +141,7 @@ public class MultiTileEntityLargeHeatExchanger extends TileEntityBase10MultiBloc
 		aList.add(Chat.CYAN     + LH.get(LH.RECIPES) + ": " + Chat.WHITE + LH.get(mRecipes.mNameInternal));
 		aList.add(LH.getToolTipEfficiency(mEfficiency));
 		LH.addEnergyToolTips(this, aList, null, mEnergyTypeEmitted, null, LH.get(LH.FACE_TOP));
+		EnergyOutputThrottle.addToolTip(aList);
 		aList.add(Chat.ORANGE   + LH.get(LH.NO_GUI_FUNNEL_TAP_TO_TANK));
 		super.addToolTips(aList, aStack, aF3_H);
 	}
@@ -196,6 +201,19 @@ public class MultiTileEntityLargeHeatExchanger extends TileEntityBase10MultiBloc
 			if (mTanks[1].has()) FL.move(mTanks[1], getAdjacentTank(SIDE_BOTTOM));
 		}
 	}
+
+	@Override
+	public long onToolClick2(String aTool, long aRemainingDurability, long aQuality, Entity aPlayer, List<String> aChatReturn, IInventory aPlayerInventory, boolean aSneaking, ItemStack aStack, byte aSide, float aHitX, float aHitY, float aHitZ) {
+		long rReturn = super.onToolClick2(aTool, aRemainingDurability, aQuality, aPlayer, aChatReturn, aPlayerInventory, aSneaking, aStack, aSide, aHitX, aHitY, aHitZ);
+		if (rReturn > 0 || isClientSide()) return rReturn;
+		if (aTool.equals(TOOL_monkeywrench)) {
+			mRate = EnergyOutputThrottle.adjust(mRateMinimum, mRate, mRateMaximum, aSneaking);
+			markDirty();
+			if (aChatReturn != null) aChatReturn.add(LH.get(LH.ENERGY_OUTPUT) + ": " + mRateMinimum + " - " + mRate + " " + mEnergyTypeEmitted.getLocalisedChatNameShort() + "/t");
+			return 10000;
+		}
+		return 0;
+	}
 	
 	@Override
 	public void onMagnifyingGlass2(List<String> aChatReturn) {
@@ -252,7 +270,7 @@ public class MultiTileEntityLargeHeatExchanger extends TileEntityBase10MultiBloc
 	@Override public boolean isEnergyEmittingTo(TagData aEnergyType, byte aSide, boolean aTheoretical) {return SIDES_TOP[aSide] && super.isEnergyEmittingTo(aEnergyType, aSide, aTheoretical);}
 	@Override public long getEnergyOffered(TagData aEnergyType, byte aSide, long aSize) {return Math.min(mRate, mEnergy);}
 	@Override public long getEnergySizeOutputRecommended(TagData aEnergyType, byte aSide) {return mRate;}
-	@Override public long getEnergySizeOutputMin(TagData aEnergyType, byte aSide) {return mRate;}
+	@Override public long getEnergySizeOutputMin(TagData aEnergyType, byte aSide) {return mRateMinimum;}
 	@Override public long getEnergySizeOutputMax(TagData aEnergyType, byte aSide) {return mRate;}
 	@Override public Collection<TagData> getEnergyTypes(byte aSide) {return mEnergyTypeEmitted.AS_LIST;}
 	
