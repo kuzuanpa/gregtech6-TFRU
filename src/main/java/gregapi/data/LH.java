@@ -119,7 +119,7 @@ public class LH {
 	, NO_GUI_TAP_TO_TANK = "gt.lang.nogui.tap.tank"
 	, POWER_CONDUCTING_FLUIDS_SLOW = "gt.lang.no.powerconducting.fluids"
 	, OWNER_CONTROLLED = "gt.lang.owner.controlled"
-	, CHEAP_OVERCLOCKING = "gt.lang.cheap.overclocking"
+	, OVERCLOCKING_SPEED = "gt.lang.overclocking.speed"
 	, NO_CONSTANT_POWER = "gt.lang.no.constant.power"
 	, NO_WASTE_ENERGY = "gt.lang.no.waste.energy"
 	, KEY_CONTROLLED = "gt.lang.key.controlled"
@@ -571,9 +571,9 @@ public class LH {
 		add(NO_GUI_FUNNEL_TAP_TO_TANK                   , "No GUI. Use Tiny Funnels and Taps to interact!");
 		add(NO_GUI_FUNNEL_TO_TANK                       , "No GUI. Use Tiny Funnels to interact!");
 		add(NO_GUI_TAP_TO_TANK                          , "No GUI. Use Taps to interact!");
-		add(POWER_CONDUCTING_FLUIDS_SLOW, "All entering Power Conductor Fluids will be voided!");
+		add(POWER_CONDUCTING_FLUIDS_SLOW                , "All entering Power Conductor Fluids will be slowed!");
 		add(OWNER_CONTROLLED                            , "This Block can only be interacted with by its Owner!");
-		add(CHEAP_OVERCLOCKING                          , "Can be overclocked without additional Energy Loss");
+		add(OVERCLOCKING_SPEED                          , "Overclocking speed factor");
 		add(NO_CONSTANT_POWER                           , "Progress won't lost if not powered");
 		add(NO_WASTE_ENERGY                             , "Can auto save power when not working");
 		add(KEY_CONTROLLED                              , "This Block can only be opened with a Key!");

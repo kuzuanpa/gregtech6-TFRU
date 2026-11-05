@@ -94,12 +94,12 @@ import static gregapi.data.CS.*;
 	@Optional.Interface(iface = "buildcraft.api.tiles.IHasWork", modid = ModIDs.BC)
 })
 public class MultiTileEntityBasicMachine extends TileEntityBase09FacingSingle implements IHasWork, ITileEntityFunnelAccessible, ITileEntityTapAccessible, ITileEntitySwitchableOnOff, ITileEntityRunningSuccessfully, ITileEntityRunningPowerSaving, ITileEntityAdjacentInventoryUpdatable, ITileEntityEnergy, ITileEntityProgress, ITileEntityGibbl, IFluidHandler, IMeterDetectable, IWailaTile {
-	public boolean mWasteEnergy = T, mSpecialIsStartEnergy = F, mNoConstantEnergy = F, mCheapOverclocking = F, mCouldUseRecipe = F, mStopped = F, oActive = F, oRunning = F, mStateNew = F, mStateOld = F, mDisabledItemInput = F, mDisabledItemOutput = F, mDisabledFluidInput = F, mDisabledFluidOutput = F, mRequiresIgnition = F, mParallelDuration = F, mCanUseOutputTanks = F, mOutputCatalyzer =F;
+	public boolean mWasteEnergy = T, mSpecialIsStartEnergy = F, mNoConstantEnergy = F, mCouldUseRecipe = F, mStopped = F, oActive = F, oRunning = F, mStateNew = F, mStateOld = F, mDisabledItemInput = F, mDisabledItemOutput = F, mDisabledFluidInput = F, mDisabledFluidOutput = F, mRequiresIgnition = F, mParallelDuration = F, mCanUseOutputTanks = F, mOutputCatalyzer =F;
 	public byte mEnergyInputs = 127, mEnergyOutput = SIDE_UNDEFINED, mOutputBlocked = 0, mMode = 0, mIgnited = 0;
 	public byte mItemInputs   = 127, mItemOutputs  = 127, mItemAutoInput  = SIDE_UNDEFINED, mItemAutoOutput  = SIDE_UNDEFINED;
 	public byte mFluidInputs  = 127, mFluidOutputs = 127, mFluidAutoInput = SIDE_UNDEFINED, mFluidAutoOutput = SIDE_UNDEFINED;
 	public short mEfficiency = 10000;
-	public int mParallel = 1, mInvSize = 0;
+	public int mParallel = 1, mInvSize = 0, mOverclockingLoss = 8;
 	public long mEnergy = 0, mInputMin = 16, mInput = 32, mInputMax = 64, mMinEnergy = 0, mOutputEnergy = 0, mOutputEnergyLast=0, mChargeRequirement = 0;
 	public TagData mEnergyTypeAccepted = TD.Energy.TU, mEnergyTypeEmitted = TD.Energy.QU, mEnergyTypeCharged = TD.Energy.TU;
 	public Recipe mLastRecipe = null, mCurrentRecipe = null;
@@ -124,7 +124,7 @@ public class MultiTileEntityBasicMachine extends TileEntityBase09FacingSingle im
 		if (aNBT.hasKey(NBT_STATE+".new")) mStateNew = aNBT.getBoolean(NBT_STATE+".new");
 		if (aNBT.hasKey(NBT_STATE+".old")) mStateOld = aNBT.getBoolean(NBT_STATE+".old");
 		if (aNBT.hasKey(NBT_NEEDS_IGNITION)) mRequiresIgnition = aNBT.getBoolean(NBT_NEEDS_IGNITION);
-		if (aNBT.hasKey(NBT_CHEAP_OVERCLOCKING)) mCheapOverclocking = aNBT.getBoolean(NBT_CHEAP_OVERCLOCKING);
+		if (aNBT.hasKey(NBT_OVERCLOCKING_LOSS)) mOverclockingLoss = Math.max(1, aNBT.getInteger(NBT_OVERCLOCKING_LOSS));
 		if (aNBT.hasKey(NBT_NO_CONSTANT_POWER)) mNoConstantEnergy = aNBT.getBoolean(NBT_NO_CONSTANT_POWER);
 		if (aNBT.hasKey(NBT_WASTE_ENERGY)) mWasteEnergy = aNBT.getBoolean(NBT_WASTE_ENERGY);
 		if (aNBT.hasKey(NBT_SPECIAL_IS_START_ENERGY)) mSpecialIsStartEnergy = aNBT.getBoolean(NBT_SPECIAL_IS_START_ENERGY);
@@ -289,8 +289,8 @@ public class MultiTileEntityBasicMachine extends TileEntityBase09FacingSingle im
 	public void addToolTips(List<String> aList, ItemStack aStack, boolean aF3_H) {
 		aList.add(Chat.CYAN + LH.get(LH.RECIPES) + ": " + Chat.WHITE + LH.get(mRecipes.mNameInternal) + (mParallel > 1 ? " ("+ String.format(LH.get(mParallelDuration?LH.PARALLEL_DURATION:LH.PARALLEL), mParallel) +")": ""));
 		
-		if (mCheapOverclocking)
-		aList.add(Chat.YELLOW + LH.get(LH.CHEAP_OVERCLOCKING));
+		float tOverclockingSpeed = 4F / mOverclockingLoss;
+		aList.add(Chat.YELLOW + LH.get(LH.OVERCLOCKING_SPEED) + ": " + (tOverclockingSpeed == (int)tOverclockingSpeed ? Integer.toString((int)tOverclockingSpeed) : String.format("%.2f", tOverclockingSpeed)) + "x");
 
 		if(mNoConstantEnergy)
 		aList.add(Chat.CYAN + LH.get(LH.NO_CONSTANT_POWER));
@@ -832,7 +832,11 @@ public class MultiTileEntityBasicMachine extends TileEntityBase09FacingSingle im
 				mMinEnergy = Math.max(1, (mEnergyTypeAccepted == TD.Energy.RF ? tRecipe.mEUt * RF_PER_EU * tMaxProcessCount : mEnergyTypeAccepted == TD.Energy.TU ? tRecipe.mEUt : tRecipe.mEUt * tMaxProcessCount));
 				mMaxProgress = Math.max(1, UT.Code.units(mMinEnergy * Math.max(1, tRecipe.mDuration), mEfficiency, 10000, T));
 			}
-			if (!mCheapOverclocking) while (mMinEnergy < mInputMin && mMinEnergy * 4 <= mInputMax) {mMinEnergy *= 4; mMaxProgress *= 2;}
+			long minEnergy = mMinEnergy;
+			while (minEnergy < mInputMin && minEnergy * 4 <= mInputMax) {
+				minEnergy *=4;//high tier machine must be able to run low tier recipes
+				mMaxProgress = Math.max(1, UT.Code.units(mMaxProgress, 4, mOverclockingLoss, T));
+			}
 		}
 		
 		removeAllDroppableNullStacks();
