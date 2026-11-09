@@ -107,9 +107,9 @@ public abstract class TileEntityBase10MultiBlockMachine extends MultiTileEntityB
 	}
 	
 	@Override
-	public boolean checkStructure(boolean aForceReset) {
+	public boolean checkStructure(boolean aForceCheck) {
 		if (isClientSide()) return mStructureOkay;
-		if ((mStructureChanged || aForceReset) && mStructureOkay != checkStructure2(null, null, null)) {
+		if ((mStructureChanged || aForceCheck) && mStructureOkay != checkStructure2(null, null, null)) {
 			mStructureOkay = !mStructureOkay;
 			updateClientData();
 		}

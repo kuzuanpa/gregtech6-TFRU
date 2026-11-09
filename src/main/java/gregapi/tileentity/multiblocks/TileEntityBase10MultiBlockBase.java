@@ -120,8 +120,8 @@ public abstract class TileEntityBase10MultiBlockBase extends TileEntityBase09Fac
 	public void onTick2(long aTimer, boolean aIsServerSide) {
 		super.onTick2(aTimer, aIsServerSide);
 		if (aIsServerSide) {
-			if (mTimer % 600 == 5) {
-				if (!checkStructure(F)) checkStructure(T);
+			if (mTimer % 60 == 5) {
+				checkStructure(F);
 				doDefaultStructuralChecks();
 			}
 		}

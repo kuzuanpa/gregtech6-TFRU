@@ -19,6 +19,7 @@
 
 package gregapi.tileentity.multiblocks;
 
+import cn.kuzuanpa.ktfruaddon.api.tile.part.IMultiBlockPart;
 import gregapi.GT_API;
 import gregapi.block.multitileentity.IMultiTileEntity;
 import gregapi.block.multitileentity.IMultiTileEntity.IMTE_AddToolTips;
@@ -196,7 +197,10 @@ public class MultiTileEntityMultiBlockPart extends TileEntityBase05Paintable imp
 			DelegatorTileEntity<TileEntity> tDelegator = getAdjacentTileEntity(tSide);
 			if (tDelegator.mTileEntity instanceof MultiTileEntityMultiBlockPart) {
 				ITileEntityMultiBlockController tController = ((MultiTileEntityMultiBlockPart)tDelegator.mTileEntity).getTarget(F);
-				if (tController != null) tController.onStructureChange();;
+				if (tController != null) tController.onStructureChange();
+			}else if (tDelegator.mTileEntity instanceof IMultiBlockPart) {
+				ITileEntityMultiBlockController tController = ((IMultiBlockPart)tDelegator.mTileEntity).getTarget(F);
+				if (tController != null) tController.onStructureChange();
 			} else if (tDelegator.mTileEntity instanceof ITileEntityMultiBlockController) {
 				((ITileEntityMultiBlockController)tDelegator.mTileEntity).onStructureChange();
 			}

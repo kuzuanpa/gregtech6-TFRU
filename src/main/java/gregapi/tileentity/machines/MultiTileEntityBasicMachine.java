@@ -495,6 +495,7 @@ public class MultiTileEntityBasicMachine extends TileEntityBase09FacingSingle im
 	public void onTick2(long aTimer, boolean aIsServerSide) {
 		if (aIsServerSide) {
 			if (mBlockUpdated) updateAdjacentToggleableEnergySources();
+			if(aTimer % 60 == 5) checkStructure(F);
 			if (!mStopped) {
 				if (mEnergyTypeAccepted == TD.Energy.TU) mEnergy++;
 				if (mChargeRequirement > 0 && mEnergyTypeCharged == TD.Energy.TU) mChargeRequirement--;
@@ -844,7 +845,7 @@ public class MultiTileEntityBasicMachine extends TileEntityBase09FacingSingle im
 	}
 	
 	public void doWork(long aTimer) {
-		if (mEnergy >= mInputMin && mEnergy >= mMinEnergy && checkStructure(F)) {
+		if (mEnergy >= mInputMin && mEnergy >= mMinEnergy) {
 			mActive = doActive(aTimer, Math.min(mInputMax, mEnergy));
 			mRunning = T;
 
@@ -969,7 +970,6 @@ public class MultiTileEntityBasicMachine extends TileEntityBase09FacingSingle im
 		}
 		if (CONSTANT_ENERGY && !mNoConstantEnergy) mProgress = 0;
 		if (mRunning || mIgnited > 0 || mInventoryChanged || aTimer % 1200 == 5) {
-			if (!checkStructure(F)) checkStructure(T);
 			checkRecipe(F, T);
 		}
 		return F;
