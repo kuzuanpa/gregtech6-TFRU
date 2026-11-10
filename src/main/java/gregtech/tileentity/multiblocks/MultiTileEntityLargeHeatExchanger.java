@@ -209,7 +209,7 @@ public class MultiTileEntityLargeHeatExchanger extends TileEntityBase10MultiBloc
 		if (aTool.equals(TOOL_monkeywrench)) {
 			mRate = EnergyOutputThrottle.adjust(mRateMinimum, mRate, mRateMaximum, aSneaking);
 			markDirty();
-			if (aChatReturn != null) aChatReturn.add(LH.get(LH.ENERGY_OUTPUT) + ": " + mRateMinimum + " - " + mRate + " " + mEnergyTypeEmitted.getLocalisedChatNameShort() + "/t");
+			if (aChatReturn != null) aChatReturn.add(LH.get(LH.ENERGY_OUTPUT) + ": " + mRate + " " + mEnergyTypeEmitted.getLocalisedChatNameShort() + "/t");
 			return 10000;
 		}
 		return 0;

@@ -187,7 +187,7 @@ minecraft {
 
 dependencies {
 	// TFRU-series dependencies (pulled from the local maven repository)
-	implementation "cn.kuzuanpa:ktfruaddon:1.1.2:dev"
+	implementation "cn.kuzuanpa:ktfruaddon:1.3.2:dev"
 	implementation "cn.kuzuanpa:TerraFirmaCraft-TFRU:0.83.0:dev"
 
 	//compile fileTree(dir: 'libs', include: '*.jar')
